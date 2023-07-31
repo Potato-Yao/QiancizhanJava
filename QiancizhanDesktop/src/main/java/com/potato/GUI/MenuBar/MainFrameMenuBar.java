@@ -10,7 +10,6 @@ import com.potato.GUI.Memory;
 import com.potato.GUI.Panel.FunctionPanel;
 import com.potato.Manager.AutoManager;
 import com.potato.ToolKit.PDFExport;
-import com.potato.Translate.Translate;
 import com.potato.Word.Word;
 import com.potato.Word.WordHelper;
 

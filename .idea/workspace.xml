@@ -5,8 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed868a30-07a5-4880-abeb-eb5d1936a3e5" name="Changes" comment="哈哈哈哈哥们前后端分离成功了">
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Chooser/FileChooser.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Chooser/FileChooser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/AboutDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/AboutDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/CreateFileDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/CreateFileDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/InsertWordDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/InsertWordDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/OneOfFourQuizDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/OneOfFourQuizDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/PreferencesDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/PreferencesDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/QuizPassedDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/QuizPassedDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/SpellQuizDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/SpellQuizDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/TranslateDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/TranslateDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Memory.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Memory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/MenuBar/MainFrameMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/MenuBar/MainFrameMenuBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Panel/FunctionPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Panel/FunctionPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Panel/ListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Panel/ListPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Panel/WordPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Panel/WordPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanKernel/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanKernel/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +83,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "dev",
     "jdk.selected.JAVA_MODULE": "17",
@@ -70,11 +91,14 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Gradle.Qiancizhan:QiancizhanDesktop [jar]">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.potato.Main" />
       <module name="Qiancizhan.QiancizhanDesktop.main" />
@@ -186,9 +210,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [jar]" />
         <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [clean]" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="Gradle.Qiancizhan:QiancizhanKernel [build]" />
         <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [build]" />
       </list>
@@ -206,6 +230,12 @@
       <workItem from="1690804886190" duration="318000" />
       <workItem from="1690805207496" duration="3000" />
       <workItem from="1690805230226" duration="2377000" />
+      <workItem from="1690813297090" duration="322000" />
+      <workItem from="1690813623254" duration="72000" />
+      <workItem from="1690813741396" duration="190000" />
+      <workItem from="1690813960289" duration="177000" />
+      <workItem from="1690814154524" duration="327000" />
+      <workItem from="1690814504794" duration="322000" />
     </task>
     <task id="LOCAL-00001" summary="哈哈哈哈哥们前后端分离成功了">
       <option name="closed" value="true" />

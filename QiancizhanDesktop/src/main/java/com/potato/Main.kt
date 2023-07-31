@@ -1,25 +1,23 @@
-package com.potato;
+package com.potato
 
-import com.formdev.flatlaf.FlatDarkLaf;
-import lombok.SneakyThrows;
+import com.formdev.flatlaf.FlatDarkLaf
+import com.potato.GUI.MainFrame
+import lombok.SneakyThrows
+import java.awt.EventQueue
+import javax.swing.UIManager
 
-import javax.swing.*;
-import java.awt.*;
-
-public class Main
+object Main
 {
     @SneakyThrows
-    public static void main(String[] args)
+    @JvmStatic
+    fun main(args: Array<String>)
     {
-        System.out.println("Hello world!");
-        Config.initial();
-
-        UIManager.setLookAndFeel(new FlatDarkLaf());
-
-        EventQueue.invokeLater(() ->
-        {
-            com.potato.GUI.MainFrame mainFrame = new com.potato.GUI.MainFrame();
-            mainFrame.setVisible(true);
-        });
+        println("Hello world!")
+        Config.initial()
+        UIManager.setLookAndFeel(FlatDarkLaf())
+        EventQueue.invokeLater {
+            val mainFrame = MainFrame()
+            mainFrame.isVisible = true
+        }
     }
 }
