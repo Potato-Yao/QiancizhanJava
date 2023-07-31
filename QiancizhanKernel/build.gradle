@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.potato'
+version = '1.0.0b'
+description = 'The kernel of Qiancizhan'
+
+repositories {
+    maven {
+        url "https://maven.aliyun.com/repository/public/"
+    }
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
+    implementation("com.alibaba:fastjson:2.0.34")
+    implementation("org.xerial:sqlite-jdbc:3.42.0.0")
+    implementation("com.alibaba:easyexcel:3.3.2")
+    implementation("com.baidu.aip:java-sdk:4.16.16")
+    implementation("org.json:json:20230618")
+    compileOnly("org.projectlombok:lombok:1.18.28")
+    annotationProcessor("org.projectlombok:lombok:1.18.28")
+}
+
+test {
+    useJUnitPlatform()
+}

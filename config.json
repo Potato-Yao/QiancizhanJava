@@ -1,0 +1,15 @@
+{
+    "language": "zh",
+    "stand_wordlist_path": "./StandingWordList",
+    "normal_wordlist_path": "./NormalWordList",
+    "output_file_name": "OutputFile",
+    "output_file_path": "./OutputList",
+    "baidu_app_id": "",
+    "baidu_app_key": "",
+    "ocr_app_id": "",
+    "ocr_api_key": "",
+    "ocr_secret_key": "",
+    "database_type": "SQLite",
+    "author": "千词斩",
+    "title": "英语单词单"
+}

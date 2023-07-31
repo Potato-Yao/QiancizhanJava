@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ed868a30-07a5-4880-abeb-eb5d1936a3e5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NormalWordList/7月20.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NormalWordList/7月25单词.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NormalWordList/test1.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NormalWordList/test2.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NormalWordList/test3.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NormalWordList/test4.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NormalWordList/周末单词.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NormalWordList/选8U5.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NormalWordList/选八U3.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NormalWordList/选八U3剩余.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OutputList/OutputFile.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Chooser/FileChooser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/AboutDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/CreateFileDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/InsertWordDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/OneOfFourQuizDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/PreferencesDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/QuizPassedDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/SpellQuizDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/TranslateDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/MainFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Memory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/MenuBar/MainFrameMenuBar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Panel/FunctionPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Panel/ListPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Panel/WordPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Manager/AutoManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Manager/DatabaseManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Manager/Manager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/OCRUtil/OCRReader.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/OptionType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Parser/AutoParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Parser/DatabaseParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Parser/Parser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/ToolKit/DatabaseToolKit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/ToolKit/DatabaseType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/ToolKit/FileToolKit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/ToolKit/PDFExport.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/ToolKit/QuizMaker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Translate/HttpGet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Translate/MD5.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Translate/TransApi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Translate/Translate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Word/Word.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Word/WordClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Word/WordHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/StandingWordList/Word.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/千词斩logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/西宁二中字.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/千词斩logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/千词斩logo.svg" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/QiancizhanDesktop">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/QiancizhanKernel">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2TKvxDwrSbJFDXnU8fVUPgOW0H8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "17",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.potato.Main" />
+      <module name="Qiancizhan.QiancizhanDesktop.main" />
+      <shortenClasspath name="NONE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.potato.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Qiancizhan:QiancizhanDesktop [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/QiancizhanDesktop" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Qiancizhan:QiancizhanKernel [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/QiancizhanKernel" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [build]" />
+      <item itemvalue="Gradle.Qiancizhan:QiancizhanKernel [build]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Gradle.Qiancizhan:QiancizhanKernel [build]" />
+        <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [build]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ed868a30-07a5-4880-abeb-eb5d1936a3e5" name="Changes" comment="" />
+      <created>1690804831104</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1690804831104</updated>
+      <workItem from="1690804832137" duration="42000" />
+      <workItem from="1690804886190" duration="318000" />
+      <workItem from="1690805207496" duration="3000" />
+      <workItem from="1690805230226" duration="1646000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>
