@@ -11,9 +11,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 导出PDF
+ */
 public class PDFExport
 {
-    private String docHead = """
+    final private String docHead = """
             \\documentclass[UTF-8]{article}
                         
             \\usepackage{ctex}
@@ -25,23 +28,29 @@ public class PDFExport
             \\begin{document}
             	\\textsf{英语单词单}由\\textit{千词斩}生成于\\today
             """;
-    private String tableHead = """
+    final private String tableHead = """
             	\\begin{longtable}{c|p{%scm}|c|p{%scm}}
             		序号 & 单词 & 词性 & 汉义\\\\
             """;
-    private String cell = """
+    final private String cell = """
             \\hline        %s& %s& %s& %s \\\\
             """;
-    private String tableTail = """
+    final private String tableTail = """
             \\end{longtable}
             """;
-    private String docTail = "\\end{document}";
+    final private String docTail = "\\end{document}";
 
     private boolean isDetailed;
     private List<Word> wordList;
     private File sourceFile;
     private BufferedWriter writer;
 
+    /**
+     * 导出PDF文件
+     *
+     * @param file           需要导出的单词本文件
+     * @param isDetailNeeded 是否需要导出详细信息
+     */
     @SneakyThrows
     public PDFExport(File file, boolean isDetailNeeded)
     {
@@ -53,13 +62,20 @@ public class PDFExport
 
         if (!sourceFile.exists())
         {
-            sourceFile.createNewFile();
+            if (!sourceFile.createNewFile())
+            {
+                // TODO log文件
+            }
         }
 
         this.wordList = parser.getWordList();
         this.isDetailed = isDetailNeeded;
     }
 
+    /**
+     * 智能输出，可以根据单词本单词的平均长度自动判断使用单行还是双行
+     * TODO 还没实现
+     */
     public void smartExport()
     {
         if (!isDetailed)
@@ -68,6 +84,12 @@ public class PDFExport
         }
     }
 
+    /**
+     * 不要求详细信息的输出
+     * TODO 还没写完
+     *
+     * @param columnNumber 输出表格的列数
+     */
     @SneakyThrows
     private void roughExport(int columnNumber)
     {
@@ -90,6 +112,10 @@ public class PDFExport
         outputProcess();
     }
 
+    /**
+     * 输出过程
+     * 这个方法用于将LaTeX输出为PDF
+     */
     @SneakyThrows
     private void outputProcess()
     {
@@ -113,6 +139,7 @@ public class PDFExport
     /**
      * 这个方法通过一个Process监视lualatex的编译信息
      * 它的意义在于，Process会占用线程，从而保证输出pdf的方法能完整进行
+     *
      * @param process 需要监视的进程
      */
     @SneakyThrows

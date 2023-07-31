@@ -4,29 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed868a30-07a5-4880-abeb-eb5d1936a3e5" name="Changes" comment="哈哈哈哈哥们前后端分离成功了">
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="ed868a30-07a5-4880-abeb-eb5d1936a3e5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Chooser/FileChooser.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Chooser/FileChooser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/AboutDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/AboutDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/CreateFileDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/CreateFileDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/InsertWordDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/InsertWordDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/OneOfFourQuizDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/OneOfFourQuizDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/PreferencesDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/PreferencesDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/QuizPassedDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/QuizPassedDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/SpellQuizDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/SpellQuizDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Dialog/TranslateDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/TranslateDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/MainFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Memory.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Memory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/MenuBar/MainFrameMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/MenuBar/MainFrameMenuBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Panel/FunctionPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Panel/FunctionPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Panel/ListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Panel/ListPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/Panel/WordPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Panel/WordPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanKernel/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanKernel/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/ToolKit/PDFExport.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/ToolKit/PDFExport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Word/WordHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Word/WordHelper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,22 +67,22 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "dev",
     "jdk.selected.JAVA_MODULE": "17",
+    "last_opened_file_path": "D:/qiancizhan-java/QiancizhanDesktop",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.kotlinCompiler",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Kotlin.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.potato.Main" />
       <module name="Qiancizhan.QiancizhanDesktop.main" />
@@ -135,50 +119,6 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="Qiancizhan:QiancizhanDesktop [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/QiancizhanDesktop" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="Qiancizhan:QiancizhanDesktop [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/QiancizhanDesktop" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jar" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="Qiancizhan:QiancizhanKernel [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -201,18 +141,23 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="Main" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.potato.Main" />
+      <module name="Qiancizhan.QiancizhanDesktop.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [clean]" />
-      <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [jar]" />
       <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [build]" />
       <item itemvalue="Gradle.Qiancizhan:QiancizhanKernel [build]" />
+      <item itemvalue="Kotlin.Main" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.Main" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [jar]" />
-        <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [clean]" />
         <item itemvalue="Gradle.Qiancizhan:QiancizhanKernel [build]" />
         <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [build]" />
       </list>
@@ -229,23 +174,11 @@
       <workItem from="1690804832137" duration="42000" />
       <workItem from="1690804886190" duration="318000" />
       <workItem from="1690805207496" duration="3000" />
-      <workItem from="1690805230226" duration="2377000" />
-      <workItem from="1690813297090" duration="322000" />
-      <workItem from="1690813623254" duration="72000" />
-      <workItem from="1690813741396" duration="190000" />
-      <workItem from="1690813960289" duration="177000" />
-      <workItem from="1690814154524" duration="327000" />
-      <workItem from="1690814504794" duration="322000" />
+      <workItem from="1690805230226" duration="1646000" />
+      <workItem from="1690828179675" duration="96000" />
+      <workItem from="1690828307258" duration="499000" />
+      <workItem from="1690828819579" duration="484000" />
     </task>
-    <task id="LOCAL-00001" summary="哈哈哈哈哥们前后端分离成功了">
-      <option name="closed" value="true" />
-      <created>1690806959492</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1690806959492</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,7 +186,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="哈哈哈哈哥们前后端分离成功了" />
-    <option name="LAST_COMMIT_MESSAGE" value="哈哈哈哈哥们前后端分离成功了" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
