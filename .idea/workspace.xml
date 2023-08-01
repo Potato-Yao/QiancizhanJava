@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed868a30-07a5-4880-abeb-eb5d1936a3e5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+    <list default="true" id="ed868a30-07a5-4880-abeb-eb5d1936a3e5" name="Changes" comment="完善内核注释，现注释占比0.24">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/statistic.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NormalWordList/8月2日.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/ToolKit/PDFExport.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/ToolKit/PDFExport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Word/WordHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/Word/WordHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OutputList/OutputFile.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/OutputList/OutputFile.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/MenuBar/MainFrameMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/MenuBar/MainFrameMenuBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +69,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "dev",
     "jdk.selected.JAVA_MODULE": "17",
@@ -177,8 +180,17 @@
       <workItem from="1690805230226" duration="1646000" />
       <workItem from="1690828179675" duration="96000" />
       <workItem from="1690828307258" duration="499000" />
-      <workItem from="1690828819579" duration="484000" />
+      <workItem from="1690828819579" duration="2620000" />
     </task>
+    <task id="LOCAL-00001" summary="完善内核注释，现注释占比0.24">
+      <option name="closed" value="true" />
+      <created>1690829775821</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1690829775821</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,6 +198,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="完善内核注释，现注释占比0.24" />
+    <option name="LAST_COMMIT_MESSAGE" value="完善内核注释，现注释占比0.24" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -171,6 +171,8 @@ public class MainFrameMenuBar extends JMenuBar
 
     private void transformItemAction()
     {
+        // FIXME  有问题
+        // 如对...印象深刻被截取成了对+space
         List<Integer> indexList = new ArrayList<>();
         List<Word> transNeededList = new ArrayList<>();
         AutoManager manager = new AutoManager(Memory.chosenWordListFile);
