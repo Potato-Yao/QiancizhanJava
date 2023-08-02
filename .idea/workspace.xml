@@ -4,15 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed868a30-07a5-4880-abeb-eb5d1936a3e5" name="Changes" comment="完善内核注释，现注释占比0.24">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/statistic.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NormalWordList/8月2日.db" afterDir="false" />
+    <list default="true" id="ed868a30-07a5-4880-abeb-eb5d1936a3e5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/QuizDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/test/java/DialogTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QiancizhanKernel/src/main/java/com/potato/ToolKit/QuizInformation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OutputList/OutputFile.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/OutputList/OutputFile.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/MenuBar/MainFrameMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/MenuBar/MainFrameMenuBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NormalWordList/test2.db" beforeDir="false" afterPath="$PROJECT_DIR$/NormalWordList/test2.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/OneOfFourQuizDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/OneOfFourQuizDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/QuizPassedDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/QuizPassedDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/SpellQuizDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/QiancizhanDesktop/src/main/java/com/potato/GUI/Dialog/SpellQuizDialog.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +42,15 @@
         </projects_view>
       </state>
     </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -78,10 +88,10 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "project.kotlinCompiler",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.14941406",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -144,6 +154,16 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="DialogTest.QuizDialogTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Qiancizhan.QiancizhanDesktop.test" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DialogTest" />
+      <option name="METHOD_NAME" value="QuizDialogTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.potato.Main" />
       <module name="Qiancizhan.QiancizhanDesktop.main" />
@@ -155,11 +175,13 @@
       <item itemvalue="Application.Main" />
       <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [build]" />
       <item itemvalue="Gradle.Qiancizhan:QiancizhanKernel [build]" />
+      <item itemvalue="JUnit.DialogTest.QuizDialogTest" />
       <item itemvalue="Kotlin.Main" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Kotlin.Main" />
+        <item itemvalue="JUnit.DialogTest.QuizDialogTest" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Gradle.Qiancizhan:QiancizhanKernel [build]" />
         <item itemvalue="Gradle.Qiancizhan:QiancizhanDesktop [build]" />
@@ -199,7 +221,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="完善内核注释，现注释占比0.24" />
-    <option name="LAST_COMMIT_MESSAGE" value="完善内核注释，现注释占比0.24" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -2,19 +2,24 @@ package com.potato.GUI.Dialog;
 
 import com.potato.GUI.Memory;
 import com.potato.Manager.AutoManager;
+import com.potato.ToolKit.QuizInformation;
 import com.potato.ToolKit.QuizMaker;
 import com.potato.Word.Word;
 import com.potato.Word.WordHelper;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class OneOfFourQuizDialog extends JDialog
+public class OneOfFourQuizDialog extends JDialog implements QuizDialog
 {
     private Random random;
     private AutoManager manager;
+    private QuizInformation information;
+    private double timeCost;
+    private double startTime;
 
     private QuizMaker maker;
     private int answerIndex;
@@ -41,11 +46,12 @@ public class OneOfFourQuizDialog extends JDialog
     public OneOfFourQuizDialog(JFrame owner)
     {
         setLayout(new BorderLayout());
-        setTitle("四选一测验");
+        setTitle("四选一测试");
         setSize(new Dimension(500, 500));
         setLocationRelativeTo(null);
         random = new Random();
-        quizPassedDialog = new QuizPassedDialog(owner);
+        information = new QuizInformation();
+        quizPassedDialog = new QuizPassedDialog(owner, this);
 
         wordPanel.add(wordLabel);
 
@@ -95,16 +101,23 @@ public class OneOfFourQuizDialog extends JDialog
 
     private void buttonsAction(boolean correct, boolean killed)
     {
+        if (quizIndex == 0)
+        {
+            startTime = System.currentTimeMillis();
+        }
+
         if (!correct)
         {
             manager.modify(quizList.get(quizIndex), WordHelper.updateWord(quizList.get(quizIndex),
                     false, false));
+            information.onWrong();
 
             return;
         }
 
         manager.modify(quizList.get(quizIndex), WordHelper.updateWord(quizList.get(quizIndex),
                 true, killed));
+        information.onCorrect();
         quizIndex++;
         if (quizIndex < quizList.size())
         {
@@ -112,6 +125,8 @@ public class OneOfFourQuizDialog extends JDialog
         }
         else
         {
+            timeCost = (System.currentTimeMillis() - startTime) / 1000;
+            quizPassedDialog.initial();
             quizPassedDialog.setVisible(true);
             setVisible(false);
             quizIndex = 0;
@@ -146,5 +161,23 @@ public class OneOfFourQuizDialog extends JDialog
         while (result.equals(word));
 
         return result;
+    }
+
+    @Override
+    public ArrayList<Integer> getStatistic()
+    {
+        return information.getStatistic();
+    }
+
+    @Override
+    public String getDialogName()
+    {
+        return getTitle();
+    }
+
+    @Override
+    public double getTimeCost()
+    {
+        return timeCost;
     }
 }

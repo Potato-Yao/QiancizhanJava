@@ -2,6 +2,7 @@ package com.potato.GUI.Dialog;
 
 import com.potato.GUI.Memory;
 import com.potato.Manager.AutoManager;
+import com.potato.ToolKit.QuizInformation;
 import com.potato.ToolKit.QuizMaker;
 import com.potato.Word.Word;
 import com.potato.Word.WordHelper;
@@ -13,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class SpellQuizDialog extends JDialog
+public class SpellQuizDialog extends JDialog implements QuizDialog
 {
     private JLabel meaningLabel;
     private JPanel buttonPanel;
@@ -21,6 +22,9 @@ public class SpellQuizDialog extends JDialog
     private JButton confirmButton;
     private JButton promptButton;
 
+    private double startTime;
+    private double timeCost;
+    private QuizInformation information;
     private QuizPassedDialog quizPassedDialog;
     private QuizMaker maker;
     private List<Word> quizList;
@@ -40,7 +44,8 @@ public class SpellQuizDialog extends JDialog
         meaningLabel = new JLabel();
         buttonPanel = new JPanel();
         answerField = new JTextField();
-        quizPassedDialog = new QuizPassedDialog(owner);
+        information = new QuizInformation();
+        quizPassedDialog = new QuizPassedDialog(owner, this);
         confirmButton = new JButton("确定");
         promptButton = new JButton("提示");
 
@@ -70,6 +75,24 @@ public class SpellQuizDialog extends JDialog
         setQuiz();
     }
 
+    @Override
+    public String getDialogName()
+    {
+        return getTitle();
+    }
+
+    @Override
+    public ArrayList<Integer> getStatistic()
+    {
+        return information.getStatistic();
+    }
+
+    @Override
+    public double getTimeCost()
+    {
+        return timeCost;
+    }
+
     /**
      * confirmButtonAction是confirmButton的动作
      * 若题目没有遍历完，则点击确定按钮应当展示下一题
@@ -77,16 +100,23 @@ public class SpellQuizDialog extends JDialog
      */
     private void confirmButtonAction()
     {
+        if (quizIndex == 0)
+        {
+            startTime = System.currentTimeMillis();
+        }
+
         if (!quizList.get(quizIndex).getWordName()
                 .equals(answerField.getText()))
         {
             Word word = WordHelper.updateWord(quizList.get(quizIndex), false, false);
             manager.modify(quizList.get(quizIndex), word);
+            information.onWrong();
             return;
         }
 
         Word word = WordHelper.updateWord(quizList.get(quizIndex), true, false);
         manager.modify(quizList.get(quizIndex), word);
+        information.onCorrect();
         quizIndex++;
 
         if (quizIndex < quizList.size())
@@ -95,6 +125,8 @@ public class SpellQuizDialog extends JDialog
         }
         else
         {
+            timeCost = (System.currentTimeMillis() - startTime) / 1000;
+            quizPassedDialog.initial();
             quizPassedDialog.setVisible(true);
             quizIndex = 0;
             manager.push();
