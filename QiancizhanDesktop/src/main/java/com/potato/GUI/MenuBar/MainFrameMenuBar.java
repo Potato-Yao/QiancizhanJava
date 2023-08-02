@@ -9,11 +9,15 @@ import com.potato.GUI.Dialog.TranslateDialog;
 import com.potato.GUI.Memory;
 import com.potato.GUI.Panel.FunctionPanel;
 import com.potato.Manager.AutoManager;
+import com.potato.OCRUtil.OCRReader;
+import com.potato.ToolKit.DatabaseToolKit;
+import com.potato.ToolKit.FileToolKit;
 import com.potato.ToolKit.PDFExport;
 import com.potato.Word.Word;
 import com.potato.Word.WordHelper;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.*;
 
 public class MainFrameMenuBar extends JMenuBar
@@ -100,8 +104,9 @@ public class MainFrameMenuBar extends JMenuBar
             }
         });
 
+        ocrItem.addActionListener(e -> OCRItemAction());
+
         exportExcelItem.setEnabled(false);
-        ocrItem.setEnabled(false);
         excelItem.setEnabled(false);
 
         editMenu.add(insertWordItem);
@@ -158,6 +163,37 @@ public class MainFrameMenuBar extends JMenuBar
         add(translateMenu);
         add(settingMenu);
         add(helpMenu);
+    }
+
+    private void OCRItemAction()
+    {
+        fileChooser.showOpenDialog(null);
+        File image = fileChooser.getSelectedFile();
+        OCRReader reader = new OCRReader();
+        List<Word> wordList = reader.recognizeWordList(image);
+
+        String name = FileToolKit.getNameWithoutExtension(image);
+        File database = new File(Config.normalWordListPath, name + ".db");
+
+        System.out.println("1");
+        System.out.println(wordList);
+        if (!DatabaseToolKit.createInitialedDatabase(database, Config.getDatabaseType()))
+        {
+            // TODO log
+        }
+        else
+        {
+            AutoManager manager = new AutoManager(database);
+
+            for (Word w : wordList)
+            {
+                manager.insert(w);
+            }
+            manager.push();
+
+            Memory.setChosenWordListFile(database);
+            Memory.globalRefresh();
+        }
     }
 
     /**

@@ -26,6 +26,15 @@ public class FileToolKit
         return extension;
     }
 
+    public static String getNameWithoutExtension(File file)
+    {
+        String name = file.getName();
+        String extension = getExtensionName(file);
+        name = name.substring(0, name.length() - extension.length() - 1);
+
+        return name;
+    }
+
     /**
      * 将文件转换成字符串
      * @param file 需要转换的文件
