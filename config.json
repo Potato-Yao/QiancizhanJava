@@ -11,5 +11,8 @@
     "ocr_secret_key": "",
     "database_type": "SQLite",
     "author": "千词斩",
-    "title": "英语单词单"
+    "title": "英语单词单",
+    "version1": "1.0.1b",
+    "version2": "1.0.1b",
+    "version3": ""
 }

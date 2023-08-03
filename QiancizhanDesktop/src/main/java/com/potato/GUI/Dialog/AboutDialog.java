@@ -1,5 +1,6 @@
 package com.potato.GUI.Dialog;
 
+import com.potato.Config;
 import lombok.SneakyThrows;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ public class AboutDialog extends JDialog
 {
     private JPanel aboutPanel = new JPanel();
     private JLabel aboutLabel = new JLabel();
+    private JTextArea linkArea = new JTextArea();
     private JLabel logoLabel = new JLabel();
     private JButton okButton = new JButton("确定");
 
@@ -21,8 +23,11 @@ public class AboutDialog extends JDialog
         super(owner, "关于我们", true);
         setResizable(false);
 
+        linkArea.setText("开源地址：https://github.com/Potato-Yao/QiancizhanJava");
+        linkArea.setEditable(false);
         aboutPanel.setLayout(new GridLayout(2, 1));
 
+        add(linkArea, BorderLayout.NORTH);
         add(aboutPanel, BorderLayout.CENTER);
         add(okButton, BorderLayout.SOUTH);
 
@@ -44,12 +49,12 @@ public class AboutDialog extends JDialog
     @SneakyThrows
     private String getAboutText()
     {
-        StringBuilder version = new StringBuilder();
-        version.append("<html><h3>此应用由碳烤黄蜂、chuan_zhi开发</h3>");
-        version.append("<br><h3>开源地址：https://github.com/Potato-Yao/Qiancizhan2</h3>");
-        version.append("<br><h3>版本");
-
-        version.append("1.0.0b");
+        StringBuilder about = new StringBuilder();
+        about.append("<html><h3>千词斩由碳烤黄蜂、chuan_zhi开发</h3>");
+        about.append("<br><h3>内核版本：");
+        about.append(Config.version1);
+        about.append("<br><h3>桌面界面版本：");
+        about.append(Config.version2);
 
 //        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 //        DocumentBuilder builder = factory.newDocumentBuilder();
@@ -69,8 +74,8 @@ public class AboutDialog extends JDialog
 //            }
 //        }
 
-        version.append("</h3></html>");
+        about.append("</h3></html>");
 
-        return version.toString();
+        return about.toString();
     }
 }

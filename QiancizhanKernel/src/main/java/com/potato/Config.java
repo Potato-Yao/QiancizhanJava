@@ -59,6 +59,15 @@ public class Config
     @Option(keyName = "title", type = OptionType.NORMAL, meaning = "PDF标题")
     public static String title;  // PDF输出标题
 
+    @Option(keyName = "version1", type = OptionType.ADVANCE, meaning = "内核版本")
+    public static String version1;  // 版本代码1，代表内核版本
+
+    @Option(keyName = "version2", type = OptionType.ADVANCE, meaning = "桌面界面版本")
+    public static String version2;  // 版本代码2，代表桌面界面版本
+
+    @Option(keyName = "version3", type = OptionType.ADVANCE, meaning = "安卓界面版本")
+    public static String version3;  // 版本代码1，代表安卓界面版本
+
     private static JSONObject jsonObject;
     private static File configFile;
 

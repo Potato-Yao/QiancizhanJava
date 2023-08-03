@@ -172,16 +172,33 @@ public class MainFrameMenuBar extends JMenuBar
         OCRReader reader = new OCRReader();
         List<Word> wordList = reader.recognizeWordList(image);
 
-        String name = FileToolKit.getNameWithoutExtension(image);
-        File database = new File(Config.normalWordListPath, name + ".db");
+        if (Memory.mode == 0)
+        {
+            String name = FileToolKit.getNameWithoutExtension(image);
+            File database = new File(Config.normalWordListPath, name + ".db");
 
-        if (!DatabaseToolKit.createInitialedDatabase(database, Config.getDatabaseType()))
-        {
-            // TODO log
+            if (!DatabaseToolKit.createInitialedDatabase(database, Config.getDatabaseType()))
+            {
+                // TODO log
+            }
+            else
+            {
+                AutoManager manager = new AutoManager(database);
+
+                for (Word w : wordList)
+                {
+                    WordHelper.autoWordClass(w);
+                    manager.insert(w);
+                }
+                manager.push();
+
+                Memory.setChosenWordListFile(database);
+                Memory.globalRefresh();
+            }
         }
-        else
+        else if (Memory.mode == 1)
         {
-            AutoManager manager = new AutoManager(database);
+            AutoManager manager = new AutoManager(Memory.chosenWordListFile);
 
             for (Word w : wordList)
             {
@@ -190,8 +207,7 @@ public class MainFrameMenuBar extends JMenuBar
             }
             manager.push();
 
-            Memory.setChosenWordListFile(database);
-            Memory.globalRefresh();
+            Memory.globalRefreshWithWordListSync();
         }
     }
 
