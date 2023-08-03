@@ -97,15 +97,13 @@ public class WordHelper
         for (Word w : words)
         {
             sourceText.append(w.getWordName());
-            sourceText.append("+++");
+            sourceText.append("\n");
         }
 
         String resultText = Translate.filter(translate
             .translate(sourceText.toString(), "en", "zh"));
-        String[] textList = resultText.split("\\+\\+\\+");
-        textList = Arrays.copyOfRange(textList, 0, textList.length - 1);  // 百度翻译结果的最后一项是\n，要把它截取掉
 
-        return textList;
+        return resultText.split("\n");
     }
 
     public static void autoWordClass(Word word)
