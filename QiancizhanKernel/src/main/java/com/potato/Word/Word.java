@@ -56,6 +56,11 @@ public class Word
         this.isKilled = builder.isKilled;
     }
 
+    public void setWordClass(WordClass wordClass)
+    {
+        this.wordClass = new WordClass[] { wordClass };
+    }
+
     /**
      * 获取是否已斩信息
      * @return 若已斩则返回1，反之返回0

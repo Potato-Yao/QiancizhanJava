@@ -10,6 +10,7 @@ public enum WordClass
     v,  // 动词
     adj,  // 形容词
     adv,  // 副词
+    phrase,  // 词组
     pron,  // 代词
     num,  // 数词
     art,  // 冠词
