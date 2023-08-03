@@ -133,7 +133,15 @@ public class WordHelper
 
         for (String s : suffix)
         {
-            String wordSuffix = wordText.substring(wordText.length() - s.length());
+            String wordSuffix = wordText;
+            try
+            {
+                wordSuffix = wordText.substring(wordText.length() - s.length());
+            }
+            catch (StringIndexOutOfBoundsException e)
+            {
+                // 无关紧要
+            }
 
             if (wordSuffix.equals(s))
             {

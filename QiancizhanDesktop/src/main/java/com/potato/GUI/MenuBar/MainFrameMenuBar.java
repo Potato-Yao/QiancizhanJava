@@ -175,8 +175,6 @@ public class MainFrameMenuBar extends JMenuBar
         String name = FileToolKit.getNameWithoutExtension(image);
         File database = new File(Config.normalWordListPath, name + ".db");
 
-        System.out.println("1");
-        System.out.println(wordList);
         if (!DatabaseToolKit.createInitialedDatabase(database, Config.getDatabaseType()))
         {
             // TODO log
@@ -187,6 +185,7 @@ public class MainFrameMenuBar extends JMenuBar
 
             for (Word w : wordList)
             {
+                WordHelper.autoWordClass(w);
                 manager.insert(w);
             }
             manager.push();

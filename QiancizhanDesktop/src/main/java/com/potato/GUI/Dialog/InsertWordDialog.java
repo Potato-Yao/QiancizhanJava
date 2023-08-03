@@ -5,6 +5,7 @@ import com.potato.Manager.AutoManager;
 import com.potato.Translate.Translate;
 import com.potato.Word.Word;
 import com.potato.Word.WordClass;
+import com.potato.Word.WordHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -125,7 +126,7 @@ public class InsertWordDialog extends JDialog
 
         // 假如单词信息不全，则不执行动作
         // 现在支持不输入汉义，由于MeaningField的默认值是""，因此即使不输入汉义也可以正常执行
-        if (wordName.equals(""))
+        if (wordName.isEmpty())
         {
             return;
         }
@@ -140,18 +141,20 @@ public class InsertWordDialog extends JDialog
             }
         }
 
-        // 如果没有选定词性，也不执行动作
-        if (wordClasses.size() == 0)
-        {
-            return;
-        }
-
         Word word = new Word.WordBuilder()
             .name(wordName)
-            .wordClass(wordClasses.toArray(new WordClass[0]))
             .meaning(wordMeaning)
             .lastReviewDate(LocalDate.now())
             .build();
+
+        if (wordClasses.isEmpty())
+        {
+            WordHelper.autoWordClass(word);
+        }
+        else
+        {
+            word.setWordClass(wordClasses.toArray(new WordClass[0]));
+        }
 
         // 判断是插入还是修改模式，从而确定执行的动作
         if (insideMode == 0)

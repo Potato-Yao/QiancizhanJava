@@ -56,6 +56,11 @@ public class Word
         this.isKilled = builder.isKilled;
     }
 
+    public void setWordClass(WordClass[] wordClass)
+    {
+        this.wordClass = wordClass;
+    }
+
     public void setWordClass(WordClass wordClass)
     {
         this.wordClass = new WordClass[] { wordClass };
