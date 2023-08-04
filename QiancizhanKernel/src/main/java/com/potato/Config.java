@@ -6,12 +6,10 @@ import com.potato.ToolKit.FileToolKit;
 import lombok.Data;
 import lombok.SneakyThrows;
 
-import java.io.File;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.io.*;
+import java.lang.annotation.*;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 /**
@@ -70,6 +68,7 @@ public class Config
 
     private static JSONObject jsonObject;
     private static File configFile;
+    private static BufferedWriter writer;
 
     /**
      * 初始化
@@ -92,6 +91,8 @@ public class Config
                 field.set(null, jsonObject.getString(annotation.keyName()));  // 将其设置为配置文件中的对应值
             }
         }
+
+        writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
     }
 
     /**
@@ -116,6 +117,27 @@ public class Config
         }
 
         return options;
+    }
+
+    @SneakyThrows
+    public static void write()
+    {
+        jsonObject = new JSONObject();
+        Field[] fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
+
+        for (Field field : fields)
+        {
+            Option annotation = field.getAnnotation(Option.class);  // 获取每个变量的Option注解
+            // 观察可知，有几个并不表示配置选项的变量，它们没有Option注解，因此对应的annotation是null
+            // 若有注解并且type是normal，那么就是一般配置；反之若是type是advance就是高级配置
+            if (annotation != null)
+            {
+                jsonObject.put(annotation.keyName(), field.get(field));
+            }
+        }
+
+        writer.write(jsonObject.toJSONString());
+        writer.close();
     }
 
     /**
