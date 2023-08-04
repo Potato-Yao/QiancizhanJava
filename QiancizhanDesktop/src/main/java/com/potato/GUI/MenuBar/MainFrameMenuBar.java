@@ -2,14 +2,12 @@ package com.potato.GUI.MenuBar;
 
 import com.potato.Config;
 import com.potato.GUI.Chooser.FileChooser;
-import com.potato.GUI.Dialog.AboutDialog;
-import com.potato.GUI.Dialog.CreateFileDialog;
-import com.potato.GUI.Dialog.InsertWordDialog;
-import com.potato.GUI.Dialog.TranslateDialog;
+import com.potato.GUI.Dialog.*;
 import com.potato.GUI.Memory;
 import com.potato.GUI.Panel.FunctionPanel;
 import com.potato.Manager.AutoManager;
 import com.potato.OCRUtil.OCRReader;
+import com.potato.OptionType;
 import com.potato.ToolKit.DatabaseToolKit;
 import com.potato.ToolKit.FileToolKit;
 import com.potato.ToolKit.PDFExport;
@@ -60,6 +58,8 @@ public class MainFrameMenuBar extends JMenuBar
     private FileChooser fileChooser;
     private AboutDialog aboutDialog;
     private TranslateDialog translateDialog;
+    private SettingDialog preferencesDialog;
+    private SettingDialog advancedSettingDialog;
 
     /**
      * MainFrameMenuBar是主界面的菜单栏
@@ -73,6 +73,8 @@ public class MainFrameMenuBar extends JMenuBar
         fileChooser = new FileChooser();
         aboutDialog = new AboutDialog(owner);
         translateDialog = new TranslateDialog(owner);
+        preferencesDialog = new SettingDialog(owner, OptionType.NORMAL);
+        advancedSettingDialog = new SettingDialog(owner, OptionType.ADVANCE);
 
         fileMenu.add(createFileItem);
         fileMenu.add(openFileItem);
@@ -151,6 +153,9 @@ public class MainFrameMenuBar extends JMenuBar
 
         settingMenu.add(preferencesItem);
         settingMenu.add(advancedSettingItem);
+
+        preferencesItem.addActionListener(e -> preferencesDialog.setVisible(true));
+        advancedSettingItem.addActionListener(e -> advancedSettingDialog.setVisible(true));
 
         helpMenu.add(checkUpdateItem);
         helpMenu.add(aboutItem);

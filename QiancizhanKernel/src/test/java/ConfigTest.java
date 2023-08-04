@@ -1,4 +1,5 @@
 import com.potato.Config;
+import com.potato.OptionType;
 import org.junit.jupiter.api.Test;
 
 public class ConfigTest
@@ -7,9 +8,6 @@ public class ConfigTest
     public void test()
     {
         Config.initial();
-        System.out.println(Config.author);
-        Config.author = "aba";
-        Config.write();
-        System.out.println(Config.author);
+        Config.update("内核版本", "111");
     }
 }

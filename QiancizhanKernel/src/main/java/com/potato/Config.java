@@ -11,6 +11,7 @@ import java.lang.annotation.*;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 读取和写入配置文件的类
@@ -91,8 +92,6 @@ public class Config
                 field.set(null, jsonObject.getString(annotation.keyName()));  // 将其设置为配置文件中的对应值
             }
         }
-
-        writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
     }
 
     /**
@@ -100,6 +99,7 @@ public class Config
      * @param type 配置选项的类型
      * @return 配置选项，key是选项在config.json中对应的key，value是选项的含义（即在GUI中显示的文本）
      */
+    @SneakyThrows
     public static HashMap<String, String> getOptions(OptionType type)
     {
         HashMap<String, String> options = new HashMap<>();
@@ -112,7 +112,7 @@ public class Config
             // 若有注解并且type是normal，那么就是一般配置；反之若是type是advance就是高级配置
             if (annotation != null && annotation.type() == type)
             {
-                options.put(annotation.keyName(), annotation.meaning());
+                options.put(annotation.meaning(), field.get(field).toString());
             }
         }
 
@@ -122,6 +122,7 @@ public class Config
     @SneakyThrows
     public static void write()
     {
+        writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
         jsonObject = new JSONObject();
         Field[] fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
 
@@ -138,6 +139,25 @@ public class Config
 
         writer.write(jsonObject.toJSONString());
         writer.close();
+    }
+
+    @SneakyThrows
+    public static void update(String meaning, String value)
+    {
+        Field[] fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
+
+        for (Field field : fields)
+        {
+            Option annotation = field.getAnnotation(Option.class);  // 获取每个变量的Option注解
+            // 观察可知，有几个并不表示配置选项的变量，它们没有Option注解，因此对应的annotation是null
+            // 若有注解并且type是normal，那么就是一般配置；反之若是type是advance就是高级配置
+            if (annotation != null && annotation.meaning().equals(meaning))
+            {
+                field.set(null, value);
+            }
+        }
+
+        write();
     }
 
     /**
