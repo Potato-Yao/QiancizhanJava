@@ -5,9 +5,11 @@ import com.baidu.aip.ocr.AipOcr
 import com.potato.Config
 import com.potato.Word.Word
 import com.potato.Word.Word.WordBuilder
-import com.potato.Word.WordHelper
 import java.io.File
 
+/**
+ * OCRReader用于图像识别
+ */
 class OCRReader
 {
     private var APP_ID: String? = null
@@ -18,6 +20,7 @@ class OCRReader
 
     init
     {
+        // 设置APP_ID、APP_KEY和APP_SECRET_KEY
         if (Config.ocrAppId == "" || Config.ocrAppKey == "" || Config.ocrSecretKey == "")
         {
             APP_ID = "35339593"
@@ -31,47 +34,72 @@ class OCRReader
             APP_SECRET_KEY = Config.ocrSecretKey
         }
         client = AipOcr(APP_ID, APP_KEY, APP_SECRET_KEY)
-        options = HashMap()
-        options["recognize_granularity"] = "big"
-        options["language_type"] = "ENG"
-        options["detect_direction"] = "false"
-        options["detect_language"] = "false"
-        options["vertexes_location"] = "false"
-        options["probability"] = "true"
-        options["paragraph"] = "false"
+        options = HashMap()  // 设置
+        options["recognize_granularity"] = "big"  // 识别粒度
+        options["language_type"] = "ENG"  // 识别语言
+        options["detect_direction"] = "false"  // 是否给出文字方向
+        options["detect_language"] = "false"  // 是否给出文字语言
+        options["vertexes_location"] = "false"  // 是否给出顶点位置
+        options["probability"] = "true"  // 是否给出置信度
+        options["paragraph"] = "false"  // 是否按照段落分开
     }
 
-    fun recognizeWordList(image: File): List<Word>
-    {
-        val wordList = recognizeImage(image)
-//        val meaningList = WordHelper.transWords(wordList)
-//        for (i in wordList.indices)
-//        {
-//            wordList[i].meaning = meaningList[i]
-//        }
-        return wordList
-    }
+    /**
+     * 将图像识别为单词列表
+     * 这里专门抽象出一个方法是便于后期添加功能
+     * @param image 传入的图像
+     */
+    fun recognizeWordList(image: File) = recognizeImage(image)
 
+    /**
+     * 将图像识别为单词列表
+     * @param image 传入的图像
+     * @return 识别出的单词列表
+     */
     private fun recognizeImage(image: File): List<Word>
     {
         val wordList: MutableList<Word> = ArrayList()
-        val res = client.general(image.absolutePath, options)
-        val result = res.toString(2)
-        val jsonObject = JSONObject.parse(result)
+        val res = client.general(image.absolutePath, options)  // 获取image的识别结果
+        val result = res.toString(2)  // JSONObject -> String
+        val jsonObject = JSONObject.parse(result)  // String -> FastJSONObject
         val words = jsonObject.getJSONArray("words_result")
+
         for (i in words.indices)
         {
             val wordResult = words.getJSONObject(i)
-            var wordName = wordResult.getString("words")
-            val j = wordName.indexOf("/")
-            if (j != -1)
-            {
-                wordName = wordName.substring(0, j)
-            }
-            wordName = wordName.replace("[^a-zA-Z]".toRegex(), "")
+            var wordName = wordResult.getString("words")  // 获取单词
+
+            wordName = filterString(wordName)  // 过滤识别内容
+
             val word = WordBuilder().name(wordName).build()
             wordList.add(word)
         }
         return wordList
+    }
+
+    /**
+     * 过滤文本
+     * 识别出的结构可能包含一些奇怪的字符，该函数可以将其全部过滤掉
+     * @param text 需要过滤的文本
+     * @return 过滤后的文本
+     */
+    private fun filterString(text: String): String
+    {
+        var result = text
+
+        // 对于英语书，识别结果会包括单词后的音标
+        // 因此识别后就会有/音标/的部分
+        // 这里将其全部去掉
+        val j = text.indexOf("/")
+        if (j != -1)
+        {
+            result = text.substring(0, j)
+        }
+
+        // 这里去掉其它不是英语字母的文本
+        // 之所以不在这里去除音标，是因为音标也被识别为了英语字母
+        result = result.replace("[^a-zA-Z]".toRegex(), "")
+
+        return result
     }
 }
