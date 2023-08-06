@@ -1,22 +1,25 @@
 package com.potato.Parser;
 
+import com.potato.ToolKit.History;
+import com.potato.ToolKit.Info;
 import com.potato.Word.Word;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import static com.potato.ToolKit.FileToolKit.*;
 
 import java.io.File;
 import java.util.List;
 
+@Data
 public abstract class Parser
 {
-    @Getter
     private final File file;
 
-    @Getter
-    @Setter
     private List<Word> wordList;  // 储存单词的文件
+
+    private Info info;  // 单词集信息
+
+    private List<History> historyList;  // 单词集的历史信息
 
     /**
      * Parser用于解析储存单词本的文件
@@ -40,3 +43,4 @@ public abstract class Parser
      */
     protected abstract void parser();
 }
+
