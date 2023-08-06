@@ -40,6 +40,7 @@ public class MainFrameMenuBar extends JMenuBar
     private JMenuItem deleteWordItem = new JMenuItem("删除单词");
     private JMenuItem modifyWordItem = new JMenuItem("修改单词");
     private JMenuItem transformItem = new JMenuItem("补全单词汉义");
+    private JMenuItem infoItem = new JMenuItem("单词本信息");
 
     // 翻译菜单
     private JMenuItem transItem = new JMenuItem("打开翻译器");
@@ -60,6 +61,7 @@ public class MainFrameMenuBar extends JMenuBar
     private TranslateDialog translateDialog;
     private SettingDialog preferencesDialog;
     private SettingDialog advancedSettingDialog;
+    private WordListInfoDialog wordListInfoDialog;
 
     /**
      * MainFrameMenuBar是主界面的菜单栏
@@ -75,6 +77,7 @@ public class MainFrameMenuBar extends JMenuBar
         translateDialog = new TranslateDialog(owner);
         preferencesDialog = new SettingDialog(owner, OptionType.NORMAL);
         advancedSettingDialog = new SettingDialog(owner, OptionType.ADVANCE);
+        wordListInfoDialog = new WordListInfoDialog(owner);
 
         fileMenu.add(createFileItem);
         fileMenu.add(openFileItem);
@@ -115,6 +118,7 @@ public class MainFrameMenuBar extends JMenuBar
         editMenu.add(deleteWordItem);
         editMenu.add(modifyWordItem);
         editMenu.add(transformItem);
+        editMenu.add(infoItem);
 
         insertWordItem.addActionListener(e ->
         {
@@ -145,6 +149,16 @@ public class MainFrameMenuBar extends JMenuBar
                 return;
             }
             transformItemAction();
+        });
+
+        infoItem.addActionListener(e ->
+        {
+            if (Memory.mode == 0)  // 0是选择单词本目录模式，此时不做任何动作
+            {
+                return;
+            }
+            wordListInfoDialog.refresh(Memory.chosenWordListFile);
+            wordListInfoDialog.setVisible(true);
         });
 
         translateMenu.add(transItem);

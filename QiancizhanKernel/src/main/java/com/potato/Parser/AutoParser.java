@@ -32,5 +32,7 @@ public class AutoParser extends Parser
         }
         assert parser != null;
         setWordList(parser.getWordList());
+        setInfo(parser.getInfo());
+        setHistoryList(parser.getHistoryList());
     }
 }

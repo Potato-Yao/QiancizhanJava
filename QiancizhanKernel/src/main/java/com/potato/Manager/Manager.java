@@ -1,14 +1,27 @@
 package com.potato.Manager;
 
+import com.potato.ToolKit.History;
+import com.potato.ToolKit.Info;
 import com.potato.Word.Word;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import static com.potato.ToolKit.FileToolKit.getExtensionName;
 
 public abstract class Manager
 {
-    private File file;
+    private File file;  // TODO 后期评估下这些东西是不是可以删掉
+
+    Info info;
+    List<Word> insertWords = new ArrayList<>();
+    List<Word> deleteWords = new ArrayList<>();
+    HashMap<Word, Word> modifyWords = new HashMap<>();
+    List<History> insertHistory = new ArrayList<>();
+    List<History> deleteHistory = new ArrayList<>();
+    HashMap<History, History> modifyHistory = new HashMap<>();
 
     /**
      * Manager用于对单词本文件进行增、删、改的操作
@@ -31,20 +44,66 @@ public abstract class Manager
      * 向this.file插入单词
      * @param word 需要插入的单词
      */
-    public abstract void insert(Word word);
+    public void insert(Word word)
+    {
+        insertWords.add(word);
+    }
 
     /**
      * 从this.file删除单词
      * @param word 需要删除的单词
      */
-    public abstract void delete(Word word);
+    public void delete(Word word)
+    {
+        deleteWords.add(word);
+    }
 
     /**
      * 在this.file中替换单词
      * @param from 需要替换的单词
      * @param to 替换后的单词
      */
-    public abstract void modify(Word from, Word to);
+    public void modify(Word from, Word to)
+    {
+        modifyWords.put(from, to);
+    }
+
+    /**
+     * 向this.file插入测试记录
+     * @param history 测试记录
+     */
+    public void insert(History history)
+    {
+        insertHistory.add(history);
+    }
+
+    /**
+     * 从this.file删除记录
+     * @param history 需要删除的记录
+     */
+    public void delete(History history)
+    {
+        deleteHistory.add(history);
+    }
+
+    /**
+     * 在this.file中替换记录
+     * @param from 需要替换的记录
+     * @param to 替换后的记录
+     */
+    public void modify(History from, History to)
+    {
+        modifyHistory.put(from, to);
+    }
+
+    /**
+     * 在this.file中替换信息
+     * @param info 替换后的信息
+     */
+    public void modify(Info info)
+    {
+        this.info = info;
+    }
 
     /**
      * 将所有修改写入this.file

@@ -91,6 +91,24 @@ public class DatabaseToolKit
         Statement statement = connection.createStatement();
         statement.executeUpdate(sql);  // 执行创建表的命令
 
+        sql = """
+            create table History
+            (
+                DATE TEXT,
+                SUM_COUNT INT,
+                CORRECT_COUNT INT,
+                WRONG_COUNT INT,
+                TIME_COST INT
+            )
+        """;
+
+        statement = connection.createStatement();
+        statement.executeUpdate(sql);  // 执行创建表的命令
+
+        sql = "create table Info(LANGUAGE TEXT)";
+        statement = connection.createStatement();
+        statement.executeUpdate(sql);  // 执行创建表的命令
+
         return true;
     }
 }

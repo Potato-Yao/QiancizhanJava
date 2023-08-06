@@ -1,6 +1,8 @@
 package com.potato.Manager;
 
 import com.potato.ToolKit.FileToolKit;
+import com.potato.ToolKit.History;
+import com.potato.ToolKit.Info;
 import com.potato.Word.Word;
 
 import java.io.File;
@@ -63,5 +65,50 @@ public class AutoManager extends Manager
     public void push()
     {
         manager.push();
+    }
+
+    /**
+     * 向this.file插入测试记录
+     *
+     * @param history 测试记录
+     */
+    @Override
+    public void insert(History history)
+    {
+        manager.insert(history);
+    }
+
+    /**
+     * 从this.file删除记录
+     *
+     * @param history 需要删除的记录
+     */
+    @Override
+    public void delete(History history)
+    {
+        manager.delete(history);
+    }
+
+    /**
+     * 在this.file中替换记录
+     *
+     * @param from 需要替换的记录
+     * @param to   替换后的记录
+     */
+    @Override
+    public void modify(History from, History to)
+    {
+        manager.modify(from, to);
+    }
+
+    /**
+     * 在this.file中替换信息
+     *
+     * @param info 替换后的信息
+     */
+    @Override
+    public void modify(Info info)
+    {
+        manager.modify(info);
     }
 }
