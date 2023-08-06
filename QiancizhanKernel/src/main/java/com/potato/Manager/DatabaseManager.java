@@ -1,8 +1,9 @@
 package com.potato.Manager;
 
 import com.potato.Config;
+import com.potato.ToolKit.History;
+import com.potato.ToolKit.Info;
 import com.potato.Word.Word;
-import com.potato.Word.WordClass;
 import com.potato.Word.WordHelper;
 import lombok.SneakyThrows;
 
@@ -20,11 +21,7 @@ import static com.potato.ToolKit.DatabaseToolKit.*;
 
 public class DatabaseManager extends Manager
 {
-    private List<Word> insertWords = new ArrayList<>();
-    private List<Word> deleteWords = new ArrayList<>();
-    private HashMap<Word, Word> modifyWords = new HashMap<>();
     private Connection connection;
-    private Config config;
 
     /**
      * DatabaseManager用于对数据库单词本文件进行增、删、改的操作
@@ -34,40 +31,7 @@ public class DatabaseManager extends Manager
     {
         super(file, "db");
 
-        config = new Config();
-        connection = getConnection(file, config.getDatabaseType());
-    }
-
-    /**
-     * 向数据库中插入单词
-     * @param word 需要插入的单词
-     */
-    @SneakyThrows
-    @Override
-    public void insert(Word word)
-    {
-        insertWords.add(word);
-    }
-
-    /**
-     * 从数据库删除单词
-     * @param word 需要删除的单词
-     */
-    @Override
-    public void delete(Word word)
-    {
-        deleteWords.add(word);
-    }
-
-    /**
-     * 在数据库中替换单词
-     * @param from 需要替换的单词
-     * @param to   替换后的单词
-     */
-    @Override
-    public void modify(Word from, Word to)
-    {
-        modifyWords.put(from, to);
+        connection = getConnection(file, Config.getDatabaseType());
     }
 
     /**
@@ -81,20 +45,21 @@ public class DatabaseManager extends Manager
             "REVIEW_COUNT, REVIEW_DATE, CORRECT_COUNT, WRONG_COUNT, IS_KILLED) " +
             "VALUES(?,?,?,?,?,?,?,?)";
 
+        PreparedStatement wordInsertStatement = connection.prepareStatement(insertSQL);
+
         // FIXME 这种实现效率太低，必须进行优化！
         for (Word w : insertWords)
         {
-            PreparedStatement statement = connection.prepareStatement(insertSQL);
-            statement.setString(1, w.getWordName());
-            statement.setString(2, WordHelper.writeToString(w.getWordClass()));
-            statement.setString(3, w.getMeaning());
-            statement.setInt(4, w.getReviewCount());
-            statement.setString(5, w.getLastReviewDate()
+            wordInsertStatement.setString(1, w.getWordName());
+            wordInsertStatement.setString(2, WordHelper.writeToString(w.getWordClass()));
+            wordInsertStatement.setString(3, w.getMeaning());
+            wordInsertStatement.setInt(4, w.getReviewCount());
+            wordInsertStatement.setString(5, w.getLastReviewDate()
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            statement.setInt(6, w.getCorrectCount());
-            statement.setInt(7, w.getWrongCount());
-            statement.setInt(8, w.getIntIsKilled());
-            statement.executeUpdate();
+            wordInsertStatement.setInt(6, w.getCorrectCount());
+            wordInsertStatement.setInt(7, w.getWrongCount());
+            wordInsertStatement.setInt(8, w.getIntIsKilled());
+            wordInsertStatement.executeUpdate();
         }
 
         for (Word w : deleteWords)
@@ -117,6 +82,48 @@ public class DatabaseManager extends Manager
                 + ", WRONG_COUNT =" + to.getWrongCount()
                 + ", IS_KILLED =" + to.getIntIsKilled()
                 + " where WORD_NAME ='" + w.getKey().getWordName() + "'";
+
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(modifySQL);
+        }
+
+        if (info != null)
+        {
+            String modifySQL = "update Info set LANGUAGE ='" + info.language() + "'";
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(modifySQL);
+        }
+
+        insertSQL = "insert into History(DATE, SUM_COUNT, CORRECT_COUNT, WRONG_COUNT, TIME_COST) values(?, ?, ?, ?, ?)";
+        PreparedStatement historyInsertStatement = connection.prepareStatement(insertSQL);
+
+        for (History h : insertHistory)
+        {
+            historyInsertStatement.setString(1, h.date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            historyInsertStatement.setInt(2, h.sumCount());
+            historyInsertStatement.setInt(3, h.correctCount());
+            historyInsertStatement.setInt(4, h.wrongCount());
+            historyInsertStatement.setInt(5, h.timeCost());
+            historyInsertStatement.executeUpdate();
+        }
+
+        for (History h : deleteHistory)
+        {
+            String deleteSQL = "delete from History where DATE = '" + h.date() + "' and TIME_COST = "
+                    + h.timeCost();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(deleteSQL);
+        }
+
+        for (Map.Entry<History, History> h : modifyHistory.entrySet())
+        {
+            History to = h.getValue();
+            String modifySQL = "update History set DATE = '" + to.date()
+                    + "', SUM_COUNT = " + to.sumCount()
+                    + ", CORRECT_COUNT = " + to.correctCount()
+                    + ", WRONG_COUNT = " + to.wrongCount()
+                    + ", TIME_COST = " + to.timeCost()
+                    + " where DATE ='" + h.getKey().date() + "' and TIME_COST = " + h.getKey().timeCost();
 
             Statement statement = connection.createStatement();
             statement.executeUpdate(modifySQL);
