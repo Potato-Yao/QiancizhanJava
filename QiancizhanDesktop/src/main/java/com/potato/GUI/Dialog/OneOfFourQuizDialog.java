@@ -2,6 +2,7 @@ package com.potato.GUI.Dialog;
 
 import com.potato.GUI.Memory;
 import com.potato.Manager.AutoManager;
+import com.potato.ToolKit.History;
 import com.potato.ToolKit.QuizInformation;
 import com.potato.ToolKit.QuizMaker;
 import com.potato.Word.Word;
@@ -9,6 +10,7 @@ import com.potato.Word.WordHelper;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -125,14 +127,26 @@ public class OneOfFourQuizDialog extends JDialog implements QuizDialog
         }
         else
         {
-            timeCost = (System.currentTimeMillis() - startTime) / 1000;
+            double cost = System.currentTimeMillis() - startTime;
+            timeCost = cost / 1000;
             quizPassedDialog.initial();
             quizPassedDialog.setVisible(true);
             setVisible(false);
             quizIndex = 0;
+
+            addHistory(cost);
             manager.push();
+            setVisible(false);
             Memory.globalRefreshWithWordListSync();
         }
+    }
+
+    private void addHistory(double cost)
+    {
+        List<Integer> data = information.getStatistic();
+        History history = new History(LocalDate.now(), data.get(0),
+                data.get(1), data.get(2), (int)cost);
+        manager.insert(history);
     }
 
     private void setQuiz()
