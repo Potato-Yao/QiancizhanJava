@@ -57,6 +57,7 @@ public class SettingDialog extends JDialog
                 Config.update(pair.get(o), ((JTextArea) o).getText());
             }
         }
+        Config.write();
 
         setVisible(false);
     }

@@ -20,8 +20,6 @@ public class Translate
 
     public Translate()
     {
-        Config config = new Config();
-
         if (Objects.equals(Config.baiduAppId, "") || Objects.equals(Config.baiduAppKey, ""))
         {
             this.APP_ID = "20200826000552094";
