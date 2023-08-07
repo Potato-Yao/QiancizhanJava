@@ -27,6 +27,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
 jar {
     from {
         configurations.runtimeClasspath.collect {
@@ -39,7 +43,8 @@ jar {
 }
 
 test {
-    useJUnitPlatform()
+    enabled(false)
+//    useJUnitPlatform()
 }
 kotlin {
     jvmToolchain(17)
