@@ -8,6 +8,8 @@ public class ConfigTest
     public void test()
     {
         Config.initial();
-        Config.update("内核版本", "111");
+//        Config.update("内核版本", "111");
+        System.out.println(Config.getOptions(OptionType.NORMAL));
     }
+
 }

@@ -11,7 +11,6 @@ import java.lang.annotation.*;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 读取和写入配置文件的类
@@ -70,94 +69,149 @@ public class Config
     private static JSONObject jsonObject;
     private static File configFile;
     private static BufferedWriter writer;
+    private static Field[] fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
 
     /**
      * 初始化
+     * 从config.json中读取配置信息
      */
-    @SneakyThrows
     public static void initial()
     {
         configFile = new File(".", "config.json");  // 获取配置文件
         String configString = FileToolKit.fileToString(configFile);
         jsonObject = JSONObject.parse(configString);
 
-        Field[] fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
-        for (Field field : fields)
+        runner(new ConfigAction()
         {
-            Option annotation = field.getAnnotation(Option.class);  // 获取每个变量的Option注解
-            // 观察可知，有几个并不表示配置选项的变量，它们没有Option注解，因此对应的annotation是null
-            if (annotation != null)
+            @SneakyThrows
+            @Override
+            public void interAction(Field field, Option option)
             {
-                field.setAccessible(true);
-                field.set(null, jsonObject.getString(annotation.keyName()));  // 将其设置为配置文件中的对应值
+                field.setAccessible(true);  // 将变量设为可访问的
+                field.set(null, jsonObject.getString(option.keyName()));  // 将其设置为配置文件中的对应值
             }
-        }
+
+            @Override
+            public void outerAction() {}
+
+            @Override
+            public boolean condition(Field field, Option option)
+            {
+                return true;
+            }
+        });
     }
 
     /**
-     * 获取指定类型的配置选项
-     * @param type 配置选项的类型
-     * @return 配置选项，key是选项在config.json中对应的key，value是选项的含义（即在GUI中显示的文本）
+     * 获取指定类型的配置
+     * @param type 配置类型
+     * @return 该类型的配置
      */
-    @SneakyThrows
     public static HashMap<String, String> getOptions(OptionType type)
     {
         HashMap<String, String> options = new HashMap<>();
-        Field[] fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
 
-        for (Field field : fields)
+        runner(new ConfigAction()
         {
-            Option annotation = field.getAnnotation(Option.class);  // 获取每个变量的Option注解
-            // 观察可知，有几个并不表示配置选项的变量，它们没有Option注解，因此对应的annotation是null
-            // 若有注解并且type是normal，那么就是一般配置；反之若是type是advance就是高级配置
-            if (annotation != null && annotation.type() == type)
+            @SneakyThrows
+            @Override
+            public void interAction(Field field, Option option)
             {
-                options.put(annotation.meaning(), field.get(field).toString());
+                options.put(option.meaning(), field.get(field).toString());
             }
-        }
+
+            @Override
+            public void outerAction() {}
+
+            @Override
+            public boolean condition(Field field, Option option)
+            {
+                return option.type() == type;
+            }
+        });
 
         return options;
     }
 
+    /**
+     * 将所有与配置相关的变量写入配置文件
+     */
     @SneakyThrows
     public static void write()
     {
-        writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
+        writer = new BufferedWriter(new OutputStreamWriter(
+            new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
         jsonObject = new JSONObject();
-        Field[] fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
 
-        for (Field field : fields)
+        runner(new ConfigAction()
         {
-            Option annotation = field.getAnnotation(Option.class);  // 获取每个变量的Option注解
-            // 观察可知，有几个并不表示配置选项的变量，它们没有Option注解，因此对应的annotation是null
-            // 若有注解并且type是normal，那么就是一般配置；反之若是type是advance就是高级配置
-            if (annotation != null)
+            @SneakyThrows
+            @Override
+            public void interAction(Field field, Option option)
             {
-                jsonObject.put(annotation.keyName(), field.get(field));
+                jsonObject.put(option.keyName(), field.get(field));  // config.json的键是keyName，值就是变量的值
             }
-        }
 
-        writer.write(jsonObject.toJSONString());
-        writer.close();
+            @SneakyThrows
+            @Override
+            public void outerAction()
+            {
+                writer.write(jsonObject.toJSONString());
+                writer.close();
+            }
+
+            @Override
+            public boolean condition(Field field, Option option)
+            {
+                return true;
+            }
+        });
     }
 
-    @SneakyThrows
+    /**
+     * 根据配置的汉义给配置变量赋值
+     * @param meaning 需要修改的配置变量的汉义
+     * @param value 赋的值
+     */
     public static void update(String meaning, String value)
     {
-        Field[] fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
-
-        for (Field field : fields)
+        runner(new ConfigAction()
         {
-            Option annotation = field.getAnnotation(Option.class);  // 获取每个变量的Option注解
-            // 观察可知，有几个并不表示配置选项的变量，它们没有Option注解，因此对应的annotation是null
-            // 若有注解并且type是normal，那么就是一般配置；反之若是type是advance就是高级配置
-            if (annotation != null && annotation.meaning().equals(meaning))
+            @SneakyThrows
+            @Override
+            public void interAction(Field field, Option option)
             {
                 field.set(null, value);
             }
-        }
 
-        write();
+            @Override
+            public void outerAction() {}
+
+            @Override
+            public boolean condition(Field field, Option option)
+            {
+                return option.meaning().equals(meaning);
+            }
+        });
+    }
+
+    /**
+     * runner用于遍历Config下的每一个与配置相关的变量并执行指定的动作
+     * @param action 需要执行的动作
+     */
+    private static void runner(ConfigAction action)
+    {
+        for (Field field : fields)
+        {
+            Option annotation = field.getAnnotation(Option.class);  // 获取每个变量的Option注解
+            // 观察可知，有几个并不表示配置选项的变量，它们没有Option注解，因此对应的annotation是null
+            // 若有注解并且type是normal，那么就是一般配置；反之若是type是advance就是高级配置
+            if (annotation != null && action.condition(field, annotation))  // 第一个条件是筛选配置变量，第二个条件是自定义的
+            {
+                action.interAction(field, annotation);  // 执行内层动作
+            }
+        }
+        action.outerAction();  // 执行外层动作
     }
 
     /**
@@ -177,6 +231,33 @@ public class Config
     {
         return new File(standWordListPath, "Word.db");
     }
+}
+
+/**
+ * runner需要执行的动作
+ */
+interface ConfigAction
+{
+    /**
+     * 循环内层的动作，即每一个变量都要执行的动作
+     * @param field 变量
+     * @param option 变量对应的注解
+     */
+    void interAction(Field field, Option option);
+
+    /**
+     * 循环外层的动作，这是函数最后执行的动作
+     * 如果没有需要执行的动作，在实现中留空即可
+     */
+    void outerAction();
+
+    /**
+     * 循环内层的筛选条件，用其来筛选满足条件的变量
+     * 如果没有额外的筛选条件，那么在实现中让此函数return true即可
+     * @param field 变量
+     * @param option 变量对应的注解
+     */
+    boolean condition(Field field, Option option);
 }
 
 /**
