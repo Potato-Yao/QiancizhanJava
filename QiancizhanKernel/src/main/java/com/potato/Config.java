@@ -90,15 +90,6 @@ public class Config
                 field.setAccessible(true);  // 将变量设为可访问的
                 field.set(null, jsonObject.getString(option.keyName()));  // 将其设置为配置文件中的对应值
             }
-
-            @Override
-            public void outerAction() {}
-
-            @Override
-            public boolean condition(Field field, Option option)
-            {
-                return true;
-            }
         });
     }
 
@@ -119,9 +110,6 @@ public class Config
             {
                 options.put(option.meaning(), field.get(field).toString());
             }
-
-            @Override
-            public void outerAction() {}
 
             @Override
             public boolean condition(Field field, Option option)
@@ -159,12 +147,6 @@ public class Config
                 writer.write(jsonObject.toJSONString());
                 writer.close();
             }
-
-            @Override
-            public boolean condition(Field field, Option option)
-            {
-                return true;
-            }
         });
     }
 
@@ -183,9 +165,6 @@ public class Config
             {
                 field.set(null, value);
             }
-
-            @Override
-            public void outerAction() {}
 
             @Override
             public boolean condition(Field field, Option option)
@@ -236,28 +215,30 @@ public class Config
 /**
  * runner需要执行的动作
  */
-interface ConfigAction
+abstract class ConfigAction
 {
     /**
      * 循环内层的动作，即每一个变量都要执行的动作
+     * 很显然这个方法是必须要实现的，否则使用runner没有意义
      * @param field 变量
      * @param option 变量对应的注解
      */
-    void interAction(Field field, Option option);
+    abstract void interAction(Field field, Option option);
 
     /**
      * 循环外层的动作，这是函数最后执行的动作
-     * 如果没有需要执行的动作，在实现中留空即可
      */
-    void outerAction();
+    void outerAction() {}
 
     /**
      * 循环内层的筛选条件，用其来筛选满足条件的变量
-     * 如果没有额外的筛选条件，那么在实现中让此函数return true即可
      * @param field 变量
      * @param option 变量对应的注解
      */
-    boolean condition(Field field, Option option);
+    boolean condition(Field field, Option option)
+    {
+        return true;
+    }
 }
 
 /**
