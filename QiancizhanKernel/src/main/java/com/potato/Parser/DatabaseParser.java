@@ -18,11 +18,15 @@ import java.util.List;
 
 import static com.potato.ToolKit.DatabaseToolKit.*;
 
+/**
+ * DatabaseParser是数据库类型单词本的解析器
+ */
 public class DatabaseParser extends Parser
 {
     /**
      * DatabaseParser用于解析储存单词本的数据库文件
      * 即后缀名是db的文件
+     *
      * @param file 需要解析的数据库文件
      */
     public DatabaseParser(File file)
@@ -47,7 +51,7 @@ public class DatabaseParser extends Parser
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);  // 获取查询结果
 
-        // 遍历查询结果，一一创建对象
+        // 遍历查询结果，获取所有单词
         // 看看遍历能不能优化一下
         while (resultSet.next())
         {
@@ -66,11 +70,13 @@ public class DatabaseParser extends Parser
         }
         setWordList(wordList);
 
+        // 获取数据库信息
         query = "select * from Info";
         resultSet = statement.executeQuery(query);
         info = new Info(resultSet.getString(1));
         setInfo(info);
 
+        // 获取历史记录
         query = "select * from History";
         resultSet = statement.executeQuery(query);
 

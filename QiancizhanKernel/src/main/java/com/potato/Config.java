@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 /**
- * 读取和写入配置文件的类
+ * Config是用于读取和写入配置文件的类
  */
 @Data
 public class Config
@@ -69,7 +69,7 @@ public class Config
     private static JSONObject jsonObject;
     private static File configFile;
     private static BufferedWriter writer;
-    private static Field[] fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
+    private static Field[] fields;  // 获取Config的所有变量
 
     /**
      * 初始化
@@ -78,8 +78,9 @@ public class Config
     public static void initial()
     {
         configFile = new File(".", "config.json");  // 获取配置文件
-        String configString = FileToolKit.fileToString(configFile);
+        String configString = FileToolKit.fileToString(configFile);  // fastjson没有直接解析文件的方法，所以先转成字符串
         jsonObject = JSONObject.parse(configString);
+        fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
 
         runner(new ConfigAction()
         {
@@ -88,15 +89,17 @@ public class Config
             public void interAction(Field field, Option option)
             {
                 field.setAccessible(true);  // 将变量设为可访问的
-                field.set(null, jsonObject.getString(option.keyName()));  // 将其设置为配置文件中的对应值
+                field.set(null, jsonObject.getString(option.keyName()));  // 将变量设置为配置文件中的对应值
             }
         });
     }
 
     /**
      * 获取指定类型的配置
+     *
      * @param type 配置类型
-     * @return 该类型的配置
+     * @return 所有指定类型的配置
+     * TODO 该方法应当一般化
      */
     public static HashMap<String, String> getOptions(OptionType type)
     {
@@ -108,13 +111,13 @@ public class Config
             @Override
             public void interAction(Field field, Option option)
             {
-                options.put(option.meaning(), field.get(field).toString());
+                options.put(option.meaning(), field.get(field).toString());  // 将配置的汉义和值加入哈希表
             }
 
             @Override
             public boolean condition(Field field, Option option)
             {
-                return option.type() == type;
+                return option.type() == type;  // 匹配类型一致的变量
             }
         });
 
@@ -128,7 +131,7 @@ public class Config
     public static void write()
     {
         writer = new BufferedWriter(new OutputStreamWriter(
-            new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
+                new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
         jsonObject = new JSONObject();
 
         runner(new ConfigAction()
@@ -151,9 +154,11 @@ public class Config
     }
 
     /**
+     * TODO 应当与getOptions()一同被一般化
      * 根据配置的汉义给配置变量赋值
+     *
      * @param meaning 需要修改的配置变量的汉义
-     * @param value 赋的值
+     * @param value   赋的值
      */
     public static void update(String meaning, String value)
     {
@@ -163,19 +168,20 @@ public class Config
             @Override
             public void interAction(Field field, Option option)
             {
-                field.set(null, value);
+                field.set(null, value);  // 将值赋给变量
             }
 
             @Override
             public boolean condition(Field field, Option option)
             {
-                return option.meaning().equals(meaning);
+                return option.meaning().equals(meaning);  // 筛选条件是变量的汉义匹配
             }
         });
     }
 
     /**
      * runner用于遍历Config下的每一个与配置相关的变量并执行指定的动作
+     *
      * @param action 需要执行的动作
      */
     private static void runner(ConfigAction action)
@@ -184,7 +190,7 @@ public class Config
         {
             Option annotation = field.getAnnotation(Option.class);  // 获取每个变量的Option注解
             // 观察可知，有几个并不表示配置选项的变量，它们没有Option注解，因此对应的annotation是null
-            // 若有注解并且type是normal，那么就是一般配置；反之若是type是advance就是高级配置
+            // 若有注解并且type是OptionType.NORMAL，那么就是一般配置；反之若是type是OptionType.ADVANCE就是高级配置
             if (annotation != null && action.condition(field, annotation))  // 第一个条件是筛选配置变量，第二个条件是自定义的
             {
                 action.interAction(field, annotation);  // 执行内层动作
@@ -195,6 +201,7 @@ public class Config
 
     /**
      * 获取databaseType变量，Config中用String储存该变量
+     *
      * @return databaseType
      */
     public static DatabaseType getDatabaseType()
@@ -204,6 +211,7 @@ public class Config
 
     /**
      * 获取标准单词本文件
+     *
      * @return 标准单词本文件
      */
     public static File getStandingWordListFile()
@@ -220,7 +228,8 @@ abstract class ConfigAction
     /**
      * 循环内层的动作，即每一个变量都要执行的动作
      * 很显然这个方法是必须要实现的，否则使用runner没有意义
-     * @param field 变量
+     *
+     * @param field  变量
      * @param option 变量对应的注解
      */
     abstract void interAction(Field field, Option option);
@@ -228,11 +237,14 @@ abstract class ConfigAction
     /**
      * 循环外层的动作，这是函数最后执行的动作
      */
-    void outerAction() {}
+    void outerAction()
+    {
+    }
 
     /**
      * 循环内层的筛选条件，用其来筛选满足条件的变量
-     * @param field 变量
+     *
+     * @param field  变量
      * @param option 变量对应的注解
      */
     boolean condition(Field field, Option option)
@@ -251,9 +263,7 @@ abstract class ConfigAction
     /* 配置的名称，此量应当与config.json中的key一致 */
     String keyName();
 
-    /*
-    * 配置的类型
-    */
+    /* 配置的类型 */
     OptionType type() default OptionType.NORMAL;
 
     /* 配置的含义，这个项用在设置GUI上 */

@@ -8,11 +8,11 @@ import com.potato.Word.Word.WordBuilder
 import java.io.File
 
 /**
- * OCRReader用于图像识别
+ * OCRReader用于识别图像中的单词
  */
 class OCRReader
 {
-    private var APP_ID: String? = null
+    private var APP_ID: String? = null  // 百度OCR的APP_ID，下二者同
     private var APP_KEY: String? = null
     private var APP_SECRET_KEY: String? = null
     private val client: AipOcr
@@ -20,7 +20,7 @@ class OCRReader
 
     init
     {
-        // 设置APP_ID、APP_KEY和APP_SECRET_KEY
+        // 设置APP_ID、APP_KEY和APP_SECRET_KEY，如果用户没有自定义那就用我的
         if (Config.ocrAppId == "" || Config.ocrAppKey == "" || Config.ocrSecretKey == "")
         {
             APP_ID = "35339593"
@@ -33,6 +33,7 @@ class OCRReader
             APP_KEY = Config.ocrAppKey
             APP_SECRET_KEY = Config.ocrSecretKey
         }
+
         client = AipOcr(APP_ID, APP_KEY, APP_SECRET_KEY)
         options = HashMap()  // 设置
         options["recognize_granularity"] = "big"  // 识别粒度
@@ -46,13 +47,15 @@ class OCRReader
 
     /**
      * 将图像识别为单词列表
-     * 这里专门抽象出一个方法是便于后期添加功能
+     * 这里专门提取出一个方法是便于后期添加功能
+     *
      * @param image 传入的图像
      */
     fun recognizeWordList(image: File) = recognizeImage(image)
 
     /**
      * 将图像识别为单词列表
+     *
      * @param image 传入的图像
      * @return 识别出的单词列表
      */
@@ -80,6 +83,7 @@ class OCRReader
     /**
      * 过滤文本
      * 识别出的结构可能包含一些奇怪的字符，该函数可以将其全部过滤掉
+     *
      * @param text 需要过滤的文本
      * @return 过滤后的文本
      */

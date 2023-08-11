@@ -6,11 +6,15 @@ import java.io.File;
 
 import static com.potato.ToolKit.FileToolKit.*;
 
+/**
+ * AutoParser用于自动根据传入单词本文件类型选择对应的解析器解析单词本
+ */
 public class AutoParser extends Parser
 {
     /**
      * AutoParser用于根据文件类型生成对应的解析储存单词本文件的Parser
      * 如对于db，生成DatabaseParser
+     *
      * @param file 需要解析的文件
      */
     public AutoParser(File file)

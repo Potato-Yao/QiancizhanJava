@@ -26,7 +26,8 @@ class QuizInformation
 
     /**
      * 返回计数的统计结果
-     * 返回的ArrayList中第一项是测试的总数，第二项是测试的正确个数，第三项是测试的错误个数，最后一项是正确率（百分比）
+     *
+     * @return 返回的ArrayList中第一项是测试的总数，第二项是测试的正确个数，第三项是测试的错误个数，最后一项是正确率（百分比）
      */
     fun getStatistic(): ArrayList<Int>
     {

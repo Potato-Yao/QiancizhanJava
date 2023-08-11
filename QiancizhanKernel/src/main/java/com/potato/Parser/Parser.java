@@ -10,6 +10,9 @@ import static com.potato.ToolKit.FileToolKit.*;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Parser用于将单词本文件解析为单词列表的解析器
+ */
 @Data
 public abstract class Parser
 {

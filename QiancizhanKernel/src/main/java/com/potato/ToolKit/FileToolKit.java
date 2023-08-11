@@ -14,6 +14,7 @@ public class FileToolKit
     /**
      * 获取文件的扩展名
      * 如文件xxx.db，返回的结果是db
+     *
      * @param file 需要获取的文件
      * @return 获取的扩展名
      */
@@ -26,17 +27,20 @@ public class FileToolKit
         return extension;
     }
 
+    /**
+     * 获取没有扩展名的文件名
+     *
+     * @param file 需要获取文件名的文件
+     * @return 传入文件的文件名
+     */
     public static String getNameWithoutExtension(File file)
     {
-        String name = file.getName();
-        String extension = getExtensionName(file);
-        name = name.substring(0, name.length() - extension.length() - 1);
-
-        return name;
+        return file.getName().substring(0, file.getName().lastIndexOf("."));
     }
 
     /**
      * 将文件转换成字符串
+     *
      * @param file 需要转换的文件
      * @return 转换后的字符串
      */
@@ -54,8 +58,8 @@ public class FileToolKit
             String readData = String.valueOf(buf, 0, numRead);
             builder.append(readData);
         }
-
         reader.close();
+
         return builder.toString();
     }
 }

@@ -14,6 +14,7 @@ public class DatabaseToolKit
 {
     /**
      * 根据数据库类型获取相应JDBC标识
+     *
      * @param databaseType 数据库类型
      * @return JDBC标识
      */
@@ -32,7 +33,8 @@ public class DatabaseToolKit
 
     /**
      * 根据文件和数据库类型快速获得一个Connection
-     * @param file 连接的文件
+     *
+     * @param file         连接的文件
      * @param databaseType 所用数据库类型
      * @return 使用该数据库连接该文件的Connection
      */
@@ -57,7 +59,8 @@ public class DatabaseToolKit
     /**
      * 创建一个初始化好的数据库
      * 即创建一个数据库后新建一个叫做WordList的table
-     * @param file 需要创建的数据库文件
+     *
+     * @param file         需要创建的数据库文件
      * @param databaseType 数据库类型
      * @return 是否创建成功，若成功则返回true
      */
@@ -91,24 +94,27 @@ public class DatabaseToolKit
         Statement statement = connection.createStatement();
         statement.executeUpdate(sql);  // 执行创建表的命令
 
+        // 创建历史记录表
         sql = """
-            create table History
-            (
-                DATE TEXT,
-                SUM_COUNT INT,
-                CORRECT_COUNT INT,
-                WRONG_COUNT INT,
-                TIME_COST INT
-            )
-        """;
+                    create table History
+                    (
+                        DATE TEXT,
+                        SUM_COUNT INT,
+                        CORRECT_COUNT INT,
+                        WRONG_COUNT INT,
+                        TIME_COST INT
+                    )
+                """;
 
         statement = connection.createStatement();
         statement.executeUpdate(sql);  // 执行创建表的命令
 
+        // 创建单词本信息表
         sql = "create table Info(LANGUAGE TEXT)";
         statement = connection.createStatement();
         statement.executeUpdate(sql);  // 执行创建表的命令
 
+        // 顺利创建
         return true;
     }
 }

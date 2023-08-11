@@ -1,7 +1,7 @@
 package com.potato;
 
 /**
- * 选项的类型
+ * OptionType配置类型的枚举类
  */
 public enum OptionType
 {

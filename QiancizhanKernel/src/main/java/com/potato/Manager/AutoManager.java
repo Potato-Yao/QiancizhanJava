@@ -7,6 +7,9 @@ import com.potato.Word.Word;
 
 import java.io.File;
 
+/**
+ * AutoManager用于自动根据指定单词本文件类型选择对应的管理器管理单词本
+ */
 public class AutoManager extends Manager
 {
     Manager manager;
@@ -14,7 +17,8 @@ public class AutoManager extends Manager
     /**
      * AutoManager用于对单词本文件进行增、删、改的操作
      * AutoManager可以自动识别文件类型并给出正确的管理器
-     * @param file      需要管理的单词本文件
+     *
+     * @param file 需要管理的单词本文件
      */
     public AutoManager(File file)
     {
@@ -29,6 +33,7 @@ public class AutoManager extends Manager
 
     /**
      * 向this.file插入单词
+     *
      * @param word 需要插入的单词
      */
     @Override
@@ -39,6 +44,7 @@ public class AutoManager extends Manager
 
     /**
      * 从this.file删除单词
+     *
      * @param word 需要删除的单词
      */
     @Override
@@ -49,6 +55,7 @@ public class AutoManager extends Manager
 
     /**
      * 在this.file中替换单词
+     *
      * @param from 需要替换的单词
      * @param to   替换后的单词
      */

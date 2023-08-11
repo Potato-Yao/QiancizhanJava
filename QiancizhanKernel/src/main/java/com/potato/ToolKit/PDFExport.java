@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 导出PDF
+ * PDFExport用于将单词列表导出为PDF
  */
 public class PDFExport
 {
-    final private String docHead = """
+    private final String docHead = """
             \\documentclass[UTF-8]{article}
                         
             \\usepackage{ctex}
@@ -28,17 +28,17 @@ public class PDFExport
             \\begin{document}
             	\\textsf{英语单词单}由\\textit{千词斩}生成于\\today
             """;
-    final private String tableHead = """
+    private final String tableHead = """
             	\\begin{longtable}{c|p{%scm}|c|p{%scm}}
             		序号 & 单词 & 词性 & 汉义\\\\
             """;
-    final private String cell = """
+    private final String cell = """
             \\hline        %s& %s& %s& %s \\\\
             """;
-    final private String tableTail = """
+    private final String tableTail = """
             \\end{longtable}
             """;
-    final private String docTail = "\\end{document}";
+    private final String docTail = "\\end{document}";
 
     private boolean isDetailed;
     private List<Word> wordList;
@@ -47,6 +47,8 @@ public class PDFExport
 
     /**
      * 导出PDF文件
+     * 这个功能是通过单词本 -> LaTeX -> PDF实现的，因此需要安装lualatex
+     * TODO 文件名应当自定义
      *
      * @param file           需要导出的单词本文件
      * @param isDetailNeeded 是否需要导出详细信息

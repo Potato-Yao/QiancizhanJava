@@ -1,7 +1,7 @@
 package com.potato.Word;
 
 /**
- * 英语单词的词性
+ * WordClass是英语单词词性的枚举类
  * 若该软件以后扩展到其它语言（如俄语没有介词，且有一个叫前置词的词性），则会写更一般化的WordClass
  */
 public enum WordClass

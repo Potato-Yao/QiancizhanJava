@@ -2,7 +2,6 @@ package com.potato.Manager;
 
 import com.potato.Config;
 import com.potato.ToolKit.History;
-import com.potato.ToolKit.Info;
 import com.potato.Word.Word;
 import com.potato.Word.WordHelper;
 import lombok.SneakyThrows;
@@ -12,20 +11,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.potato.ToolKit.DatabaseToolKit.*;
 
+/**
+ * DatabaseManager用于管理数据库类型的单词本文件
+ */
 public class DatabaseManager extends Manager
 {
     private Connection connection;
 
     /**
      * DatabaseManager用于对数据库单词本文件进行增、删、改的操作
-     * @param file      需要管理的单词本文件
+     *
+     * @param file 需要管理的单词本文件
      */
     public DatabaseManager(File file)
     {
@@ -41,9 +41,10 @@ public class DatabaseManager extends Manager
     @Override
     public void push()
     {
+        // 写入添加的单词
         String insertSQL = "insert into WordList(WORD_NAME, WORD_CLASS, MEANING, " +
-            "REVIEW_COUNT, REVIEW_DATE, CORRECT_COUNT, WRONG_COUNT, IS_KILLED) " +
-            "VALUES(?,?,?,?,?,?,?,?)";
+                "REVIEW_COUNT, REVIEW_DATE, CORRECT_COUNT, WRONG_COUNT, IS_KILLED) " +
+                "VALUES(?,?,?,?,?,?,?,?)";
 
         PreparedStatement wordInsertStatement = connection.prepareStatement(insertSQL);
 
@@ -55,13 +56,14 @@ public class DatabaseManager extends Manager
             wordInsertStatement.setString(3, w.getMeaning());
             wordInsertStatement.setInt(4, w.getReviewCount());
             wordInsertStatement.setString(5, w.getLastReviewDate()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             wordInsertStatement.setInt(6, w.getCorrectCount());
             wordInsertStatement.setInt(7, w.getWrongCount());
             wordInsertStatement.setInt(8, w.getIntIsKilled());
             wordInsertStatement.executeUpdate();
         }
 
+        // 写入删除的单词
         for (Word w : deleteWords)
         {
             String deleteSQL = "delete from WordList where WORD_NAME = '" + w.getWordName() + "'";
@@ -69,24 +71,26 @@ public class DatabaseManager extends Manager
             statement.executeUpdate(deleteSQL);
         }
 
+        // 写入修改的单词
         for (Map.Entry<Word, Word> w : modifyWords.entrySet())
         {
             Word to = w.getValue();
             String modifySQL = "update WordList set WORD_NAME ='" + to.getWordName()
-                + "', WORD_CLASS ='" + WordHelper.writeToString(to.getWordClass())
-                + "', MEANING ='" + to.getMeaning()
-                + "', REVIEW_COUNT =" + to.getReviewCount()
-                + ", REVIEW_DATE ='" + to.getLastReviewDate()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                + "', CORRECT_COUNT =" + to.getCorrectCount()
-                + ", WRONG_COUNT =" + to.getWrongCount()
-                + ", IS_KILLED =" + to.getIntIsKilled()
-                + " where WORD_NAME ='" + w.getKey().getWordName() + "'";
+                    + "', WORD_CLASS ='" + WordHelper.writeToString(to.getWordClass())
+                    + "', MEANING ='" + to.getMeaning()
+                    + "', REVIEW_COUNT =" + to.getReviewCount()
+                    + ", REVIEW_DATE ='" + to.getLastReviewDate()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                    + "', CORRECT_COUNT =" + to.getCorrectCount()
+                    + ", WRONG_COUNT =" + to.getWrongCount()
+                    + ", IS_KILLED =" + to.getIntIsKilled()
+                    + " where WORD_NAME ='" + w.getKey().getWordName() + "'";
 
             Statement statement = connection.createStatement();
             statement.executeUpdate(modifySQL);
         }
 
+        // 写入修改的单词本信息
         if (info != null)
         {
             String modifySQL = "update Info set LANGUAGE ='" + info.language() + "'";
@@ -94,6 +98,7 @@ public class DatabaseManager extends Manager
             statement.executeUpdate(modifySQL);
         }
 
+        // 写入修改的背诵历史信息
         insertSQL = "insert into History(DATE, SUM_COUNT, CORRECT_COUNT, WRONG_COUNT, TIME_COST) values(?, ?, ?, ?, ?)";
         PreparedStatement historyInsertStatement = connection.prepareStatement(insertSQL);
 

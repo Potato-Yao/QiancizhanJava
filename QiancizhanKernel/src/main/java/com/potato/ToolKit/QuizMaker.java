@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * 生成提问的单词列表
+ * QuizMaker用于生成提问的单词列表
  */
 public class QuizMaker
 {
@@ -16,6 +16,7 @@ public class QuizMaker
 
     /**
      * QuizMaker用于根据单词本生成测试
+     *
      * @param wordList 需要测试的单词本
      */
     public QuizMaker(List<Word> wordList)
@@ -25,12 +26,13 @@ public class QuizMaker
 
     /**
      * 随机测试
+     *
      * @return 随机测试的单词列表
      */
     public List<Word> randomQuizMaker()
     {
-        List<Word> quizList = new ArrayList<>();
-        List<Word> wordList = new ArrayList<>(words);
+        List<Word> quizList = new ArrayList<>();  // 测试的列表，即打乱后的列表
+        List<Word> wordList = new ArrayList<>(words);  // 未打乱的初始列表
 
         while (wordList.size() > 1)
         {

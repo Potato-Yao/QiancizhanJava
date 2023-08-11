@@ -6,24 +6,26 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * Word的工具类
+ * WordHelper是Word的工具类
  */
 public class WordHelper
 {
-    private static Map<WordClass, String[]> wordClasses = new HashMap<>();
+    private static Map<WordClass, String[]> wordClasses = new HashMap<>();  // 单词后缀，key是词性，value是词性对应的后缀
     private static final String[] ADJ = new String[]{"al", "able", "ible", "ed", "ful", "ish",
-        "ive", "ous", "some"};
-    private static final String[] V = new String[]{"fy", "ize"};
+        "ive", "ous", "some"};  // 常见的形容词后缀
+    private static final String[] V = new String[]{"fy", "ize"};  // 常见的动词后缀
     private static final String[] N = new String[]{"ance", "ee", "er", "ence", "ery", "hood",
-        "ion", "ism", "ite", "ity", "logy", "ment", "ness", "or", "ship", "th", "ure"};
-    private static final String[] ADV = new String[]{"ly", "wise"};
+        "ion", "ism", "ite", "ity", "logy", "ment", "ness", "or", "ship", "th", "ure"};  // 常见的名词后缀
+    private static final String[] ADV = new String[]{"ly", "wise"};  // 常见的副词后缀
 
     static
     {
         wordClasses.put(WordClass.adj, ADJ);
         wordClasses.put(WordClass.v, V);
         wordClasses.put(WordClass.adv, ADV);
-        wordClasses.put(WordClass.n, N);
+        // 因为默认词性就是名词，所以为了性能就不加名词了
+        // 如果以后有了比遍历更好的判断词性的算法，则可以把它加回来
+//        wordClasses.put(WordClass.n, N);
     }
 
     /**
@@ -106,14 +108,21 @@ public class WordHelper
         return resultText.split("\n");
     }
 
+    /**
+     * 自动给单词设置词性
+     *
+     * @param word 需要设置的词性的单词
+     */
     public static void autoWordClass(Word word)
     {
+        // 如果包含空格，那么就视为词组
         if (word.getWordName().contains(" "))
         {
             word.setWordClass(WordClass.phrase);
             return;
         }
 
+        // 遍历后缀的哈希表，若匹配则设置对应词性
         for (WordClass wordClass : wordClasses.keySet())
         {
             if (checkSuffix(word, wordClasses.get(wordClass)))
@@ -125,6 +134,13 @@ public class WordHelper
 
     }
 
+    /**
+     * 检查单词是否有匹配的后缀
+     *
+     * @param word 需要检查的单词
+     * @param suffix 后缀
+     * @return 若有匹配的后缀，则返回true
+     */
     private static boolean checkSuffix(Word word, String[] suffix)
     {
         String wordText = word.getWordName();
@@ -134,19 +150,20 @@ public class WordHelper
             String wordSuffix = wordText;
             try
             {
+                // 截取单词最后与后缀等长的部分
                 wordSuffix = wordText.substring(wordText.length() - s.length());
             }
             catch (StringIndexOutOfBoundsException e)
             {
-                // 无关紧要
+                // 出现这个错误是因为有可能后缀比单词长，因此它无关紧要，跳过即可
             }
 
+            // 如果后缀与单词最后等长的部分一致，就说明该单词匹配的后缀
             if (wordSuffix.equals(s))
             {
                 return true;
             }
         }
-
 
         return false;
     }
