@@ -16,8 +16,6 @@ import static com.potato.ToolKit.FileToolKit.getExtensionName;
  */
 public abstract class Manager
 {
-    private File file;  // TODO 后期评估下这些东西是不是可以删掉
-
     Info info;
     List<Word> insertWords = new ArrayList<>();
     List<Word> deleteWords = new ArrayList<>();
@@ -41,7 +39,6 @@ public abstract class Manager
         {
             throw new RuntimeException("文件类型错误");
         }
-        this.file = file;
     }
 
     /**

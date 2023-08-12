@@ -48,17 +48,16 @@ public class PDFExport
     /**
      * 导出PDF文件
      * 这个功能是通过单词本 -> LaTeX -> PDF实现的，因此需要安装lualatex
-     * TODO 文件名应当自定义
      *
      * @param file           需要导出的单词本文件
      * @param isDetailNeeded 是否需要导出详细信息
      */
     @SneakyThrows
-    public PDFExport(File file, boolean isDetailNeeded)
+    public PDFExport(File file, String outputName, boolean isDetailNeeded)
     {
         wordList = new ArrayList<>();
         AutoParser parser = new AutoParser(file);
-        sourceFile = new File(Config.outputFilePath, Config.outputFileName + ".tex");
+        sourceFile = new File(Config.outputFilePath, outputName + ".tex");
         writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(sourceFile, false), StandardCharsets.UTF_8));
 

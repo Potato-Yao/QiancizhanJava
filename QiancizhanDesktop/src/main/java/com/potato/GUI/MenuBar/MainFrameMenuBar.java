@@ -62,6 +62,7 @@ public class MainFrameMenuBar extends JMenuBar
     private SettingDialog preferencesDialog;
     private SettingDialog advancedSettingDialog;
     private WordListInfoDialog wordListInfoDialog;
+    private ExportFileDialog exportPDFDialog;
 
     /**
      * MainFrameMenuBar是主界面的菜单栏
@@ -78,6 +79,7 @@ public class MainFrameMenuBar extends JMenuBar
         preferencesDialog = new SettingDialog(owner, OptionType.NORMAL);
         advancedSettingDialog = new SettingDialog(owner, OptionType.ADVANCE);
         wordListInfoDialog = new WordListInfoDialog(owner);
+        exportPDFDialog = new ExportFileDialog(owner, "PDF");
 
         fileMenu.add(createFileItem);
         fileMenu.add(openFileItem);
@@ -102,7 +104,9 @@ public class MainFrameMenuBar extends JMenuBar
         {
             if (Memory.mode == 1)
             {
-                PDFExport export = new PDFExport(Memory.chosenWordListFile, false);
+                exportPDFDialog.setVisible(true);
+
+                PDFExport export = new PDFExport(Memory.chosenWordListFile, exportPDFDialog.getTitle(), false);
                 export.smartExport();
                 JOptionPane.showMessageDialog(null, "导出已完成",
                         "提示", JOptionPane.INFORMATION_MESSAGE);

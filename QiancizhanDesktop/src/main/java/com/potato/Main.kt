@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatDarkLaf
 import com.potato.GUI.MainFrame
 import lombok.SneakyThrows
 import java.awt.EventQueue
+import java.io.File
 import javax.swing.UIManager
 
 object Main
@@ -13,7 +14,7 @@ object Main
     fun main(args: Array<String>)
     {
         println("Hello world!")
-        Config.initial()
+        Config.initial(File(".", "config.json"))
         UIManager.setLookAndFeel(FlatDarkLaf())
         EventQueue.invokeLater {
             val mainFrame = MainFrame()

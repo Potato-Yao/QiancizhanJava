@@ -70,14 +70,11 @@
         </library>
       </libraries>
     </data-source>
-    <data-source source="LOCAL" name="4444" uuid="3a7fc35b-8e6d-4ab0-b38c-d4af435ffa13">
+    <data-source source="LOCAL" name="4444 [2]" uuid="3c93a84b-0b41-4aa4-8b0f-3f991e445ab0">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\qiancizhan-java\NormalWordList\4444.db</jdbc-url>
-      <jdbc-additional-properties>
-        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
-      </jdbc-additional-properties>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/NormalWordList/4444.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>

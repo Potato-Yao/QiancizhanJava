@@ -75,9 +75,9 @@ public class Config
      * 初始化
      * 从config.json中读取配置信息
      */
-    public static void initial()
+    public static void initial(File file)
     {
-        configFile = new File(".", "config.json");  // 获取配置文件
+        configFile = file;  // 获取配置文件
         String configString = FileToolKit.fileToString(configFile);  // fastjson没有直接解析文件的方法，所以先转成字符串
         jsonObject = JSONObject.parse(configString);
         fields = Config.class.getDeclaredFields();  // 获取Config的所有变量

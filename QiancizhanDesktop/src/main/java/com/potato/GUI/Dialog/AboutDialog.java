@@ -56,24 +56,6 @@ public class AboutDialog extends JDialog
         about.append("<br><h3>桌面界面版本：");
         about.append(Config.version2);
 
-//        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-//        DocumentBuilder builder = factory.newDocumentBuilder();
-//        File pom = new File(".", "pom.xml");
-//        Document document = builder.parse(pom);
-//        Element root = document.getDocumentElement();
-//        NodeList nodeList = root.getChildNodes();
-//
-//        for (int i = 0; i < nodeList.getLength(); i++)
-//        {
-//            Node child = nodeList.item(i);
-//
-//            if (child.getNodeName().equals("version"))
-//            {
-//                version.append(child.getTextContent());
-//                break;
-//            }
-//        }
-
         about.append("</h3></html>");
 
         return about.toString();
