@@ -147,9 +147,9 @@ public class Config
     @SneakyThrows
     public static void write()
     {
+        jsonObject = new JSONObject();
         writer = new BufferedWriter(new OutputStreamWriter(
             new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
-        jsonObject = new JSONObject();
 
         runner(new ConfigAction()
         {
@@ -214,6 +214,52 @@ public class Config
             }
         }
         action.outerAction();  // 执行外层动作
+    }
+
+    /**
+     * 写入初始化内容
+     */
+    @SneakyThrows
+    public static void writeInitial()
+    {
+        if (!configFile.exists())
+        {
+            if (configFile.createNewFile())
+            {
+                Log.i(Config.class.toString(), "配置文件创建成功");
+            }
+            else
+            {
+                Log.e(Config.class.toString(), "配置文件创建失败");
+            }
+        }
+
+        writer = new BufferedWriter(new OutputStreamWriter(
+            new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
+
+        String text = """
+            {
+                "language": "en",
+                "stand_wordlist_path": "./StandingWordList",
+                "normal_wordlist_path": "./NormalWordList",
+                "output_file_name": "OutputFile",
+                "output_file_path": "./OutputList",
+                "baidu_app_id": "",
+                "baidu_app_key": "",
+                "ocr_app_id": "",
+                "ocr_api_key": "",
+                "ocr_secret_key": "",
+                "database_type": "SQLite",
+                "author": "千词斩",
+                "title": "英语单词单",
+                "version1": "1.0.3b",
+                "version2": "1.0.1b",
+                "version3": "InDev"
+            }
+            """;
+
+        writer.write(text);
+        writer.close();
     }
 
     /**
