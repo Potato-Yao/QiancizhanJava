@@ -1,6 +1,7 @@
 package com.potato.ToolKit;
 
 import com.potato.Config;
+import com.potato.Log.Log;
 import com.potato.Parser.AutoParser;
 import com.potato.Word.Word;
 import com.potato.Word.WordHelper;
@@ -65,7 +66,7 @@ public class PDFExport
         {
             if (!sourceFile.createNewFile())
             {
-                // TODO log文件
+                Log.i(getClass().toString(), "创建tex源代码文件成功");
             }
         }
 

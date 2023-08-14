@@ -1,6 +1,9 @@
 package com.potato;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.potato.Log.ConsoleLogOutput;
+import com.potato.Log.Log;
+import com.potato.Log.LogOutput;
 import com.potato.ToolKit.DatabaseType;
 import com.potato.ToolKit.FileToolKit;
 import lombok.Data;
@@ -11,6 +14,7 @@ import java.lang.annotation.*;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Config是用于读取和写入配置文件的类
@@ -64,7 +68,7 @@ public class Config
     public static String version2;  // 版本代码2，代表桌面界面版本
 
     @Option(keyName = "version3", type = OptionType.ADVANCE, meaning = "安卓界面版本")
-    public static String version3;  // 版本代码1，代表安卓界面版本
+    public static String version3;  // 版本代码3，代表安卓界面版本
 
     private static JSONObject jsonObject;
     private static File configFile;
@@ -74,11 +78,16 @@ public class Config
     /**
      * 初始化
      * 从config.json中读取配置信息
+     *
+     * @param configFile 配置文件
+     * @param normalDir  一般单词本目录，如果为null则使用配置文件中的设置
+     * @param standDir   长期单词本目录，如果为null则使用配置文件中的设置
+     * @param logOutput  日志输出器，如果为null则使用终端输出器
      */
-    public static void initial(File file)
+    public static void initial(File configFile, File normalDir, File standDir, LogOutput logOutput)
     {
-        configFile = file;  // 获取配置文件
-        String configString = FileToolKit.fileToString(configFile);  // fastjson没有直接解析文件的方法，所以先转成字符串
+        Config.configFile = configFile;  // 获取配置文件
+        String configString = FileToolKit.fileToString(Config.configFile);  // fastjson没有直接解析文件的方法，所以先转成字符串
         jsonObject = JSONObject.parse(configString);
         fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
 
@@ -92,6 +101,14 @@ public class Config
                 field.set(null, jsonObject.getString(option.keyName()));  // 将变量设置为配置文件中的对应值
             }
         });
+
+        if (normalDir != null && standDir != null)
+        {
+            Config.normalWordListPath = normalDir.getPath();
+            Config.standWordListPath = standDir.getPath();
+        }
+
+        Log.setLogOutput(Objects.requireNonNullElseGet(logOutput, ConsoleLogOutput::new));
     }
 
     /**
@@ -131,7 +148,7 @@ public class Config
     public static void write()
     {
         writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
+            new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
         jsonObject = new JSONObject();
 
         runner(new ConfigAction()
