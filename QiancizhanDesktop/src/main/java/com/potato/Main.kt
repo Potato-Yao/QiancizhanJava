@@ -18,7 +18,7 @@ object Main
 
         val configFile = File(".", "config.json")
 
-        Config.initial(configFile, null, null, null)
+        Config.initial(configFile, null, null, null, null)
 
         UIManager.setLookAndFeel(FlatDarkLaf())
         EventQueue.invokeLater {

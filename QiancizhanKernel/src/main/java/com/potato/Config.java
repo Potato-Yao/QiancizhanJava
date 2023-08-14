@@ -25,16 +25,16 @@ public class Config
     @Option(keyName = "language", type = OptionType.ADVANCE, meaning = "去向语言")
     public static String language;  // 默认语言，用于配置UI默认语言和翻译默认去向语言
 
-    @Option(keyName = "stand_wordlist_path", type = OptionType.ADVANCE, meaning = "长期单词本路径")
+    @Option(keyName = "stand_wordlist_path", type = OptionType.DIR, meaning = "长期单词本路径")
     public static String standWordListPath;  // 长期单词库储存文件夹
 
-    @Option(keyName = "normal_wordlist_path", type = OptionType.ADVANCE, meaning = "一般单词本路径")
+    @Option(keyName = "normal_wordlist_path", type = OptionType.DIR, meaning = "一般单词本路径")
     public static String normalWordListPath;  // 一般单词库储存文件夹
 
     @Option(keyName = "output_file_name", type = OptionType.ADVANCE, meaning = "输出文件名称")
     public static String outputFileName;  // 输出文件的名称
 
-    @Option(keyName = "output_file_path", type = OptionType.ADVANCE, meaning = "输出文件路径")
+    @Option(keyName = "output_file_path", type = OptionType.DIR, meaning = "输出文件路径")
     public static String outputFilePath; //  输出文件的路径
 
     @Option(keyName = "baidu_app_id", type = OptionType.ADVANCE, meaning = "百度翻译ID")
@@ -82,10 +82,15 @@ public class Config
      * @param configFile 配置文件
      * @param normalDir  一般单词本目录，如果为null则使用配置文件中的设置
      * @param standDir   长期单词本目录，如果为null则使用配置文件中的设置
+     * @param outputDir  输出文件目录，如果为null则使用配置文件中的设置
      * @param logOutput  日志输出器，如果为null则使用终端输出器
      */
-    public static void initial(File configFile, File normalDir, File standDir, LogOutput logOutput)
+    public static void initial(File configFile, File normalDir, File standDir, File outputDir, LogOutput logOutput)
     {
+        Log.setLogOutput(Objects.requireNonNullElseGet(logOutput, ConsoleLogOutput::new));
+
+        writeInitial(configFile, normalDir, standDir, outputDir);
+
         Config.configFile = configFile;  // 获取配置文件
         String configString = FileToolKit.fileToString(Config.configFile);  // fastjson没有直接解析文件的方法，所以先转成字符串
         jsonObject = JSONObject.parse(configString);
@@ -102,13 +107,12 @@ public class Config
             }
         });
 
-        if (normalDir != null && standDir != null)
+        if (normalDir != null && standDir != null && outputDir != null)
         {
             Config.normalWordListPath = normalDir.getPath();
             Config.standWordListPath = standDir.getPath();
+            Config.outputFileName = outputDir.getPath();
         }
-
-        Log.setLogOutput(Objects.requireNonNullElseGet(logOutput, ConsoleLogOutput::new));
     }
 
     /**
@@ -220,46 +224,46 @@ public class Config
      * 写入初始化内容
      */
     @SneakyThrows
-    public static void writeInitial()
+    private static void writeInitial(File configFile, File normalDir, File standDir, File outputDir)
     {
-        if (!configFile.exists())
+        if (configFile.createNewFile())
         {
-            if (configFile.createNewFile())
-            {
-                Log.i(Config.class.toString(), "配置文件创建成功");
-            }
-            else
-            {
-                Log.e(Config.class.toString(), "配置文件创建失败");
-            }
+            Log.i(Config.class.toString(), "配置文件创建成功");
+
+            Config.configFile = configFile;
+            writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
+
+            String text = """
+                {
+                    "language": "en",
+                    "stand_wordlist_path": "",
+                    "normal_wordlist_path": "",
+                    "output_file_name": "OutputFile",
+                    "output_file_path": "",
+                    "baidu_app_id": "",
+                    "baidu_app_key": "",
+                    "ocr_app_id": "",
+                    "ocr_api_key": "",
+                    "ocr_secret_key": "",
+                    "database_type": "SQLite",
+                    "author": "千词斩",
+                    "title": "英语单词单",
+                    "version1": "1.0.3b",
+                    "version2": "1.0.1b",
+                    "version3": "InDev"
+                }
+                """;
+
+            writer.write(text);
+            writer.close();
+            Log.i(Config.class.toString(), "配置文件写入成功");
         }
 
-        writer = new BufferedWriter(new OutputStreamWriter(
-            new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
-
-        String text = """
-            {
-                "language": "en",
-                "stand_wordlist_path": "./StandingWordList",
-                "normal_wordlist_path": "./NormalWordList",
-                "output_file_name": "OutputFile",
-                "output_file_path": "./OutputList",
-                "baidu_app_id": "",
-                "baidu_app_key": "",
-                "ocr_app_id": "",
-                "ocr_api_key": "",
-                "ocr_secret_key": "",
-                "database_type": "SQLite",
-                "author": "千词斩",
-                "title": "英语单词单",
-                "version1": "1.0.3b",
-                "version2": "1.0.1b",
-                "version3": "InDev"
-            }
-            """;
-
-        writer.write(text);
-        writer.close();
+        if (normalDir.mkdir() && standDir.mkdir() && outputDir.mkdir())
+        {
+            Log.i(Config.class.toString(), "相关文件夹创建成功");
+        }
     }
 
     /**
