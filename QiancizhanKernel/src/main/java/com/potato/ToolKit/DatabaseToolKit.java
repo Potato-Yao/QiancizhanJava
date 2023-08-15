@@ -67,10 +67,6 @@ public class DatabaseToolKit
     @SneakyThrows
     public static boolean createInitialedDatabase(File file, DatabaseType databaseType)
     {
-        if (file.exists())  // 检查文件是否存在
-        {
-            return false;
-        }
         if (!file.createNewFile())  // 文件是否成功创建
         {
             return false;
