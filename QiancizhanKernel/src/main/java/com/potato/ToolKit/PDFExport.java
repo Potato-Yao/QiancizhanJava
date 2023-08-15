@@ -66,7 +66,7 @@ public class PDFExport
         {
             if (!sourceFile.createNewFile())
             {
-                Log.i(getClass().toString(), "创建tex源代码文件成功");
+                Log.i(getClass().toString(), String.format("创建tex源代码文件成功，文件名%s", sourceFile.getName()));
             }
         }
 
@@ -84,6 +84,8 @@ public class PDFExport
         {
             roughExport(1);
         }
+
+        Log.i(getClass().toString(), "PDF文件导出成功");
     }
 
     /**

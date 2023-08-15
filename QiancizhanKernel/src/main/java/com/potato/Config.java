@@ -107,12 +107,7 @@ public class Config
             }
         });
 
-        if (normalDir != null && standDir != null && outputDir != null)
-        {
-            Config.normalWordListPath = normalDir.getPath();
-            Config.standWordListPath = standDir.getPath();
-            Config.outputFileName = outputDir.getPath();
-        }
+        Log.i(Config.class.toString(), "已完成初始化");
     }
 
     /**
@@ -168,10 +163,19 @@ public class Config
             @Override
             public void outerAction()
             {
-                writer.write(jsonObject.toJSONString());
+                try
+                {
+                    writer.write(jsonObject.toJSONString());
+                }
+                catch (Exception e)
+                {
+                    Log.e(Config.class.toString(), "写入配置文件失败", e);
+                }
                 writer.close();
             }
         });
+
+        Log.v(Config.class.toString(), "已完成写入配置文件");
     }
 
     /**
@@ -198,6 +202,8 @@ public class Config
                 return option.meaning().equals(meaning);  // 筛选条件是变量的汉义匹配
             }
         });
+
+        Log.v(Config.class.toString(), "已更新配置变量值");
     }
 
     /**
@@ -222,13 +228,18 @@ public class Config
 
     /**
      * 写入初始化内容
+     *
+     * @param configFile 配置文件
+     * @param normalDir  一般单词本目录，如果为null则使用配置文件中的设置
+     * @param standDir   长期单词本目录，如果为null则使用配置文件中的设置
+     * @param outputDir  输出文件目录，如果为null则使用配置文件中的设置
      */
     @SneakyThrows
     private static void writeInitial(File configFile, File normalDir, File standDir, File outputDir)
     {
         if (configFile.createNewFile())
         {
-            Log.i(Config.class.toString(), "配置文件创建成功");
+            Log.v(Config.class.toString(), "配置文件创建成功");
 
             Config.configFile = configFile;
             writer = new BufferedWriter(new OutputStreamWriter(
@@ -257,13 +268,30 @@ public class Config
 
             writer.write(text);
             writer.close();
-            Log.i(Config.class.toString(), "配置文件写入成功");
+            Log.v(Config.class.toString(), "配置文件写入成功");
+        }
+        else
+        {
+            Log.v(Config.class.toString(), "已检测到配置文件");
         }
 
-        if (normalDir.mkdir() && standDir.mkdir() && outputDir.mkdir())
+        if (normalDir == null || standDir == null || outputDir == null)
         {
-            Log.i(Config.class.toString(), "相关文件夹创建成功");
+            Log.v(Config.class.toString(), "相关文件夹使用配置文件中的配置");
         }
+        else
+        {
+            if (normalDir.mkdir() && standDir.mkdir() && outputDir.mkdir())
+            {
+                Log.v(Config.class.toString(), "相关文件夹创建成功");
+            }
+            else
+            {
+                Log.v(Config.class.toString(), "已检测到相关文件夹");
+            }
+        }
+
+        Log.i(Config.class.toString(), "初始化配置文件和相关文件夹完成");
     }
 
     /**

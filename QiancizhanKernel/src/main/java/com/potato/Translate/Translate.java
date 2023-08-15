@@ -3,6 +3,7 @@ package com.potato.Translate;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.potato.Config;
+import com.potato.Log.Log;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -28,11 +29,13 @@ public class Translate
         {
             this.APP_ID = "20200826000552094";
             this.SECURITY_KEY = "9Lzaco6skEAWVS9dEvK6";
+            Log.i(getClass().toString(), "使用系统自带APP_ID开启翻译器");
         }
         else
         {
             this.APP_ID = Config.baiduAppId;
             this.SECURITY_KEY = Config.baiduAppKey;
+            Log.v(getClass().toString(), "使用用户自定义APP_ID开启翻译器");
         }
 
         transApi = new TransApi(APP_ID, SECURITY_KEY);

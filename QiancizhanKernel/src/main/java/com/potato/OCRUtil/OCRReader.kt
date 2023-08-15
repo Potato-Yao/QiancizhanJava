@@ -3,6 +3,7 @@ package com.potato.OCRUtil
 import com.alibaba.fastjson2.JSONObject
 import com.baidu.aip.ocr.AipOcr
 import com.potato.Config
+import com.potato.Log.Log
 import com.potato.Word.Word
 import com.potato.Word.Word.WordBuilder
 import java.io.File
@@ -26,12 +27,14 @@ class OCRReader
             APP_ID = "35339593"
             APP_KEY = "Ad5C3C8bxLBeVn7YiDLy1o4e"
             APP_SECRET_KEY = "lqvCae8jX5QfYGpaavlo6NVIXDGbNF9x"
+            Log.i(javaClass.name, "使用系统自带APP_ID开启OCR")
         }
         else
         {
             APP_ID = Config.ocrAppId
             APP_KEY = Config.ocrAppKey
             APP_SECRET_KEY = Config.ocrSecretKey
+            Log.i(javaClass.name, "使用用户自定义APP_ID开启OCR")
         }
 
         client = AipOcr(APP_ID, APP_KEY, APP_SECRET_KEY)
@@ -77,6 +80,8 @@ class OCRReader
             val word = WordBuilder().name(wordName).build()
             wordList.add(word)
         }
+
+        Log.v(javaClass.name, String().format("图像%s识别完成", image.name))
         return wordList
     }
 

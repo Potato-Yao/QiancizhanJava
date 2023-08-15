@@ -1,5 +1,6 @@
 package com.potato.Word;
 
+import com.potato.Log.Log;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -232,7 +233,11 @@ public class Word
          */
         public Word build()
         {
-            return new Word(this);
+            Word word = new Word(this);
+
+            Log.v(getClass().toString(), String.format("单词%s已创建", word));
+
+            return word;
         }
     }
 }

@@ -11,9 +11,9 @@ public class ConsoleLogOutput implements LogOutput
      * @param tag     用于分辨日志来源，可以设置为类名
      * @param message 日志信息
      */
-    private void normalPrintln(String tag, String message)
+    private void normalPrintln(String tag, String message, LogLevel logLevel)
     {
-        normalPrintln(tag, message, null);
+        normalPrintln(tag, message, null, logLevel);
     }
 
     /**
@@ -23,15 +23,15 @@ public class ConsoleLogOutput implements LogOutput
      * @param message   日志信息
      * @param throwable 提供给日志的报错
      */
-    private void normalPrintln(String tag, String message, Throwable throwable)
+    private void normalPrintln(String tag, String message, Throwable throwable, LogLevel logLevel)
     {
         if (throwable != null)
         {
-            System.out.printf("TAG:%s\tINFO:%s\tTHROWABLE:%s%n", tag, message, throwable.toString());
+            System.out.printf("TAG:%s\t%s:%s\tTHROWABLE:%s%n", tag, logLevel, message, throwable);
         }
         else
         {
-            System.out.printf("TAG:%s\tINFO:%s%n", tag, message);
+            System.out.printf("TAG:%s\t%s:%s%n", tag, logLevel, message);
         }
     }
 
@@ -41,9 +41,9 @@ public class ConsoleLogOutput implements LogOutput
      * @param tag     用于分辨日志来源，可以设置为类名
      * @param message 日志信息
      */
-    private void errorPrintln(String tag, String message)
+    private void errorPrintln(String tag, String message, LogLevel logLevel)
     {
-        errorPrintln(tag, message, null);
+        errorPrintln(tag, message, null, logLevel);
     }
 
     /**
@@ -53,15 +53,15 @@ public class ConsoleLogOutput implements LogOutput
      * @param message   日志信息
      * @param throwable 提供给日志的报错
      */
-    private void errorPrintln(String tag, String message, Throwable throwable)
+    private void errorPrintln(String tag, String message, Throwable throwable, LogLevel logLevel)
     {
         if (throwable != null)
         {
-            System.err.printf("TAG:%s\tINFO:%s\tTHROWABLE:%s%n", tag, message, throwable.toString());
+            System.err.printf("TAG:%s\t%s:%s\tTHROWABLE:%s%n", tag, logLevel, message, throwable);
         }
         else
         {
-            System.err.printf("TAG:%s\tINFO:%s%n", tag, message);
+            System.err.printf("TAG:%s\t%s:%s%n", tag, logLevel, message);
         }
     }
 
@@ -74,7 +74,7 @@ public class ConsoleLogOutput implements LogOutput
     @Override
     public void v(String tag, String message)
     {
-        normalPrintln(tag, message);
+        normalPrintln(tag, message, LogLevel.VERBOSE);
     }
 
     /**
@@ -87,7 +87,7 @@ public class ConsoleLogOutput implements LogOutput
     @Override
     public void v(String tag, String message, Throwable throwable)
     {
-        normalPrintln(tag, message, throwable);
+        normalPrintln(tag, message, throwable, LogLevel.VERBOSE);
     }
 
     /**
@@ -99,7 +99,7 @@ public class ConsoleLogOutput implements LogOutput
     @Override
     public void d(String tag, String message)
     {
-        normalPrintln(tag, message);
+        normalPrintln(tag, message, LogLevel.DEBUG);
     }
 
     /**
@@ -112,7 +112,7 @@ public class ConsoleLogOutput implements LogOutput
     @Override
     public void d(String tag, String message, Throwable throwable)
     {
-        normalPrintln(tag, message, throwable);
+        normalPrintln(tag, message, throwable, LogLevel.DEBUG);
     }
 
     /**
@@ -124,7 +124,7 @@ public class ConsoleLogOutput implements LogOutput
     @Override
     public void i(String tag, String message)
     {
-        normalPrintln(tag, message);
+        normalPrintln(tag, message, LogLevel.INFO);
     }
 
     /**
@@ -137,7 +137,7 @@ public class ConsoleLogOutput implements LogOutput
     @Override
     public void i(String tag, String message, Throwable throwable)
     {
-        normalPrintln(tag, message, throwable);
+        normalPrintln(tag, message, throwable, LogLevel.INFO);
     }
 
     /**
@@ -149,7 +149,7 @@ public class ConsoleLogOutput implements LogOutput
     @Override
     public void w(String tag, String message)
     {
-        errorPrintln(tag, message);
+        errorPrintln(tag, message, LogLevel.WARN);
     }
 
     /**
@@ -162,7 +162,7 @@ public class ConsoleLogOutput implements LogOutput
     @Override
     public void w(String tag, String message, Throwable throwable)
     {
-        errorPrintln(tag, message, throwable);
+        errorPrintln(tag, message, throwable, LogLevel.WARN);
     }
 
     /**
@@ -174,7 +174,7 @@ public class ConsoleLogOutput implements LogOutput
     @Override
     public void e(String tag, String message)
     {
-        errorPrintln(tag, message);
+        errorPrintln(tag, message, LogLevel.ERROR);
     }
 
     /**
@@ -187,6 +187,6 @@ public class ConsoleLogOutput implements LogOutput
     @Override
     public void e(String tag, String message, Throwable throwable)
     {
-        errorPrintln(tag, message, throwable);
+        errorPrintln(tag, message, throwable, LogLevel.ERROR);
     }
 }

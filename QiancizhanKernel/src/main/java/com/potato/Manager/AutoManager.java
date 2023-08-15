@@ -1,5 +1,6 @@
 package com.potato.Manager;
 
+import com.potato.Log.Log;
 import com.potato.ToolKit.FileToolKit;
 import com.potato.ToolKit.History;
 import com.potato.ToolKit.Info;
@@ -40,6 +41,7 @@ public class AutoManager extends Manager
     public void insert(Word word)
     {
         manager.insert(word);
+        Log.v(getClass().toString(), String.format("插入单词%s", word));
     }
 
     /**
@@ -51,6 +53,7 @@ public class AutoManager extends Manager
     public void delete(Word word)
     {
         manager.delete(word);
+        Log.v(getClass().toString(), String.format("删除单词%s", word));
     }
 
     /**
@@ -63,6 +66,7 @@ public class AutoManager extends Manager
     public void modify(Word from, Word to)
     {
         manager.modify(from, to);
+        Log.v(getClass().toString(), String.format("将单词%s修改为单词%s", from, to));
     }
 
     /**
@@ -72,6 +76,7 @@ public class AutoManager extends Manager
     public void push()
     {
         manager.push();
+        Log.v(getClass().toString(), "将修改写入文件完成");
     }
 
     /**
@@ -83,6 +88,7 @@ public class AutoManager extends Manager
     public void insert(History history)
     {
         manager.insert(history);
+        Log.v(getClass().toString(), String.format("插入历史记录%s", history));
     }
 
     /**
@@ -94,6 +100,7 @@ public class AutoManager extends Manager
     public void delete(History history)
     {
         manager.delete(history);
+        Log.v(getClass().toString(), String.format("删除历史记录%s", history));
     }
 
     /**
@@ -106,6 +113,7 @@ public class AutoManager extends Manager
     public void modify(History from, History to)
     {
         manager.modify(from, to);
+        Log.v(getClass().toString(), String.format("将历史记录%s修改为历史记录%s", from, to));
     }
 
     /**
@@ -117,5 +125,6 @@ public class AutoManager extends Manager
     public void modify(Info info)
     {
         manager.modify(info);
+        Log.v(getClass().toString(), String.format("修改数据库信息至%s", info));
     }
 }

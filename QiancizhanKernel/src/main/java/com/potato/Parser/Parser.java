@@ -1,5 +1,6 @@
 package com.potato.Parser;
 
+import com.potato.Log.Log;
 import com.potato.ToolKit.History;
 import com.potato.ToolKit.Info;
 import com.potato.Word.Word;
@@ -39,6 +40,7 @@ public abstract class Parser
         this.file = file;
 
         parser();
+        Log.i(getClass().toString(), String.format("解析文件%s成功", file.getName()));
     }
 
     /**

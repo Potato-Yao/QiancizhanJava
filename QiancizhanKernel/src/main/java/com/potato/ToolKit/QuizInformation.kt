@@ -1,5 +1,7 @@
 package com.potato.ToolKit
 
+import com.potato.Log.Log
+
 /**
  * QuizInformation是一个统计测试数据的工具类
  */
@@ -14,6 +16,7 @@ class QuizInformation
     fun onCorrect()
     {
         correctCount++
+        Log.v(javaClass.name, "正确次数自增1")
     }
 
     /**
@@ -22,6 +25,7 @@ class QuizInformation
     fun onWrong()
     {
         wrongCount++
+        Log.v(javaClass.name, "错误次数自增1")
     }
 
     /**
