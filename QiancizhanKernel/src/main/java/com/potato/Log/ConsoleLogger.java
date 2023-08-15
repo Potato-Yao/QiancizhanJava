@@ -3,7 +3,7 @@ package com.potato.Log;
 /**
  * ConsoleLogOutput是将日志输出至终端的一个实现
  */
-public class ConsoleLogOutput implements LogOutput
+public class ConsoleLogger implements Logger
 {
     /**
      * 一般日志输出至标准输出流

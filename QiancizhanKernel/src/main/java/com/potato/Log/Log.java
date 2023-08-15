@@ -1,9 +1,6 @@
 package com.potato.Log;
 
-import com.potato.Config;
 import lombok.Setter;
-
-import java.util.Objects;
 
 /**
  * Log用于输出日志
@@ -11,7 +8,7 @@ import java.util.Objects;
 public class Log
 {
     @Setter
-    private static LogOutput logOutput;
+    private static Logger logger;
 
     /**
      * 输出冗余信息
@@ -21,7 +18,7 @@ public class Log
      */
     public static void v(String tag, String message)
     {
-        logOutput.v(tag, message);
+        logger.v(tag, message);
     }
 
     /**
@@ -33,7 +30,7 @@ public class Log
      */
     public static void v(String tag, String message, Throwable throwable)
     {
-        logOutput.v(tag, message, throwable);
+        logger.v(tag, message, throwable);
     }
 
     /**
@@ -44,7 +41,7 @@ public class Log
      */
     public static void d(String tag, String message)
     {
-        logOutput.d(tag, message);
+        logger.d(tag, message);
     }
 
     /**
@@ -56,7 +53,7 @@ public class Log
      */
     public static void d(String tag, String message, Throwable throwable)
     {
-        logOutput.d(tag, message, throwable);
+        logger.d(tag, message, throwable);
     }
 
     /**
@@ -67,7 +64,7 @@ public class Log
      */
     public static void i(String tag, String message)
     {
-        logOutput.i(tag, message);
+        logger.i(tag, message);
     }
 
     /**
@@ -79,7 +76,7 @@ public class Log
      */
     public static void i(String tag, String message, Throwable throwable)
     {
-        logOutput.i(tag, message, throwable);
+        logger.i(tag, message, throwable);
     }
 
     /**
@@ -90,7 +87,7 @@ public class Log
      */
     public static void w(String tag, String message)
     {
-        logOutput.w(tag, message);
+        logger.w(tag, message);
     }
 
     /**
@@ -102,7 +99,7 @@ public class Log
      */
     public static void w(String tag, String message, Throwable throwable)
     {
-        logOutput.w(tag, message, throwable);
+        logger.w(tag, message, throwable);
     }
 
     /**
@@ -113,7 +110,7 @@ public class Log
      */
     public static void e(String tag, String message)
     {
-        logOutput.e(tag, message);
+        logger.e(tag, message);
     }
 
     /**
@@ -125,6 +122,6 @@ public class Log
      */
     public static void e(String tag, String message, Throwable throwable)
     {
-        logOutput.e(tag, message, throwable);
+        logger.e(tag, message, throwable);
     }
 }

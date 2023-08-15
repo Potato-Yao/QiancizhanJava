@@ -3,7 +3,7 @@ package com.potato.Log;
 /**
  * 日志输出
  */
-public interface LogOutput
+public interface Logger
 {
     /**
      * 输出冗余信息

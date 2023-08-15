@@ -1,9 +1,9 @@
 package com.potato;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.potato.Log.ConsoleLogOutput;
+import com.potato.Log.ConsoleLogger;
 import com.potato.Log.Log;
-import com.potato.Log.LogOutput;
+import com.potato.Log.Logger;
 import com.potato.ToolKit.DatabaseType;
 import com.potato.ToolKit.FileToolKit;
 import lombok.Data;
@@ -83,11 +83,11 @@ public class Config
      * @param normalDir  一般单词本目录，如果为null则使用配置文件中的设置
      * @param standDir   长期单词本目录，如果为null则使用配置文件中的设置
      * @param outputDir  输出文件目录，如果为null则使用配置文件中的设置
-     * @param logOutput  日志输出器，如果为null则使用终端输出器
+     * @param logger  日志输出器，如果为null则使用终端输出器
      */
-    public static void initial(File configFile, File normalDir, File standDir, File outputDir, LogOutput logOutput)
+    public static void initial(File configFile, File normalDir, File standDir, File outputDir, Logger logger)
     {
-        Log.setLogOutput(Objects.requireNonNullElseGet(logOutput, ConsoleLogOutput::new));
+        Log.setLogger(Objects.requireNonNullElseGet(logger, ConsoleLogger::new));
 
         writeInitial(configFile, normalDir, standDir, outputDir);
 
