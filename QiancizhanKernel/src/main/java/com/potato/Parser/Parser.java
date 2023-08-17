@@ -35,7 +35,7 @@ public abstract class Parser
         // 使用卫语句捕捉文件类型错误
         if (!extension.equals(getExtensionName(file)))
         {
-            throw new RuntimeException("文件类型错误");
+            Log.e(getClass().toString(), String.format("解析文件%s类型错误", file.getName()));
         }
         this.file = file;
 

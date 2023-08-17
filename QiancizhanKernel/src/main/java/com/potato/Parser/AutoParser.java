@@ -34,27 +34,11 @@ public class AutoParser extends Parser
     @Override
     protected void parser()
     {
-        Parser parser = null;
+        // 获取对应类型的解析器
+        Constructor<? extends Parser> parserConstructor = Config
+                .getParserConstructor(getExtensionName(getFile()));
+        Parser parser = parserConstructor.newInstance(getFile());
 
-        // 根据不同文件类型选取不同的解析器
-        if (getExtensionName(getFile()).equals(WordFileType.DATABASE.type()))  // 数据库使用DatabaseParser
-        {
-            Constructor<Parser> alternativeParserConstructor =
-                Config.alternativeParser.get(WordFileType.DATABASE);
-
-            // 如果替换解析器是null，则使用默认解析器
-            if (alternativeParserConstructor == null)
-            {
-                parser = new DatabaseParser(getFile());
-            }
-            else
-            {
-                // 否则使用替换的解析器
-                parser = alternativeParserConstructor.newInstance(getFile());
-            }
-        }
-
-        assert parser != null;
         setWordList(parser.getWordList());
         setInfo(parser.getInfo());
         setHistoryList(parser.getHistoryList());

@@ -30,25 +30,11 @@ public class AutoManager extends Manager
     {
         super(file, FileToolKit.getExtensionName(file));
 
-        String extension = FileToolKit.getExtensionName(file);
-        if (extension.equals(WordFileType.DATABASE.type()))
-        {
-            Constructor<Manager> alternativeManagerConstructor =
-                Config.alternativeManager.get(WordFileType.DATABASE);
+        // 根据类型获取管理器
+        Constructor<? extends Manager> managerConstructor =
+                Config.getManagerConstructor(FileToolKit.getExtensionName(file));
+        manager = managerConstructor.newInstance(file);
 
-            // 如果替换管理器是null，则使用默认管理器
-            if (alternativeManagerConstructor == null)
-            {
-                manager = new DatabaseManager(file);
-            }
-            else
-            {
-                // 否则使用替换的管理器
-                manager = alternativeManagerConstructor.newInstance(file);
-            }
-        }
-
-        assert manager != null;
         Log.i(getClass().toString(), String.format("管理器为%s，已加载管理器", manager.getClass()));
     }
 

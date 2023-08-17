@@ -3,6 +3,7 @@ package com.potato.Parser;
 import com.potato.Config;
 import com.potato.ToolKit.History;
 import com.potato.ToolKit.Info;
+import com.potato.ToolKit.WordFileType;
 import com.potato.Word.Word;
 import com.potato.Word.WordClass;
 import com.potato.Word.WordHelper;
@@ -31,7 +32,7 @@ public class DatabaseParser extends Parser
      */
     public DatabaseParser(File file)
     {
-        super(file, "db");  // db是数据库的扩展名
+        super(file, WordFileType.DATABASE.type());
     }
 
     /**

@@ -4,7 +4,13 @@ import com.alibaba.fastjson2.JSONObject;
 import com.potato.Log.ConsoleLogger;
 import com.potato.Log.Log;
 import com.potato.Log.Logger;
+import com.potato.Manager.DatabaseManager;
+import com.potato.Manager.ExcelManager;
+import com.potato.Manager.JSONManager;
 import com.potato.Manager.Manager;
+import com.potato.Parser.DatabaseParser;
+import com.potato.Parser.ExcelParser;
+import com.potato.Parser.JSONParser;
 import com.potato.Parser.Parser;
 import com.potato.ToolKit.DatabaseType;
 import com.potato.ToolKit.FileToolKit;
@@ -80,11 +86,11 @@ public class Config
     private static BufferedWriter writer;
     private static Field[] fields;  // 获取Config的所有变量
 
-    /* 替换默认解析器的解析器，null代表使用默认解析器 */
-    public static Map<WordFileType, Constructor<Parser>> alternativeParser;
+    /* 配置每个文件类对应的解析器 */
+    public static Map<WordFileType, Constructor<? extends Parser>> parserMap;
 
-    /* 替换默认管理器的管理器，null代表使用默认管理器 */
-    public static Map<WordFileType, Constructor<Manager>> alternativeManager;
+    /* 配置每个文件类对应的管理器 */
+    public static Map<WordFileType, Constructor<? extends Manager>> managerMap;
 
     /**
      * 初始化
@@ -118,12 +124,22 @@ public class Config
             }
         });
 
-        alternativeParser = new HashMap<>();
-        alternativeManager = new HashMap<>();
-        for (WordFileType type : WordFileType.values())
+        parserMap = new HashMap<>();
+        managerMap = new HashMap<>();
+
+        try
         {
-            alternativeParser.put(type, null);
-            alternativeManager.put(type, null);
+            parserMap.put(WordFileType.DATABASE, DatabaseParser.class.getConstructor(File.class));
+            parserMap.put(WordFileType.JSON, JSONParser.class.getConstructor(File.class));
+            parserMap.put(WordFileType.EXCEL, ExcelParser.class.getConstructor(File.class));
+
+            managerMap.put(WordFileType.DATABASE, DatabaseManager.class.getConstructor(File.class));
+            managerMap.put(WordFileType.JSON, JSONManager.class.getConstructor(File.class));
+            managerMap.put(WordFileType.EXCEL, ExcelManager.class.getConstructor(File.class));
+        }
+        catch (NoSuchMethodException e)
+        {
+            throw new RuntimeException(e);
         }
 
         Log.i(Config.class.toString(), "已完成初始化");
@@ -314,14 +330,36 @@ public class Config
     }
 
     /**
+     * 根据文件类型（即扩展名）获取对应的解析器构造器
+     *
+     * @param type 文件类型
+     * @return 对应的解析器的构造器
+     */
+    public static Constructor<? extends Parser> getParserConstructor(String type)
+    {
+        return parserMap.get(WordFileType.getWordFileType(type));
+    }
+
+    /**
+     * 根据文件类型（即扩展名）获取对应的管理器构造器
+     *
+     * @param type 文件类型
+     * @return 对应的管理器的构造器
+     */
+    public static Constructor<? extends Manager> getManagerConstructor(String type)
+    {
+        return managerMap.get(WordFileType.getWordFileType(type));
+    }
+
+    /**
      * 设置替换的解析器
      *
      * @param type 解析器对应的文件类型
      * @param parser 解析器
      */
-    public static void setParser(WordFileType type, Constructor<Parser> parser)
+    public static void setParser(WordFileType type, Constructor<? extends Parser> parser)
     {
-        alternativeParser.replace(type, parser);
+        parserMap.replace(type, parser);
     }
 
     /**
@@ -330,9 +368,9 @@ public class Config
      * @param type 管理器对应的文件类型
      * @param manager 管理器
      */
-    public static void setManager(WordFileType type, Constructor<Manager> manager)
+    public static void setManager(WordFileType type, Constructor<? extends Manager> manager)
     {
-        alternativeManager.replace(type, manager);
+        managerMap.replace(type, manager);
     }
 
     /**
