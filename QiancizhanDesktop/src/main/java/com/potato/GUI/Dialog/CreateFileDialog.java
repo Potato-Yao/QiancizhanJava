@@ -46,7 +46,7 @@ public class CreateFileDialog extends JDialog
         String name = fileNameField.getText();  // 获取单词本名称
 
         // 卫语句，假如没有输入就不进行任何动作
-        if (name.equals(""))
+        if (name.isEmpty())
         {
             return;
         }

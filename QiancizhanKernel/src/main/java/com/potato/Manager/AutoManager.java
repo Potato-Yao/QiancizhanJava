@@ -1,12 +1,16 @@
 package com.potato.Manager;
 
+import com.potato.Config;
 import com.potato.Log.Log;
 import com.potato.ToolKit.FileToolKit;
 import com.potato.ToolKit.History;
 import com.potato.ToolKit.Info;
+import com.potato.ToolKit.WordFileType;
 import com.potato.Word.Word;
+import lombok.SneakyThrows;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
 
 /**
  * AutoManager用于自动根据指定单词本文件类型选择对应的管理器管理单词本
@@ -21,15 +25,31 @@ public class AutoManager extends Manager
      *
      * @param file 需要管理的单词本文件
      */
+    @SneakyThrows
     public AutoManager(File file)
     {
         super(file, FileToolKit.getExtensionName(file));
 
         String extension = FileToolKit.getExtensionName(file);
-        if (extension.equals("db"))
+        if (extension.equals(WordFileType.DATABASE.type()))
         {
-            manager = new DatabaseManager(file);
+            Constructor<Manager> alternativeManagerConstructor =
+                Config.alternativeManager.get(WordFileType.DATABASE);
+
+            // 如果替换管理器是null，则使用默认管理器
+            if (alternativeManagerConstructor == null)
+            {
+                manager = new DatabaseManager(file);
+            }
+            else
+            {
+                // 否则使用替换的管理器
+                manager = alternativeManagerConstructor.newInstance(file);
+            }
         }
+
+        assert manager != null;
+        Log.i(getClass().toString(), String.format("管理器为%s，已加载管理器", manager.getClass()));
     }
 
     /**

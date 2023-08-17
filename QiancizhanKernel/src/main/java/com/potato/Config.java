@@ -4,16 +4,21 @@ import com.alibaba.fastjson2.JSONObject;
 import com.potato.Log.ConsoleLogger;
 import com.potato.Log.Log;
 import com.potato.Log.Logger;
+import com.potato.Manager.Manager;
+import com.potato.Parser.Parser;
 import com.potato.ToolKit.DatabaseType;
 import com.potato.ToolKit.FileToolKit;
+import com.potato.ToolKit.WordFileType;
 import lombok.Data;
 import lombok.SneakyThrows;
 
 import java.io.*;
 import java.lang.annotation.*;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -75,6 +80,12 @@ public class Config
     private static BufferedWriter writer;
     private static Field[] fields;  // 获取Config的所有变量
 
+    /* 替换默认解析器的解析器，null代表使用默认解析器 */
+    public static Map<WordFileType, Constructor<Parser>> alternativeParser;
+
+    /* 替换默认管理器的管理器，null代表使用默认管理器 */
+    public static Map<WordFileType, Constructor<Manager>> alternativeManager;
+
     /**
      * 初始化
      * 从config.json中读取配置信息
@@ -106,6 +117,14 @@ public class Config
                 field.set(null, jsonObject.getString(option.keyName()));  // 将变量设置为配置文件中的对应值
             }
         });
+
+        alternativeParser = new HashMap<>();
+        alternativeManager = new HashMap<>();
+        for (WordFileType type : WordFileType.values())
+        {
+            alternativeParser.put(type, null);
+            alternativeManager.put(type, null);
+        }
 
         Log.i(Config.class.toString(), "已完成初始化");
     }
@@ -292,6 +311,28 @@ public class Config
         }
 
         Log.i(Config.class.toString(), "初始化配置文件和相关文件夹完成");
+    }
+
+    /**
+     * 设置替换的解析器
+     *
+     * @param type 解析器对应的文件类型
+     * @param parser 解析器
+     */
+    public static void setParser(WordFileType type, Constructor<Parser> parser)
+    {
+        alternativeParser.replace(type, parser);
+    }
+
+    /**
+     * 设置替换的管理器
+     *
+     * @param type 管理器对应的文件类型
+     * @param manager 管理器
+     */
+    public static void setManager(WordFileType type, Constructor<Manager> manager)
+    {
+        alternativeManager.replace(type, manager);
     }
 
     /**
