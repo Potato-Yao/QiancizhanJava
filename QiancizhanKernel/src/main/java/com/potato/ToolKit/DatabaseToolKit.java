@@ -1,10 +1,12 @@
 package com.potato.ToolKit;
 
+import com.potato.Log.Log;
 import lombok.SneakyThrows;
 
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -38,7 +40,6 @@ public class DatabaseToolKit
      * @param databaseType 所用数据库类型
      * @return 使用该数据库连接该文件的Connection
      */
-    @SneakyThrows
     public static Connection getConnection(File file, DatabaseType databaseType)
     {
         Connection connection = null;
@@ -50,7 +51,15 @@ public class DatabaseToolKit
                 databaseType == DatabaseType.Oracle)
         {
             jdbc = jdbc + file.getPath();
-            connection = DriverManager.getConnection(jdbc);
+            try
+            {
+                connection = DriverManager.getConnection(jdbc);
+            }
+            catch (SQLException e)
+            {
+                Log.e(DatabaseToolKit.class.toString(), String.format("获取数据库文件%s的连接错误", file.getName()), e);
+                throw new RuntimeException(e);
+            }
         }
 
         return connection;

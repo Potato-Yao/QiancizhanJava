@@ -11,6 +11,7 @@ import lombok.SneakyThrows;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * AutoManager用于自动根据指定单词本文件类型选择对应的管理器管理单词本
@@ -25,7 +26,6 @@ public class AutoManager extends Manager
      *
      * @param file 需要管理的单词本文件
      */
-    @SneakyThrows
     public AutoManager(File file)
     {
         super(file, FileToolKit.getExtensionName(file));
@@ -33,7 +33,15 @@ public class AutoManager extends Manager
         // 根据类型获取管理器
         Constructor<? extends Manager> managerConstructor =
                 Config.getManagerConstructor(FileToolKit.getExtensionName(file));
-        manager = managerConstructor.newInstance(file);
+        try
+        {
+            manager = managerConstructor.newInstance(file);
+        }
+        catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
+        {
+            Log.e(getClass().toString(), String.format("获取管理器%s的实例失败", managerConstructor), e);
+            throw new RuntimeException(e);
+        }
 
         Log.i(getClass().toString(), String.format("管理器为%s，已加载管理器", manager.getClass()));
     }

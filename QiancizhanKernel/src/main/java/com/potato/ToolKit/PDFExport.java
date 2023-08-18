@@ -53,20 +53,35 @@ public class PDFExport
      * @param file           需要导出的单词本文件
      * @param isDetailNeeded 是否需要导出详细信息
      */
-    @SneakyThrows
     public PDFExport(File file, String outputName, boolean isDetailNeeded)
     {
         wordList = new ArrayList<>();
         AutoParser parser = new AutoParser(file);
         sourceFile = new File(Config.outputFilePath, outputName + ".tex");
-        writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(sourceFile, false), StandardCharsets.UTF_8));
+        try
+        {
+            writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(sourceFile, false), StandardCharsets.UTF_8));
+        }
+        catch (FileNotFoundException e)
+        {
+            Log.e(getClass().toString(), "无法找到文件" + sourceFile.getName(), e);
+            throw new RuntimeException(e);
+        }
 
         if (!sourceFile.exists())
         {
-            if (!sourceFile.createNewFile())
+            try
             {
-                Log.i(getClass().toString(), String.format("创建tex源代码文件成功，文件名%s", sourceFile.getName()));
+                if (sourceFile.createNewFile())
+                {
+                    Log.i(getClass().toString(), String.format("创建tex源代码文件成功，文件名%s", sourceFile.getName()));
+                }
+            }
+            catch (IOException e)
+            {
+                Log.e(getClass().toString(), String.format("创建tex源代码文件失败，文件路径%s", sourceFile.getName()), e);
+                throw new RuntimeException(e);
             }
         }
 
@@ -94,25 +109,34 @@ public class PDFExport
      *
      * @param columnNumber 输出表格的列数
      */
-    @SneakyThrows
     private void roughExport(int columnNumber)
     {
         int index = 1;
 //        int columnSize = 0;
-        writer.append(docHead);
-        writer.append(String.format(tableHead, "6", "6"));
-
-        for (Word w : wordList)
+        try
         {
-            writer.append(String.format(cell, index, w.getWordName(),
-                    WordHelper.writeToString(w.getWordClass()), w.getMeaning()));
-            index++;
+            writer.append(docHead);
+
+            writer.append(String.format(tableHead, "6", "6"));
+
+            for (Word w : wordList)
+            {
+                writer.append(String.format(cell, index, w.getWordName(),
+                        WordHelper.writeToString(w.getWordClass()), w.getMeaning()));
+                index++;
+            }
+
+            writer.append(tableTail);
+            writer.append(docTail);
+            writer.flush();
+            writer.close();
+        }
+        catch (IOException e)
+        {
+            Log.e(getClass().toString(), String.format("%s写入失败", writer.getClass()), e);
+            throw new RuntimeException(e);
         }
 
-        writer.append(tableTail);
-        writer.append(docTail);
-        writer.flush();
-        writer.close();
         outputProcess();
     }
 
@@ -120,7 +144,6 @@ public class PDFExport
      * 输出过程
      * 这个方法用于将LaTeX输出为PDF
      */
-    @SneakyThrows
     private void outputProcess()
     {
         String fullPath = sourceFile.getAbsolutePath();
@@ -129,15 +152,26 @@ public class PDFExport
         // 使用lualatex编译pdf
         // lualatex对汉语支持较好，因此选用它
         // 另外也可以引用xeCJK后使用xelatex编译
-        Process makePDF = Runtime.getRuntime().exec("lualatex " + fullPath, null, file);
+        Process makePDF = null;
+        try
+        {
+            makePDF = Runtime.getRuntime().exec("lualatex " + fullPath, null, file);
+        }
+        catch (IOException e)
+        {
+            Log.e(getClass().toString(), String.format("文件%s输出为PDF失败", file.getName()), e);
+            throw new RuntimeException(e);
+        }
         printResults(makePDF);  // 必须通过输出来占据线程，保证编译完成
 
         // 在完成编译后删除临时文件，只保留pdf
-        File tempFile = new File(pathWithoutName, Config.outputFileName + ".aux");
-        tempFile.delete();
-        tempFile = new File(pathWithoutName, Config.outputFileName + ".log");
-        tempFile.delete();
-        sourceFile.delete();
+        File tempFile1 = new File(pathWithoutName, Config.outputFileName + ".aux");
+        File tempFile2 = new File(pathWithoutName, Config.outputFileName + ".log");
+
+        if (!tempFile1.delete() || !tempFile2.delete() || !sourceFile.delete())
+        {
+            Log.e(getClass().toString(), "删除导出PDF的临时文件失败");
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import static com.potato.ToolKit.FileToolKit.*;
 
@@ -30,14 +31,22 @@ public class AutoParser extends Parser
     /**
      * 解析，将this.file解析为一个储存Word的List，将这个List赋给this.wordList
      */
-    @SneakyThrows
     @Override
     protected void parser()
     {
         // 获取对应类型的解析器
         Constructor<? extends Parser> parserConstructor = Config
                 .getParserConstructor(getExtensionName(getFile()));
-        Parser parser = parserConstructor.newInstance(getFile());
+        Parser parser;
+        try
+        {
+            parser = parserConstructor.newInstance(getFile());
+        }
+        catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
+        {
+            Log.e(getClass().toString(), String.format("获取解析器%s的实例失败", parserConstructor), e);
+            throw new RuntimeException(e);
+        }
 
         setWordList(parser.getWordList());
         setInfo(parser.getInfo());
