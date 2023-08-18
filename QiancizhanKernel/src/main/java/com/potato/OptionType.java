@@ -1,7 +1,7 @@
 package com.potato;
 
 /**
- * 选项的类型
+ * OptionType配置类型的枚举类
  */
 public enum OptionType
 {
@@ -9,4 +9,6 @@ public enum OptionType
     NORMAL,
     /* 高级选项，不建议用户自定义 */
     ADVANCE,
+    /* 指向目录（如一般单词本存放位置），不应该被程序外修改 */
+    DIR,
 }

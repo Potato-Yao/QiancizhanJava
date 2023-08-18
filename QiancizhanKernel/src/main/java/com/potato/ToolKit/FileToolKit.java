@@ -1,6 +1,6 @@
 package com.potato.ToolKit;
 
-import lombok.SneakyThrows;
+import com.potato.Log.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,6 +14,7 @@ public class FileToolKit
     /**
      * 获取文件的扩展名
      * 如文件xxx.db，返回的结果是db
+     *
      * @param file 需要获取的文件
      * @return 获取的扩展名
      */
@@ -27,26 +28,46 @@ public class FileToolKit
     }
 
     /**
+     * 获取没有扩展名的文件名
+     *
+     * @param file 需要获取文件名的文件
+     * @return 传入文件的文件名
+     */
+    public static String getNameWithoutExtension(File file)
+    {
+        return file.getName().substring(0, file.getName().lastIndexOf("."));
+    }
+
+    /**
      * 将文件转换成字符串
+     *
      * @param file 需要转换的文件
      * @return 转换后的字符串
      */
-    @SneakyThrows
     public static String fileToString(File file)
     {
         StringBuilder builder = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new FileReader(file));  // 读取文件
-        char[] buf = new char[1024];
-        int numRead = 0;
-
-        // -1是文件的截止符，以此判断以后已经读取到尽头
-        while ((numRead = reader.read(buf)) != -1)
+        BufferedReader reader;  // 读取文件
+        try
         {
-            String readData = String.valueOf(buf, 0, numRead);
-            builder.append(readData);
+            reader = new BufferedReader(new FileReader(file));
+            char[] buf = new char[1024];
+            int numRead;
+
+            // -1是文件的截止符，以此判断以后已经读取到尽头
+            while ((numRead = reader.read(buf)) != -1)
+            {
+                String readData = String.valueOf(buf, 0, numRead);
+                builder.append(readData);
+            }
+            reader.close();
+        }
+        catch (Exception e)
+        {
+            Log.e(FileToolKit.class.toString(), String.format("读取文件%s失败", file.getName()), e);
+            throw new RuntimeException(e);
         }
 
-        reader.close();
         return builder.toString();
     }
 }

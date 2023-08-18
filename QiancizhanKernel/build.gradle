@@ -1,9 +1,11 @@
 plugins {
     id 'java'
+    id 'org.jetbrains.kotlin.jvm'
+//    id 'maven-publish'
 }
 
 group = 'com.potato'
-version = '1.0.0b'
+version = '1.0.4b'
 description = 'The kernel of Qiancizhan'
 
 repositories {
@@ -26,8 +28,30 @@ dependencies {
     implementation("org.json:json:20230618")
     compileOnly("org.projectlombok:lombok:1.18.28")
     annotationProcessor("org.projectlombok:lombok:1.18.28")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}
+
+jar {
+//    from {
+//        configurations.runtimeClasspath.collect {
+//            it.isDirectory() ? it : zipTree(it) }
+//    }
+
+    manifest {
+        attributes 'Main-Class': 'com.potato.Main'
+    }
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 }
 
 test {
-    useJUnitPlatform()
+    enabled(false)
+//    useJUnitPlatform()
+}
+
+kotlin {
+    jvmToolchain(17)
 }

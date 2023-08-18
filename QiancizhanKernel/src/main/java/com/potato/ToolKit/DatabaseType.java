@@ -1,7 +1,7 @@
 package com.potato.ToolKit;
 
 /**
- * 数据库类型
+ * DatabaseType是数据库类型的枚举类
  */
 public enum DatabaseType
 {

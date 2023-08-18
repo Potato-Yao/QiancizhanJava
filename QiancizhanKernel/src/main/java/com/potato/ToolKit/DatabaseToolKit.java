@@ -1,10 +1,12 @@
 package com.potato.ToolKit;
 
+import com.potato.Log.Log;
 import lombok.SneakyThrows;
 
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -14,6 +16,7 @@ public class DatabaseToolKit
 {
     /**
      * 根据数据库类型获取相应JDBC标识
+     *
      * @param databaseType 数据库类型
      * @return JDBC标识
      */
@@ -32,11 +35,11 @@ public class DatabaseToolKit
 
     /**
      * 根据文件和数据库类型快速获得一个Connection
-     * @param file 连接的文件
+     *
+     * @param file         连接的文件
      * @param databaseType 所用数据库类型
      * @return 使用该数据库连接该文件的Connection
      */
-    @SneakyThrows
     public static Connection getConnection(File file, DatabaseType databaseType)
     {
         Connection connection = null;
@@ -48,7 +51,15 @@ public class DatabaseToolKit
                 databaseType == DatabaseType.Oracle)
         {
             jdbc = jdbc + file.getPath();
-            connection = DriverManager.getConnection(jdbc);
+            try
+            {
+                connection = DriverManager.getConnection(jdbc);
+            }
+            catch (SQLException e)
+            {
+                Log.e(DatabaseToolKit.class.toString(), String.format("获取数据库文件%s的连接错误", file.getName()), e);
+                throw new RuntimeException(e);
+            }
         }
 
         return connection;
@@ -57,17 +68,14 @@ public class DatabaseToolKit
     /**
      * 创建一个初始化好的数据库
      * 即创建一个数据库后新建一个叫做WordList的table
-     * @param file 需要创建的数据库文件
+     *
+     * @param file         需要创建的数据库文件
      * @param databaseType 数据库类型
      * @return 是否创建成功，若成功则返回true
      */
     @SneakyThrows
     public static boolean createInitialedDatabase(File file, DatabaseType databaseType)
     {
-        if (file.exists())  // 检查文件是否存在
-        {
-            return false;
-        }
         if (!file.createNewFile())  // 文件是否成功创建
         {
             return false;
@@ -91,6 +99,27 @@ public class DatabaseToolKit
         Statement statement = connection.createStatement();
         statement.executeUpdate(sql);  // 执行创建表的命令
 
+        // 创建历史记录表
+        sql = """
+                    create table History
+                    (
+                        DATE TEXT,
+                        SUM_COUNT INT,
+                        CORRECT_COUNT INT,
+                        WRONG_COUNT INT,
+                        TIME_COST INT
+                    )
+                """;
+
+        statement = connection.createStatement();
+        statement.executeUpdate(sql);  // 执行创建表的命令
+
+        // 创建单词本信息表
+        sql = "create table Info(LANGUAGE TEXT)";
+        statement = connection.createStatement();
+        statement.executeUpdate(sql);  // 执行创建表的命令
+
+        // 顺利创建
         return true;
     }
 }
