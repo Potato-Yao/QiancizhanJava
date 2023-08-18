@@ -100,7 +100,7 @@ public class Config
      * @param normalDir  一般单词本目录，如果为null则使用配置文件中的设置
      * @param standDir   长期单词本目录，如果为null则使用配置文件中的设置
      * @param outputDir  输出文件目录，如果为null则使用配置文件中的设置
-     * @param logger  日志输出器，如果为null则使用终端输出器
+     * @param logger     日志输出器，如果为null则使用终端输出器
      */
     public static void initial(File configFile, File normalDir, File standDir, File outputDir, Logger logger)
     {
@@ -139,6 +139,7 @@ public class Config
         }
         catch (NoSuchMethodException e)
         {
+            Log.e(Config.class.toString(), "未找到对应解析器或管理器", e);
             throw new RuntimeException(e);
         }
 
@@ -178,12 +179,19 @@ public class Config
     /**
      * 将所有与配置相关的变量写入配置文件
      */
-    @SneakyThrows
     public static void write()
     {
         jsonObject = new JSONObject();
-        writer = new BufferedWriter(new OutputStreamWriter(
-            new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
+        try
+        {
+            writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
+        }
+        catch (FileNotFoundException e)
+        {
+            Log.e(Config.class.toString(), "未找到配置文件", e);
+            throw new RuntimeException(e);
+        }
 
         runner(new ConfigAction()
         {
@@ -194,19 +202,18 @@ public class Config
                 jsonObject.put(option.keyName(), field.get(field));  // config.json的键是keyName，值就是变量的值
             }
 
-            @SneakyThrows
             @Override
             public void outerAction()
             {
                 try
                 {
                     writer.write(jsonObject.toJSONString());
+                    writer.close();
                 }
                 catch (Exception e)
                 {
                     Log.e(Config.class.toString(), "写入配置文件失败", e);
                 }
-                writer.close();
             }
         });
 
@@ -263,6 +270,7 @@ public class Config
 
     /**
      * 写入初始化内容
+     * TODO  此方法应当删掉，即给所有变量初值，初始化的时候直接write()就可以了
      *
      * @param configFile 配置文件
      * @param normalDir  一般单词本目录，如果为null则使用配置文件中的设置
@@ -354,7 +362,7 @@ public class Config
     /**
      * 设置替换的解析器
      *
-     * @param type 解析器对应的文件类型
+     * @param type   解析器对应的文件类型
      * @param parser 解析器
      */
     public static void setParser(WordFileType type, Constructor<? extends Parser> parser)
@@ -365,7 +373,7 @@ public class Config
     /**
      * 设置替换的管理器
      *
-     * @param type 管理器对应的文件类型
+     * @param type    管理器对应的文件类型
      * @param manager 管理器
      */
     public static void setManager(WordFileType type, Constructor<? extends Manager> manager)
