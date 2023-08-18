@@ -51,6 +51,7 @@ public class PDFExport
      * 这个功能是通过单词本 -> LaTeX -> PDF实现的，因此需要安装lualatex
      *
      * @param file           需要导出的单词本文件
+     * @param outputName
      * @param isDetailNeeded 是否需要导出详细信息
      */
     public PDFExport(File file, String outputName, boolean isDetailNeeded)

@@ -1,0 +1,89 @@
+\section[解析器和管理器]{编写解析器和管理器}\label{sec:解析器和管理器}
+
+解析器用于解析单词本文件，它将单词本文件的单词、历史记录和单词本信息分别解析为\emph{List<Word>}、\emph{List<History>}和\emph{Info}。管理器则是用于单词本的增、删、查、改。
+
+\subsection[解析器]{编写解析器}\label{subsec:解析器}
+
+编写解析器，首先需要继承\emph{Parser}类并实现构造器和\emph{parser()}方法。
+
+\begin{lstlisting}[style=Java, caption={初始布局},label={lst:初始布局}]
+import com.potato.Parser.Parser;
+import java.io.File;
+
+public class MyParser extends Parser
+{
+    public MyParser(File file, String extension)
+    {
+        super(file, extension);
+    }
+
+    @Override
+    protected void parser()
+    {
+
+    }
+}
+\end{lstlisting}
+
+由于我们自定义的解析器对应的文件类型一定是确定的，因此我们应该将构造器中的\emph{String extension}换成我们解析器对应的文件类型。所有单词本文件的文件类型都定义在了\emph{com.potato.ToolKit.WordFileType}中，我们以数据库为例，构造器更改如下所示：
+
+\begin{lstlisting}[style=Java, caption={构造器},label={lst:构造器}]
+public MyParser(File file)
+{
+    super(file, WordFileType.DATABASE.type());
+}
+\end{lstlisting}
+
+接下来编写\emph{parser()}方法。这个方法是解析单词本文件的具体实现，它是一个抽象方法（因此必须实现），将直接被\emph{Parser}的构造器调用。因此如果有需要在解析前初始化的对象，需要写在构造器中。
+
+\begin{lstlisting}[style=Java, caption={Parser的构造器源码},label={lst:Parser的构造器源码}]
+/**
+ * Parser用于解析储存单词本的文件
+ *
+ * @param file       需要解析的文件
+ * @param extension 文件应有的扩展名，对于文件xxx.db，其扩展名是db
+ *                  扩展名建议使用WordFileType中已定义的枚举
+ */
+public Parser(File file, String extension)
+{
+    // 使用卫语句捕捉文件类型错误
+    if (!extension.equals(getExtensionName(file)))
+    {
+        Log.e(getClass().toString(), String.format("解析文件%s类型错误", file.getName()));
+    }
+    this.file = file;
+
+    parser();
+    Log.i(getClass().toString(), String.format("解析文件%s成功", file.getName()));
+}
+\end{lstlisting}
+
+\emph{Parser}中定义了三个静态变量：\emph{wordList}、\emph{info}和\emph{historyList}，它们分别储存单词列表、单词本信息和历史记录（单词本文件的详细说明和格式规范、单词的构造方法、历史记录和数据库的构造器请见API指南）。这三个静态变量都给出了对应的Setter，\emph{parser()}方法的作用就是给这三个变量赋值。
+
+\begin{lstlisting}[style=Java, caption={parser方法},label={lst:parser方法}]
+@Override
+protected void parser()
+{
+    List<Word> wordList = new ArrayList<>();
+    List<History> historyList = new ArrayList<>();
+    Info info = null;
+
+    // 对以上三者赋值
+    // ...
+
+    setWordList(wordList);
+    setHistoryList(historyList);
+    setInfo(info);
+}
+\end{lstlisting}
+
+至此就完成了解析器的编写。我们在调用\emph{AutoParser}时，它会从\emph{Config.parserMap}中选取对应文件类型的解析器，因此我们要在这里更改解析器为我们的解析器。
+
+\emph{Config}提供了\emph{setParser(WordFileType, Constructor<? extends Parser>)}方法用于修改某文件类型对应的解析器。修改解析器建议在\emph{Config}初始化时就进行，以免因为程序执行顺序错误而选用了错误了解析器。
+
+\begin{lstlisting}[style=Java, caption={修改解析器},label={lst:修改解析器}]
+// getConstructor()的参数是MyParser构造器中每个参数对应类型的class
+Config.setParser(WordFileType.DATABASE, MyParser.class.getConstructor(File.class));
+\end{lstlisting}
+
+\subsection[管理器]{编写管理器}\label{subsec:管理器}

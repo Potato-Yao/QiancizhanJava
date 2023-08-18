@@ -43,3 +43,7 @@ bin/
 
 gradle.properties
 QiancizhanDesktop/gradle.properties
+
+*.aux
+*.log
+*.idx

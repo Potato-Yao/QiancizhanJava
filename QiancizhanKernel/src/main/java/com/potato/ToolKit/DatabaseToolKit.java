@@ -101,14 +101,14 @@ public class DatabaseToolKit
 
         // 创建历史记录表
         sql = """
-                    create table History
-                    (
-                        DATE TEXT,
-                        SUM_COUNT INT,
-                        CORRECT_COUNT INT,
-                        WRONG_COUNT INT,
-                        TIME_COST INT
-                    )
+                create table History
+                (
+                    DATE TEXT,
+                    SUM_COUNT INT,
+                    CORRECT_COUNT INT,
+                    WRONG_COUNT INT,
+                    TIME_COST INT
+                )
                 """;
 
         statement = connection.createStatement();

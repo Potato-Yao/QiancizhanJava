@@ -27,8 +27,10 @@ public abstract class Parser
 
     /**
      * Parser用于解析储存单词本的文件
-     * @param file 需要解析的文件
+     *
+     * @param file      需要解析的文件
      * @param extension 文件应有的扩展名，对于文件xxx.db，其扩展名是db
+     *                  扩展名建议使用WordFileType中已定义的枚举
      */
     public Parser(File file, String extension)
     {
@@ -44,7 +46,9 @@ public abstract class Parser
     }
 
     /**
-     * 解析，将this.file解析为一个储存Word的List，将这个List赋给this.wordList
+     * 解析单词本文件
+     * 将this.file解析为一个储存Word的List，将这个List赋给this.wordList
+     * 如果在解析前有需要初始化的对象，将初始化写在构造器中
      */
     protected abstract void parser();
 }

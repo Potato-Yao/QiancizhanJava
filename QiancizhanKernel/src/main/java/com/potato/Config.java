@@ -151,7 +151,6 @@ public class Config
      *
      * @param type 配置类型
      * @return 所有指定类型的配置
-     * TODO 该方法应当一般化
      */
     public static HashMap<String, String> getOptions(OptionType type)
     {
@@ -221,7 +220,7 @@ public class Config
     }
 
     /**
-     * TODO 应当与getOptions()一同被一般化
+     * TODO 应当一般化
      * 根据配置的汉义给配置变量赋值
      *
      * @param meaning 需要修改的配置变量的汉义
