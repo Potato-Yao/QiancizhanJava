@@ -1,19 +1,23 @@
 \documentclass[chinese]{svmono}
 
+\usepackage[dvipsnames, svgnames, x11names]{xcolor}
 \usepackage{ctex}
 \usepackage{listings}
-\usepackage[dvipsnames]{xcolor}
 \usepackage{geometry}
 
+\definecolor{lopurple}{RGB}{173,87,206}
+\definecolor{logrey}{RGB}{165,172,190}
+\definecolor{lored}{RGB}{216,96,97}
+
 \lstset{
-    basicstyle          =   \sffamily,          % 基本代码风格
-    keywordstyle        =   \bfseries,          % 关键字风格
-    commentstyle        =   \rmfamily\itshape,  % 注释的风格，斜体
-    stringstyle         =   \ttfamily,  % 字符串风格
+    basicstyle          =   \fontjbmono,          % 基本代码风格
+    keywordstyle        =   \fontjbmono,          % 关键字风格
+    commentstyle        =   \fontjbmono\ttfamily,  % 注释的风格，斜体
+    stringstyle         =   \fontjbmono,  % 字符串风格
     flexiblecolumns,                % 别问为什么，加上这个
     numbers             =   left,   % 行号的位置在左边
     showspaces          =   false,  % 是否显示空格，显示了有点乱，所以不现实了
-    numberstyle         =   \zihao{-5}\ttfamily,    % 行号的样式，小五号，tt等宽字体
+    numberstyle         =   \zihao{-5}\fontjbmono,    % 行号的样式，小五号，tt等宽字体
     showstringspaces    =   false,
     captionpos          =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
     frame               =   lrtb,   % 显示边框
@@ -21,12 +25,12 @@
 
 \lstdefinestyle{Java}{
     language        =   Java,
-    basicstyle      =   \zihao{-5}\ttfamily,
-    numberstyle     =   \zihao{-5}\ttfamily,
-    keywordstyle    =   \color{blue},
-    keywordstyle    =   [2] \color{teal},
-    stringstyle     =   \color{magenta},
-    commentstyle    =   \color{red}\ttfamily,
+    basicstyle      =   \zihao{-5}\fontjbmono,
+    numberstyle     =   \zihao{-5}\fontjbmono,
+    keywordstyle    =   \color{lopurple},
+%    keywordstyle    =   [2] \color{teal},
+    stringstyle     =   \color{lored},
+    commentstyle    =   \color{logrey}\ttfamily,
     breaklines      =   true,   % 自动换行，建议不要写太长的行
     columns         =   fixed,  % 如果不加这一句，字间距就不固定，很丑，必须加
     basewidth       =   0.5em,
@@ -34,17 +38,29 @@
 
 \geometry{scale=0.7}
 
-\makeindex
+\renewcommand{\lstlistlistingname}{代码清单}
+\renewcommand{\lstlistingname}{代码清单}
 
-\newcommand{\codeline}[1]{\texttt{#1}}
+\newfontfamily\fontjbmono{Jetbrains Mono}
+
+\newcommand{\codeline}[1]{\fontjbmono{#1}}
+
+\makeindex
 
 \begin{document}
     \title{功能开发指南}
     \author{碳烤黄蜂}
     \maketitle
+
     \tableofcontents
 
+    \frontmatter
+    \chapter[前言]{前言}\label{ch:前言}
+    \include{前言}
+
     \mainmatter
+    \chapter[正文]{正文}\label{ch:正文}
     \include{解析器和管理器}
+    \include{日志输出器}
 
 \end{document}

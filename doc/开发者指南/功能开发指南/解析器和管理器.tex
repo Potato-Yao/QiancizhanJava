@@ -122,6 +122,43 @@ Config.setParser(WordFileType.DATABASE, MyParser.class.getConstructor(File.class
 
 \codeline{Manager}类方法定义了\codeline{List<Word> insertWords}、\codeline{List<Word> deleteWords}和\codeline{Map<Word, Word> modifyWords}等用于分别储存需要增、删、改的单词、历史记录和数据库信息。\codeline{Manager}类的\codeline{void insert(Word)}、\codeline{void delete(Word)}和\codeline{void modify(Word, Word)}等方法用于给上述储存增、删、改动作的数据结构添加数据（这几个方法都给出了对应的Getter）。最后通过\codeline{void push()}方法将所有修改写入到单词本文件中。一般情况下不需要修改\codeline{void insert(Word)}等方法，只需要实现\codeline{void push()}抽象方法即可。
 
+最后实现的效果是可以像这样调用：
+
+\begin{lstlisting}[style=Java, caption={示例},label={lst:Manager示例}]
+@Test
+public void managerTest()
+{
+    // 首先要在Config中配置好Manager
+    /*
+    try
+    {
+        Config.setManager(WordFileType.DATABASE, MyManager.class.getConstructor(File.class));
+    }
+    catch (NoSuchMethodException e)
+    {
+        Log.e(getClass().toString(),
+            String.format("将文件类型%s的管理器替换为%s时出现错误", WordFileType.DATABASE.type(), MyManager.class), e);
+        throw new RuntimeException(e);
+    }
+     */
+    File file = new File("a.db");
+    // AutoManager会根据文件类型自动获取对应的管理器
+    // 数据库文件的默认管理器是内核中提供的DatabaseManager
+    // 在Config中修改后则会使用我们提供的管理器
+    AutoManager manager = new AutoManager(file);
+
+    // Word构造方法请见API指南
+    Word insertWord = new Word.WordBuilder().name("test").build();
+    manager.insert(insertWord);  // 插入单词
+
+    // 需要删除的单词
+    Word deleteWord = // ...
+    manager.delete(deleteWord);
+
+    manager.push();  // 将修改写入单词本文件
+}
+\end{lstlisting}
+
 编写管理器，首先需要继承\codeline{Manager}类并实现构造器和\codeline{void push()}方法。
 
 \begin{lstlisting}[style=Java, caption={初始布局},label={lst:Manager初始布局}]
