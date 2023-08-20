@@ -1,9 +1,7 @@
-\contentsline {chapter}{前言}{v}{}%
-\contentsline {section}{\numberline {1.1}前言}{vi}{}%
-\contentsline {chapter}{\numberline {2}正文}{1}{}%
-\contentsline {section}{\numberline {2.1}解析器和管理器}{2}{}%
-\contentsline {subsection}{\numberline {2.1.1}解析器}{2}{}%
-\contentsline {subsection}{\numberline {2.1.2}管理器}{5}{}%
-\contentsline {section}{\numberline {2.2}日志输出器}{9}{}%
-\contentsline {subsection}{\numberline {2.2.1}日志的结构}{9}{}%
-\contentsline {subsection}{\numberline {2.2.2}编写日志输出器}{9}{}%
+\contentsline {chapter}{\numberline {1}正文}{1}{}%
+\contentsline {section}{\numberline {1.1}解析器和管理器}{2}{}%
+\contentsline {subsection}{\numberline {1.1.1}解析器}{2}{}%
+\contentsline {subsection}{\numberline {1.1.2}管理器}{5}{}%
+\contentsline {section}{\numberline {1.2}日志输出器}{9}{}%
+\contentsline {subsection}{\numberline {1.2.1}日志的结构}{9}{}%
+\contentsline {subsection}{\numberline {1.2.2}编写日志输出器}{9}{}%
