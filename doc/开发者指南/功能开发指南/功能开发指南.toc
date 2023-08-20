@@ -5,3 +5,5 @@
 \contentsline {subsection}{\numberline {2.1.1}解析器}{2}{}%
 \contentsline {subsection}{\numberline {2.1.2}管理器}{5}{}%
 \contentsline {section}{\numberline {2.2}日志输出器}{9}{}%
+\contentsline {subsection}{\numberline {2.2.1}日志的结构}{9}{}%
+\contentsline {subsection}{\numberline {2.2.2}编写日志输出器}{9}{}%
