@@ -210,7 +210,7 @@ public class MainFrameMenuBar extends JMenuBar
 
                 for (Word w : wordList)
                 {
-                    WordHelper.autoWordClass(w);
+                    WordHelper.setWordClass(w);
                     manager.insert(w);
                 }
                 manager.push();
@@ -225,7 +225,7 @@ public class MainFrameMenuBar extends JMenuBar
 
             for (Word w : wordList)
             {
-                WordHelper.autoWordClass(w);
+                WordHelper.setWordClass(w);
                 manager.insert(w);
             }
             manager.push();

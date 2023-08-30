@@ -13,36 +13,35 @@ public class FileToolKit
 {
     /**
      * 获取文件的扩展名
-     * 如文件xxx.db，返回的结果是db
+     * <p> 如文件xxx.db，返回的结果是db
      *
-     * @param file 需要获取的文件
-     * @return 获取的扩展名
+     * @param file 需要获取扩展名的文件
+     * @return 文件的扩展名
      */
     public static String getExtensionName(File file)
     {
-        String extension = file.getName();
-        // 我所知道的操作系统（Windows，Linux，MacOS）都以.作为文件名和扩展名的分割
-        extension = extension.substring(extension.lastIndexOf(".") + 1);
-
-        return extension;
+        // Windows、Linux、MacOS都以.作为文件名和扩展名的分割，因此最后一个.一定分割了文件名和扩展名
+        return file.getName().substring(file.getName().lastIndexOf(".") + 1);
     }
 
     /**
-     * 获取没有扩展名的文件名
+     * 将文件名化为没有扩展名的形式
+     * 如xxx.db将返回xxx
      *
      * @param file 需要获取文件名的文件
-     * @return 传入文件的文件名
+     * @return 该文件没有扩展名的文件名
      */
     public static String getNameWithoutExtension(File file)
     {
+        // 最后一个.一定分割了文件名和扩展名
         return file.getName().substring(0, file.getName().lastIndexOf("."));
     }
 
     /**
-     * 将文件转换成字符串
+     * 将文件内容读取为字符串
      *
-     * @param file 需要转换的文件
-     * @return 转换后的字符串
+     * @param file 需要读取内容的文件
+     * @return 读取出的字符串
      */
     public static String fileToString(File file)
     {

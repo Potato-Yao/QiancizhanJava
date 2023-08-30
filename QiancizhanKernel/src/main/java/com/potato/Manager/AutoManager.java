@@ -5,9 +5,7 @@ import com.potato.Log.Log;
 import com.potato.ToolKit.FileToolKit;
 import com.potato.ToolKit.History;
 import com.potato.ToolKit.Info;
-import com.potato.ToolKit.WordFileType;
 import com.potato.Word.Word;
-import lombok.SneakyThrows;
 
 import java.io.File;
 import java.lang.reflect.Constructor;

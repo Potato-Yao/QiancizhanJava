@@ -52,7 +52,7 @@ public class DatabaseManager extends Manager
         for (Word w : getInsertWords())
         {
             wordInsertStatement.setString(1, w.getWordName());
-            wordInsertStatement.setString(2, WordHelper.writeToString(w.getWordClass()));
+            wordInsertStatement.setString(2, WordHelper.wordClassToString(w.getWordClass()));
             wordInsertStatement.setString(3, w.getMeaning());
             wordInsertStatement.setInt(4, w.getReviewCount());
             wordInsertStatement.setString(5, w.getLastReviewDate()
@@ -76,7 +76,7 @@ public class DatabaseManager extends Manager
         {
             Word to = w.getValue();
             String modifySQL = "update WordList set WORD_NAME ='" + to.getWordName()
-                    + "', WORD_CLASS ='" + WordHelper.writeToString(to.getWordClass())
+                    + "', WORD_CLASS ='" + WordHelper.wordClassToString(to.getWordClass())
                     + "', MEANING ='" + to.getMeaning()
                     + "', REVIEW_COUNT =" + to.getReviewCount()
                     + ", REVIEW_DATE ='" + to.getLastReviewDate()

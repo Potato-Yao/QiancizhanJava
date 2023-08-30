@@ -11,7 +11,7 @@ class QuizInformation
     private var wrongCount = 0
 
     /**
-     * 正确计数使用此方法
+     * 当测试正确时，调用该方法
      */
     fun onCorrect()
     {
@@ -20,7 +20,7 @@ class QuizInformation
     }
 
     /**
-     * 错误计数使用此方法
+     * 当测试错误时，调用该方法
      */
     fun onWrong()
     {

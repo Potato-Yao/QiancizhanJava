@@ -1,6 +1,7 @@
 package com.potato.Parser;
 
 import com.potato.ToolKit.WordFileType;
+import com.potato.Word.Word;
 
 import java.io.File;
 
@@ -22,7 +23,9 @@ public class ExcelParser extends Parser
     }
 
     /**
-     * 解析，将this.file解析为一个储存Word的List，将这个List赋给this.wordList
+     * 解析单词本文件
+     * <p> 将this.file解析为一个储存{@link Word}的List，将这个List赋给this.wordList
+     * <p> 如果在解析前有需要初始化的对象，将初始化写在构造器中
      */
     @Override
     protected void parser()

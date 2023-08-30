@@ -149,7 +149,7 @@ public class InsertWordDialog extends JDialog
 
         if (wordClasses.isEmpty())
         {
-            WordHelper.autoWordClass(word);
+            WordHelper.setWordClass(word);
         }
         else
         {

@@ -11,15 +11,15 @@ public class WordClassTest
     {
         Word word = new Word.WordBuilder().name("unstoppable").build();
         System.out.println(Arrays.toString(word.getWordClass()));
-        WordHelper.autoWordClass(word);
+        WordHelper.setWordClass(word);
         System.out.println(Arrays.toString(word.getWordClass()));
 
         word.setWordName("happily");
-        WordHelper.autoWordClass(word);
+        WordHelper.setWordClass(word);
         System.out.println(Arrays.toString(word.getWordClass()));
 
         word.setWordName("classify");
-        WordHelper.autoWordClass(word);
+        WordHelper.setWordClass(word);
         System.out.println(Arrays.toString(word.getWordClass()));
     }
 }

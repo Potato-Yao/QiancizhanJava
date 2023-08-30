@@ -84,7 +84,7 @@ public class Config
     private static JSONObject jsonObject;
     private static File configFile;
     private static BufferedWriter writer;
-    private static Field[] fields;  // 获取Config的所有变量
+    private static Field[] fields;  // Config的所有变量
 
     /* 配置每个文件类对应的解析器 */
     public static Map<WordFileType, Constructor<? extends Parser>> parserMap;
@@ -106,9 +106,9 @@ public class Config
     {
         Log.setLogger(Objects.requireNonNullElseGet(logger, ConsoleLogger::new));
 
-        writeInitial(configFile, normalDir, standDir, outputDir);
+        writeInitial(configFile, normalDir, standDir, outputDir);  // 假如不存在配置文件，那么就创建一个配置文件
 
-        Config.configFile = configFile;  // 获取配置文件
+        Config.configFile = configFile;
         String configString = FileToolKit.fileToString(Config.configFile);  // fastjson没有直接解析文件的方法，所以先转成字符串
         jsonObject = JSONObject.parse(configString);
         fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
@@ -126,7 +126,7 @@ public class Config
 
         parserMap = new HashMap<>();
         managerMap = new HashMap<>();
-
+        // 配置默认解析器和管理器
         try
         {
             parserMap.put(WordFileType.DATABASE, DatabaseParser.class.getConstructor(File.class));

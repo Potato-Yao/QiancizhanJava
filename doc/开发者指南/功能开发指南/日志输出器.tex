@@ -145,3 +145,13 @@ public class ConsoleLogger implements Logger
 File configFile = // 配置文件
 Config.initial(configFile, null, null, null, new MyLogger());
 \end{lstlisting}
+
+这里给出一个调用\codeline{Log}的实例：
+
+\begin{lstlisting}[style=Java, caption={Log调用实例},label={lst:Log调用实例}]
+catch (NoSuchMethodException e)
+{
+    Log.e(Config.class.toString(), "未找到对应解析器或管理器", e);
+    throw new RuntimeException(e);
+}
+\end{lstlisting}
