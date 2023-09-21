@@ -7,7 +7,9 @@ import com.potato.Log.Log;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class BaiduOCRParser extends OCRParser
 {
@@ -47,13 +49,22 @@ public class BaiduOCRParser extends OCRParser
     }
 
     @Override
-    public JSONArray recognizeImage(File image)
+    public List<String> recognizeImage(File image)
     {
         JSONObject res = client.general(image.getAbsolutePath(), options);
         String resText = res.toString(2);
-        com.alibaba.fastjson2.JSONObject jsonObject = com.alibaba.fastjson2.JSONObject.parse(resText);
+        com.alibaba.fastjson2.JSONObject jsonObject =
+                com.alibaba.fastjson2.JSONObject.parse(resText);
+
+        JSONArray wordsArray = jsonObject.getJSONArray("words_result");
+        List<String> result = new ArrayList<>();
+
+        for (int i = 0; i < wordsArray.size(); i++)
+        {
+            result.add(wordsArray.getJSONObject(i).getString("words"));
+        }
 
         Log.v(getClass().toString(), String.format("图像%s识别完成", image.getName()));
-        return jsonObject.getJSONArray("words_result");
+        return result;
     }
 }

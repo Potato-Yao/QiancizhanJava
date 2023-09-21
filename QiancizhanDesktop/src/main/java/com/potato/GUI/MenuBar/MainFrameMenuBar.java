@@ -5,6 +5,7 @@ import com.potato.GUI.Chooser.FileChooser;
 import com.potato.GUI.Dialog.*;
 import com.potato.GUI.Memory;
 import com.potato.GUI.Panel.FunctionPanel;
+import com.potato.Log.Log;
 import com.potato.Manager.AutoManager;
 import com.potato.OCRUtil.WordListParser;
 import com.potato.OptionType;
@@ -119,7 +120,7 @@ public class MainFrameMenuBar extends JMenuBar
             }
         });
 
-        exportOCRItem.addActionListener(e -> OCRItemAction());
+        exportOCRItem.addActionListener(e -> exportOCRItemAction());
 
         exportExcelItem.setEnabled(false);
         excelItem.setEnabled(false);
@@ -175,6 +176,7 @@ public class MainFrameMenuBar extends JMenuBar
         toolkitMenu.add(ocrItem);
 
         transItem.addActionListener(e -> translateDialog.setVisible(true));
+        ocrItem.addActionListener(e -> OCRImageItemAction());
 
         settingMenu.add(preferencesItem);
         settingMenu.add(advancedSettingItem);
@@ -195,7 +197,7 @@ public class MainFrameMenuBar extends JMenuBar
         add(helpMenu);
     }
 
-    private void OCRItemAction()
+    private void exportOCRItemAction()
     {
         wordlistFileChooser.showOpenDialog(null);
         File image = wordlistFileChooser.getSelectedFile();
@@ -209,7 +211,7 @@ public class MainFrameMenuBar extends JMenuBar
 
             if (!DatabaseToolKit.createInitialedDatabase(database, Config.getDatabaseType()))
             {
-                // TODO log
+                Log.e(getClass().toString(), "创建文件失败");
             }
             else
             {
@@ -281,5 +283,7 @@ public class MainFrameMenuBar extends JMenuBar
     private void OCRImageItemAction()
     {
         ocrImageFileChooser.showOpenDialog(null);
+        ocrTextDialog.setText(ocrImageFileChooser.getSelectedFile());
+        ocrTextDialog.setVisible(true);
     }
 }

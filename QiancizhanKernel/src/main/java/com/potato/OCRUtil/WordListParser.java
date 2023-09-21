@@ -10,7 +10,7 @@ import java.util.List;
 
 public class WordListParser
 {
-    private BaiduOCRParser parser;
+    private OCRParser parser;
 
     public WordListParser()
     {
@@ -19,14 +19,12 @@ public class WordListParser
 
     public List<Word> recognizeToWordList(File image)
     {
-        JSONArray wordArray = parser.recognizeImage(image);
+        List<String> wordNameList = parser.recognizeImage(image);
         List<Word> wordList = new ArrayList<>();
 
-        for (int i = 0; i < wordArray.size(); i++)
+        for (String wn : wordNameList)
         {
-            String wordName = wordArray.getJSONObject(i).getString("words");
-            wordName = filterString(wordName);
-
+            String wordName = filterString(wn);
             Word word = new Word.WordBuilder().name(wordName).build();
             wordList.add(word);
         }
