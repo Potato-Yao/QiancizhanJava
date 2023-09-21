@@ -6,7 +6,7 @@ import com.potato.GUI.Dialog.*;
 import com.potato.GUI.Memory;
 import com.potato.GUI.Panel.FunctionPanel;
 import com.potato.Manager.AutoManager;
-import com.potato.OCRUtil.OCRReader;
+import com.potato.OCRUtil.WordListParser;
 import com.potato.OptionType;
 import com.potato.ToolKit.DatabaseToolKit;
 import com.potato.ToolKit.FileToolKit;
@@ -22,7 +22,7 @@ public class MainFrameMenuBar extends JMenuBar
 {
     private JMenu fileMenu = new JMenu("文件");
     private JMenu editMenu = new JMenu("编辑");
-    private JMenu translateMenu = new JMenu("翻译");
+    private JMenu toolkitMenu = new JMenu("工具");
     private JMenu settingMenu = new JMenu("设置");
     private JMenu helpMenu = new JMenu("帮助");
 
@@ -32,7 +32,7 @@ public class MainFrameMenuBar extends JMenuBar
     private JMenuItem openStandingItem = new JMenuItem("打开长期单词本");
     private JMenuItem exportPDFItem = new JMenuItem("导出为PDF");
     private JMenuItem exportExcelItem = new JMenuItem("导出为Excel");
-    private JMenuItem ocrItem = new JMenuItem("从图像获取单词本");
+    private JMenuItem exportOCRItem = new JMenuItem("从图像获取单词本");
     private JMenuItem excelItem = new JMenuItem("从Excel获取单词本");
 
     // 编辑菜单
@@ -42,12 +42,13 @@ public class MainFrameMenuBar extends JMenuBar
     private JMenuItem transformItem = new JMenuItem("补全单词汉义");
     private JMenuItem infoItem = new JMenuItem("单词本信息");
 
-    // 翻译菜单
-    private JMenuItem transItem = new JMenuItem("打开翻译器");
+    // 工具菜单
+    private JMenuItem transItem = new JMenuItem("翻译器");
+    private JMenuItem ocrItem = new JMenuItem("图像识别");
 
     // 设置菜单
     private JMenuItem preferencesItem = new JMenuItem("偏好设置");
-    private JMenuItem  advancedSettingItem  = new JMenuItem("高级设置");
+    private JMenuItem advancedSettingItem = new JMenuItem("高级设置");
 
     // 帮助菜单
     private JMenuItem checkUpdateItem = new JMenuItem("检查更新");
@@ -56,16 +57,19 @@ public class MainFrameMenuBar extends JMenuBar
     private CreateFileDialog createFileDialog;
     private InsertWordDialog insertWordDialog;
     private InsertWordDialog modifyWordDialog;
-    private FileChooser fileChooser;
+    private FileChooser wordlistFileChooser;
     private AboutDialog aboutDialog;
     private TranslateDialog translateDialog;
     private SettingDialog preferencesDialog;
     private SettingDialog advancedSettingDialog;
     private WordListInfoDialog wordListInfoDialog;
     private ExportFileDialog exportPDFDialog;
+    private TextShownDialog ocrTextDialog;
+    private FileChooser ocrImageFileChooser;
 
     /**
      * MainFrameMenuBar是主界面的菜单栏
+     *
      * @param owner 菜单栏所属的JFrame
      */
     public MainFrameMenuBar(JFrame owner)
@@ -73,32 +77,34 @@ public class MainFrameMenuBar extends JMenuBar
         createFileDialog = new CreateFileDialog(owner);
         insertWordDialog = new InsertWordDialog(owner, "插入单词");
         modifyWordDialog = new InsertWordDialog(owner, "修改单词");
-        fileChooser = new FileChooser();
+        wordlistFileChooser = new FileChooser();
         aboutDialog = new AboutDialog(owner);
         translateDialog = new TranslateDialog(owner);
         preferencesDialog = new SettingDialog(owner, OptionType.NORMAL);
         advancedSettingDialog = new SettingDialog(owner, OptionType.ADVANCE);
         wordListInfoDialog = new WordListInfoDialog(owner);
         exportPDFDialog = new ExportFileDialog(owner, "PDF");
+        ocrTextDialog = new TextShownDialog(null, "OCR图像识别");
+        ocrImageFileChooser = new FileChooser();
 
         fileMenu.add(createFileItem);
         fileMenu.add(openFileItem);
         fileMenu.add(openStandingItem);
         fileMenu.add(exportPDFItem);
         fileMenu.add(exportExcelItem);
-        fileMenu.add(ocrItem);
+        fileMenu.add(exportOCRItem);
         fileMenu.add(excelItem);
 
         createFileItem.addActionListener(e -> createFileItemAction());
 
         openFileItem.addActionListener(e ->
         {
-            fileChooser.showOpenDialog(null);
-            Memory.setChosenWordListFile(fileChooser.getSelectedFile());
+            wordlistFileChooser.showOpenDialog(null);
+            Memory.setChosenWordListFile(wordlistFileChooser.getSelectedFile());
         });
 
         openStandingItem.addActionListener(e ->
-            Memory.setChosenWordListFile(Config.getStandingWordListFile()));
+                Memory.setChosenWordListFile(Config.getStandingWordListFile()));
 
         exportPDFItem.addActionListener(e ->
         {
@@ -113,7 +119,7 @@ public class MainFrameMenuBar extends JMenuBar
             }
         });
 
-        ocrItem.addActionListener(e -> OCRItemAction());
+        exportOCRItem.addActionListener(e -> OCRItemAction());
 
         exportExcelItem.setEnabled(false);
         excelItem.setEnabled(false);
@@ -165,7 +171,8 @@ public class MainFrameMenuBar extends JMenuBar
             wordListInfoDialog.setVisible(true);
         });
 
-        translateMenu.add(transItem);
+        toolkitMenu.add(transItem);
+        toolkitMenu.add(ocrItem);
 
         transItem.addActionListener(e -> translateDialog.setVisible(true));
 
@@ -183,17 +190,17 @@ public class MainFrameMenuBar extends JMenuBar
 
         add(fileMenu);
         add(editMenu);
-        add(translateMenu);
+        add(toolkitMenu);
         add(settingMenu);
         add(helpMenu);
     }
 
     private void OCRItemAction()
     {
-        fileChooser.showOpenDialog(null);
-        File image = fileChooser.getSelectedFile();
-        OCRReader reader = new OCRReader();
-        List<Word> wordList = reader.recognizeWordList(image);
+        wordlistFileChooser.showOpenDialog(null);
+        File image = wordlistFileChooser.getSelectedFile();
+        WordListParser wordListParser = new WordListParser();
+        List<Word> wordList = wordListParser.recognizeToWordList(image);
 
         if (Memory.mode == 0)
         {
@@ -269,5 +276,10 @@ public class MainFrameMenuBar extends JMenuBar
 
         manager.push();
         Memory.globalRefreshWithWordListSync();
+    }
+
+    private void OCRImageItemAction()
+    {
+        ocrImageFileChooser.showOpenDialog(null);
     }
 }
