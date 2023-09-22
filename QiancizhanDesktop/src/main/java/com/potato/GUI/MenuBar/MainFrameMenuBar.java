@@ -38,6 +38,7 @@ public class MainFrameMenuBar extends JMenuBar
 
     // 编辑菜单
     private JMenuItem insertWordItem = new JMenuItem("插入单词");
+    private JMenuItem continueInsertItem = new JMenuItem("连续插入单词");
     private JMenuItem deleteWordItem = new JMenuItem("删除单词");
     private JMenuItem modifyWordItem = new JMenuItem("修改单词");
     private JMenuItem transformItem = new JMenuItem("补全单词汉义");
@@ -58,6 +59,7 @@ public class MainFrameMenuBar extends JMenuBar
     private CreateFileDialog createFileDialog;
     private InsertWordDialog insertWordDialog;
     private InsertWordDialog modifyWordDialog;
+    private InsertWordDialog continuousInsertWordDialog;
     private FileChooser wordlistFileChooser;
     private AboutDialog aboutDialog;
     private TranslateDialog translateDialog;
@@ -76,8 +78,9 @@ public class MainFrameMenuBar extends JMenuBar
     public MainFrameMenuBar(JFrame owner)
     {
         createFileDialog = new CreateFileDialog(owner);
-        insertWordDialog = new InsertWordDialog(owner, "插入单词");
-        modifyWordDialog = new InsertWordDialog(owner, "修改单词");
+        insertWordDialog = new InsertWordDialog(owner, "插入单词", false);
+        modifyWordDialog = new InsertWordDialog(owner, "修改单词", false);
+        continuousInsertWordDialog = new InsertWordDialog(owner, "连续插入单词", true);
         wordlistFileChooser = new FileChooser();
         aboutDialog = new AboutDialog(owner);
         translateDialog = new TranslateDialog(owner);
@@ -128,6 +131,7 @@ public class MainFrameMenuBar extends JMenuBar
         editMenu.add(insertWordItem);
         editMenu.add(deleteWordItem);
         editMenu.add(modifyWordItem);
+        editMenu.add(continueInsertItem);
         editMenu.add(transformItem);
         editMenu.add(infoItem);
 
@@ -151,6 +155,16 @@ public class MainFrameMenuBar extends JMenuBar
             }
             modifyWordDialog.setTextAndCheckBox(Memory.word);
             modifyWordDialog.setVisible(true);
+        });
+
+        continueInsertItem.addActionListener(e ->
+        {
+            if (Memory.mode == 0)  // 0是选择单词本目录模式，此时不做任何动作
+            {
+                return;
+            }
+            continuousInsertWordDialog.setTextAndCheckBox(null);
+            continuousInsertWordDialog.setVisible(true);
         });
 
         transformItem.addActionListener(e ->

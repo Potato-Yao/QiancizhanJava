@@ -33,8 +33,8 @@ public class FunctionPanel extends JPanel
     {
         setLayout(new GridLayout(6, 1));
 
-        insertWordDialog = new InsertWordDialog(owner, "插入单词");
-        modifyWordDialog = new InsertWordDialog(owner, "修改单词");
+        insertWordDialog = new InsertWordDialog(owner, "插入单词", false);
+        modifyWordDialog = new InsertWordDialog(owner, "修改单词", false);
         translateDialog = new TranslateDialog(owner);
         oneOfFourQuizDialog = new OneOfFourQuizDialog(owner);
         spellQuizDialog = new SpellQuizDialog(owner);
