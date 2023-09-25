@@ -172,8 +172,6 @@ public class InsertWordDialog extends JDialog
         manager.push();
         Memory.globalRefreshWithWordListSync();  // 由于WordList改变，所以全局刷新时要同步WordList
 
-        System.out.println(insideMode);
-        System.out.println(isContinuousNeeded);
         if (insideMode == 0 && isContinuousNeeded)
         {
             setTextAndCheckBox(null);
