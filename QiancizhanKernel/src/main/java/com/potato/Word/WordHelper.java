@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * WordHelper是Word的工具类
+ * WordHelper是{@link Word}的工具类
  */
 public class WordHelper
 {
@@ -29,15 +29,16 @@ public class WordHelper
     }
 
     /**
-     * 从字符串解析单词的词性
-     * 每个词性以;分割
+     * 将代表词性的字符串转化为{@link WordClass}的数组
+     * <p> 代表词性的字符串应当使用;分隔每个词性
+     * <p> 如字符串n.;adj.;将会被解析为{@code {WordClass.n, WordClass.adj}}的数组
      *
-     * @param text 需要解析的字符串
-     * @return 词性
+     * @param text 需要解析的词性字符串
+     * @return 解析出的词性数组
      */
     public static WordClass[] parserWordClass(String text)
     {
-        String[] wordClass = text.split(";");
+        String[] wordClass = text.split(";");  // 词性以;分隔，这里获取了所有词性的字符串
         WordClass[] classes = new WordClass[wordClass.length];
 
         for (int i = 0; i < wordClass.length; i++)
@@ -49,13 +50,14 @@ public class WordHelper
     }
 
     /**
-     * 将词性转换为字符串
-     * 每个词性使用;分割
+     * 将{@link WordClass}的数组转换为代表词性的字符串
+     * <p> 字符串中的每个词性使用;分割
+     * <p> 如词性数组{@code {WordClass.n, WordClass.adj}}将会被解析为字符串n.;adj.;
      *
-     * @param wordClasses 需要转换的词性
+     * @param wordClasses 需要转换的词性数组
      * @return 转换后的字符串
      */
-    public static String writeToString(WordClass[] wordClasses)
+    public static String wordClassToString(WordClass[] wordClasses)
     {
         StringBuilder classes = new StringBuilder();
         for (WordClass wc : wordClasses)
@@ -69,11 +71,11 @@ public class WordHelper
 
     /**
      * 一个用于快速更新单词复习次数的工具类
-     * 它可以自增单词的复习次数以及正确和错误的次数
+     * <p> 它可以自增单词的复习次数以及正确和错误的次数，并且将最后修改日期改为今天
      *
      * @param word    需要更新的单词
-     * @param correct 此次更新是否是单词输入正确
-     * @param killed  此次更新是否是斩单词
+     * @param correct 此次更新是否将正确次数自增一
+     * @param killed  此次更新是否将单词设为已斩的
      * @return 更新后的单词
      */
     public static Word updateWord(Word word, boolean correct, boolean killed)
@@ -86,16 +88,33 @@ public class WordHelper
     }
 
     /**
-     * 将单词组翻译为汉语的字符串组
+     * 这个工具类用于给出{@link Word}列表的所有单词的汉义
      *
-     * @param words 需要转换的单词组
-     * @return 翻译后的字符串组
+     * @param words 需要翻译的单词列表
+     * @return 传入单词列表对应的汉义的字符串数组
      */
     public static String[] transWords(List<Word> words)
     {
         StringBuilder sourceText = new StringBuilder();
         Translate translate = new Translate();
 
+        /*
+        这个方法的算法是将单词列表转化为一个特殊格式的字符串
+        将其翻译后再得到汉义的字符串
+        再使用特殊格式就可以将其还原为原来单词列表的顺序了
+        这里使用的是回车作为分割的特殊格式，比如传入单词列表{apple, banana, watermelon}
+        则会被转换为
+        apple
+        banana
+        watermelon
+        这个字符串会被翻译为
+        苹果
+        香蕉
+        西瓜
+        这个字符串就可以还原为{苹果, 香蕉, 苹果}，对应给单词赋汉义即可
+        最开始使用的是*分割，后来换成了+++分割，但是它们都有概率被百度翻译替换掉，因此被废弃了
+        但是回车不会被替换，所以使用回车
+         */
         for (Word w : words)
         {
             sourceText.append(w.getWordName());
@@ -109,14 +128,16 @@ public class WordHelper
     }
 
     /**
-     * 自动给单词设置词性
+     * 通过分析单词{@link Word}的后缀名，自动给单词设置词性{@link WordClass}
      *
      * @param word 需要设置的词性的单词
      */
-    public static void autoWordClass(Word word)
+    public static void setWordClass(Word word)
     {
+        String space = " ";
+
         // 如果包含空格，那么就视为词组
-        if (word.getWordName().contains(" "))
+        if (word.getWordName().contains(space))
         {
             word.setWordClass(WordClass.phrase);
             return;
@@ -131,7 +152,6 @@ public class WordHelper
                 return;
             }
         }
-
     }
 
     /**

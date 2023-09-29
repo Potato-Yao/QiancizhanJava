@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * QuizMaker用于生成提问的单词列表
+ * QuizMaker用于根据一定算法改变单词列表中元素的顺序
  */
 public class QuizMaker
 {
@@ -15,9 +15,10 @@ public class QuizMaker
     private List<Word> words;
 
     /**
-     * QuizMaker用于根据单词本生成测试
+     * QuizMaker用于根据一定算法改变单词列表中元素的顺序
+     * <p> 所有用于改变顺序的方法都是没有副作用的方法，不会改变原单词列表中元素的顺序
      *
-     * @param wordList 需要测试的单词本
+     * @param wordList 需要改变顺序的单词列表
      */
     public QuizMaker(List<Word> wordList)
     {
@@ -25,7 +26,7 @@ public class QuizMaker
     }
 
     /**
-     * 随机测试
+     * 随机测试，该方法将会随机打乱单词列表中元素的顺序
      *
      * @return 随机测试的单词列表
      */
@@ -40,7 +41,7 @@ public class QuizMaker
             quizList.add(wordList.get(index));
             wordList.remove(index);
         }
-        // 上述遍历后会剩一个元素
+        // 上面的遍历后会剩一个元素，将其插入到随机索引
         quizList.add(random.nextInt(0, quizList.size()), wordList.get(0));
 
         return quizList;

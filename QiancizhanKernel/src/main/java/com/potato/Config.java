@@ -84,7 +84,7 @@ public class Config
     private static JSONObject jsonObject;
     private static File configFile;
     private static BufferedWriter writer;
-    private static Field[] fields;  // 获取Config的所有变量
+    private static Field[] fields;  // Config的所有变量
 
     /* 配置每个文件类对应的解析器 */
     public static Map<WordFileType, Constructor<? extends Parser>> parserMap;
@@ -100,15 +100,15 @@ public class Config
      * @param normalDir  一般单词本目录，如果为null则使用配置文件中的设置
      * @param standDir   长期单词本目录，如果为null则使用配置文件中的设置
      * @param outputDir  输出文件目录，如果为null则使用配置文件中的设置
-     * @param logger  日志输出器，如果为null则使用终端输出器
+     * @param logger     日志输出器，如果为null则使用终端输出器
      */
     public static void initial(File configFile, File normalDir, File standDir, File outputDir, Logger logger)
     {
         Log.setLogger(Objects.requireNonNullElseGet(logger, ConsoleLogger::new));
 
-        writeInitial(configFile, normalDir, standDir, outputDir);
+        configInitial(configFile);  // 假如不存在配置文件，那么就创建一个配置文件
 
-        Config.configFile = configFile;  // 获取配置文件
+        Config.configFile = configFile;
         String configString = FileToolKit.fileToString(Config.configFile);  // fastjson没有直接解析文件的方法，所以先转成字符串
         jsonObject = JSONObject.parse(configString);
         fields = Config.class.getDeclaredFields();  // 获取Config的所有变量
@@ -124,9 +124,11 @@ public class Config
             }
         });
 
+        dirInitial(normalDir, standDir, outputDir);
+
         parserMap = new HashMap<>();
         managerMap = new HashMap<>();
-
+        // 配置默认解析器和管理器
         try
         {
             parserMap.put(WordFileType.DATABASE, DatabaseParser.class.getConstructor(File.class));
@@ -139,6 +141,7 @@ public class Config
         }
         catch (NoSuchMethodException e)
         {
+            Log.e(Config.class.toString(), "未找到对应解析器或管理器", e);
             throw new RuntimeException(e);
         }
 
@@ -150,7 +153,6 @@ public class Config
      *
      * @param type 配置类型
      * @return 所有指定类型的配置
-     * TODO 该方法应当一般化
      */
     public static HashMap<String, String> getOptions(OptionType type)
     {
@@ -178,12 +180,19 @@ public class Config
     /**
      * 将所有与配置相关的变量写入配置文件
      */
-    @SneakyThrows
     public static void write()
     {
         jsonObject = new JSONObject();
-        writer = new BufferedWriter(new OutputStreamWriter(
-            new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
+        try
+        {
+            writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(configFile, false), StandardCharsets.UTF_8));
+        }
+        catch (FileNotFoundException e)
+        {
+            Log.e(Config.class.toString(), "未找到配置文件", e);
+            throw new RuntimeException(e);
+        }
 
         runner(new ConfigAction()
         {
@@ -194,19 +203,18 @@ public class Config
                 jsonObject.put(option.keyName(), field.get(field));  // config.json的键是keyName，值就是变量的值
             }
 
-            @SneakyThrows
             @Override
             public void outerAction()
             {
                 try
                 {
                     writer.write(jsonObject.toJSONString());
+                    writer.close();
                 }
                 catch (Exception e)
                 {
                     Log.e(Config.class.toString(), "写入配置文件失败", e);
                 }
-                writer.close();
             }
         });
 
@@ -214,7 +222,7 @@ public class Config
     }
 
     /**
-     * TODO 应当与getOptions()一同被一般化
+     * TODO 应当一般化
      * 根据配置的汉义给配置变量赋值
      *
      * @param meaning 需要修改的配置变量的汉义
@@ -265,12 +273,9 @@ public class Config
      * 写入初始化内容
      *
      * @param configFile 配置文件
-     * @param normalDir  一般单词本目录，如果为null则使用配置文件中的设置
-     * @param standDir   长期单词本目录，如果为null则使用配置文件中的设置
-     * @param outputDir  输出文件目录，如果为null则使用配置文件中的设置
      */
     @SneakyThrows
-    private static void writeInitial(File configFile, File normalDir, File standDir, File outputDir)
+    private static void configInitial(File configFile)
     {
         if (configFile.createNewFile())
         {
@@ -283,10 +288,10 @@ public class Config
             String text = """
                 {
                     "language": "en",
-                    "stand_wordlist_path": "",
-                    "normal_wordlist_path": "",
+                    "stand_wordlist_path": "./StandingWordList",
+                    "normal_wordlist_path": "./NormalWordList",
                     "output_file_name": "OutputFile",
-                    "output_file_path": "",
+                    "output_file_path": "./OutputList",
                     "baidu_app_id": "",
                     "baidu_app_key": "",
                     "ocr_app_id": "",
@@ -295,7 +300,7 @@ public class Config
                     "database_type": "SQLite",
                     "author": "千词斩",
                     "title": "英语单词单",
-                    "version1": "1.0.3b",
+                    "version1": "1.0.4b",
                     "version2": "1.0.1b",
                     "version3": "InDev"
                 }
@@ -303,30 +308,42 @@ public class Config
 
             writer.write(text);
             writer.close();
-            Log.v(Config.class.toString(), "配置文件写入成功");
+            Log.v(Config.class.toString(), "配置文件创建并写入成功");
         }
         else
         {
-            Log.v(Config.class.toString(), "已检测到配置文件");
+            Log.v(Config.class.toString(), "已加载配置文件");
         }
+    }
 
-        if (normalDir == null || standDir == null || outputDir == null)
+
+    private static void dirInitial(File normalDir, File standingDir, File outputDir)
+    {
+        File normal;
+        File standing;
+        File output;
+
+        if (normalDir == null || standingDir == null || outputDir == null)
         {
-            Log.v(Config.class.toString(), "相关文件夹使用配置文件中的配置");
+            normal = new File(normalWordListPath);
+            standing = new File(standWordListPath);
+            output = new File(outputFilePath);
         }
         else
         {
-            if (normalDir.mkdir() && standDir.mkdir() && outputDir.mkdir())
-            {
-                Log.v(Config.class.toString(), "相关文件夹创建成功");
-            }
-            else
-            {
-                Log.v(Config.class.toString(), "已检测到相关文件夹");
-            }
+            normal = normalDir;
+            standing = standingDir;
+            output = outputDir;
         }
 
-        Log.i(Config.class.toString(), "初始化配置文件和相关文件夹完成");
+        if (normal.mkdir() && standing.mkdir() && output.mkdir())
+        {
+            Log.i(Config.class.toString(), "目录创建成功");
+        }
+        else
+        {
+            Log.i(Config.class.toString(), "目录加载成功");
+        }
     }
 
     /**
@@ -354,7 +371,7 @@ public class Config
     /**
      * 设置替换的解析器
      *
-     * @param type 解析器对应的文件类型
+     * @param type   解析器对应的文件类型
      * @param parser 解析器
      */
     public static void setParser(WordFileType type, Constructor<? extends Parser> parser)
@@ -365,7 +382,7 @@ public class Config
     /**
      * 设置替换的管理器
      *
-     * @param type 管理器对应的文件类型
+     * @param type    管理器对应的文件类型
      * @param manager 管理器
      */
     public static void setManager(WordFileType type, Constructor<? extends Manager> manager)

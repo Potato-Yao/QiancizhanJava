@@ -21,6 +21,7 @@ public class InsertWordDialog extends JDialog
     1代表修改单词模式
      */
     private int insideMode;
+    private boolean isContinuousNeeded;  // 是否是连续插入模式，该模式只在插入单词时适用
     private Translate translate = new Translate();
     private JPanel parameterPanel = new JPanel();
     private JLabel wordNameLabel = new JLabel("单词");
@@ -40,9 +41,10 @@ public class InsertWordDialog extends JDialog
      * @param owner 对话框所属的JFrame
      * @param title 对话框的标题，值为”插入单词“或”修改单词“
      */
-    public InsertWordDialog(JFrame owner, String title)
+    public InsertWordDialog(JFrame owner, String title, boolean isContinuousNeeded)
     {
         super(owner, title, true);
+        this.isContinuousNeeded = isContinuousNeeded;
 
         meaningField.setText("");
 
@@ -149,7 +151,7 @@ public class InsertWordDialog extends JDialog
 
         if (wordClasses.isEmpty())
         {
-            WordHelper.autoWordClass(word);
+            WordHelper.setWordClass(word);
         }
         else
         {
@@ -170,7 +172,14 @@ public class InsertWordDialog extends JDialog
         manager.push();
         Memory.globalRefreshWithWordListSync();  // 由于WordList改变，所以全局刷新时要同步WordList
 
-        setVisible(false);
+        if (insideMode == 0 && isContinuousNeeded)
+        {
+            setTextAndCheckBox(null);
+        }
+        else
+        {
+            setVisible(false);
+        }
     }
 
     private void translateButtonAction()

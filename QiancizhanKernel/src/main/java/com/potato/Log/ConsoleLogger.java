@@ -8,17 +8,6 @@ public class ConsoleLogger implements Logger
     /**
      * 一般日志输出至标准输出流
      *
-     * @param tag     用于分辨日志来源，可以设置为类名
-     * @param message 日志信息
-     */
-    private void normalPrintln(String tag, String message, LogLevel logLevel)
-    {
-        normalPrintln(tag, message, null, logLevel);
-    }
-
-    /**
-     * 一般日志输出至标准输出流
-     *
      * @param tag       用于分辨日志来源，可以设置为类名
      * @param message   日志信息
      * @param throwable 提供给日志的报错
@@ -33,17 +22,6 @@ public class ConsoleLogger implements Logger
         {
             System.out.printf("TAG:%s\t%s:%s%n", tag, logLevel, message);
         }
-    }
-
-    /**
-     * 错误日志输出至错误输出流
-     *
-     * @param tag     用于分辨日志来源，可以设置为类名
-     * @param message 日志信息
-     */
-    private void errorPrintln(String tag, String message, LogLevel logLevel)
-    {
-        errorPrintln(tag, message, null, logLevel);
     }
 
     /**
@@ -74,7 +52,7 @@ public class ConsoleLogger implements Logger
     @Override
     public void v(String tag, String message)
     {
-        normalPrintln(tag, message, LogLevel.VERBOSE);
+        normalPrintln(tag, message, null, LogLevel.VERBOSE);
     }
 
     /**
@@ -99,7 +77,7 @@ public class ConsoleLogger implements Logger
     @Override
     public void d(String tag, String message)
     {
-        normalPrintln(tag, message, LogLevel.DEBUG);
+        normalPrintln(tag, message, null, LogLevel.DEBUG);
     }
 
     /**
@@ -124,7 +102,7 @@ public class ConsoleLogger implements Logger
     @Override
     public void i(String tag, String message)
     {
-        normalPrintln(tag, message, LogLevel.INFO);
+        normalPrintln(tag, message, null, LogLevel.INFO);
     }
 
     /**
@@ -149,7 +127,7 @@ public class ConsoleLogger implements Logger
     @Override
     public void w(String tag, String message)
     {
-        errorPrintln(tag, message, LogLevel.WARN);
+        errorPrintln(tag, message, null, LogLevel.WARN);
     }
 
     /**
@@ -174,7 +152,7 @@ public class ConsoleLogger implements Logger
     @Override
     public void e(String tag, String message)
     {
-        errorPrintln(tag, message, LogLevel.ERROR);
+        errorPrintln(tag, message, null, LogLevel.ERROR);
     }
 
     /**

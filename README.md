@@ -9,21 +9,16 @@
 | Java版内核          | Java、Kotlin | Java版本的千词斩内核，适用于桌面端和安卓端界面           | 通用                  | 开发中 |
 | 桌面端GUI（基于swing）  | Java、Kotlin | swing版本的千词斩桌面端界面                    | Windows、Linux、MacOS | 开发中 |
 | 桌面端GUI（基于JavaFx） | Java        | JavaFx版本的千词斩桌面端界面，相较于swing版本更加灵活和美观 | Windows、Linux、MacOS | 未开始 |
-| 移动设备端            | Kotlin、Java | 千词斩安卓端界面                            | Android、HarmonyOS   | 开发中 |
-| 佩戴设备端            | Kotlin、Java | 千词斩手表端轻内核和界面                        | Android、HarmonyOS   | 未开始 |
+| 移动设备端            | Kotlin、Java | 千词斩安卓端界面                            | Android、HarmonyOS   | 已停止 |
+| 佩戴设备端            | Kotlin、Java | 千词斩手表端轻内核和界面                        | Android、HarmonyOS   | 已取消 |
 | C/Cpp版内核         | C、C++       | C/C++版本的千词斩内核，适用于桌面端界面，性能更加强大       | Windows、Linux       | 未开始 |
 | 桌面端GUI（基于Qt6）    | C++         | Qt6版本的千词斩桌面端界面，基于C/Cpp版内核           | Windows、Linux       | 未开始 |
 
 TODO:
 
-- 背诵记录
-- 多语言支持
-- 优化默写体验
-- 连续写入单词模式
 - 图像的预处理
 - 更新程序和更新内容展示
 - $\LaTeX$汉语路径报错
-- 输出时自定义信息
-- 输出文件默认使用单词本名称
 - 订正错误单词
 - 管理单词本
+- 默写时全部转化为小写进行比较

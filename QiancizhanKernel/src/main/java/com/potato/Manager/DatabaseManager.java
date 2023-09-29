@@ -49,10 +49,10 @@ public class DatabaseManager extends Manager
         PreparedStatement wordInsertStatement = connection.prepareStatement(insertSQL);
 
         // FIXME 这种实现效率太低，必须进行优化！
-        for (Word w : insertWords)
+        for (Word w : getInsertWords())
         {
             wordInsertStatement.setString(1, w.getWordName());
-            wordInsertStatement.setString(2, WordHelper.writeToString(w.getWordClass()));
+            wordInsertStatement.setString(2, WordHelper.wordClassToString(w.getWordClass()));
             wordInsertStatement.setString(3, w.getMeaning());
             wordInsertStatement.setInt(4, w.getReviewCount());
             wordInsertStatement.setString(5, w.getLastReviewDate()
@@ -64,7 +64,7 @@ public class DatabaseManager extends Manager
         }
 
         // 写入删除的单词
-        for (Word w : deleteWords)
+        for (Word w : getDeleteWords())
         {
             String deleteSQL = "delete from WordList where WORD_NAME = '" + w.getWordName() + "'";
             Statement statement = connection.createStatement();
@@ -72,11 +72,11 @@ public class DatabaseManager extends Manager
         }
 
         // 写入修改的单词
-        for (Map.Entry<Word, Word> w : modifyWords.entrySet())
+        for (Map.Entry<Word, Word> w : getModifyWords().entrySet())
         {
             Word to = w.getValue();
             String modifySQL = "update WordList set WORD_NAME ='" + to.getWordName()
-                    + "', WORD_CLASS ='" + WordHelper.writeToString(to.getWordClass())
+                    + "', WORD_CLASS ='" + WordHelper.wordClassToString(to.getWordClass())
                     + "', MEANING ='" + to.getMeaning()
                     + "', REVIEW_COUNT =" + to.getReviewCount()
                     + ", REVIEW_DATE ='" + to.getLastReviewDate()
@@ -91,9 +91,9 @@ public class DatabaseManager extends Manager
         }
 
         // 写入修改的单词本信息
-        if (info != null)
+        if (getInfo() != null)
         {
-            String modifySQL = "update Info set LANGUAGE ='" + info.language() + "'";
+            String modifySQL = "update Info set LANGUAGE ='" + getInfo().language() + "'";
             Statement statement = connection.createStatement();
             statement.executeUpdate(modifySQL);
         }
@@ -102,7 +102,7 @@ public class DatabaseManager extends Manager
         insertSQL = "insert into History(DATE, SUM_COUNT, CORRECT_COUNT, WRONG_COUNT, TIME_COST) values(?, ?, ?, ?, ?)";
         PreparedStatement historyInsertStatement = connection.prepareStatement(insertSQL);
 
-        for (History h : insertHistory)
+        for (History h : getInsertHistory())
         {
             historyInsertStatement.setString(1, h.date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             historyInsertStatement.setInt(2, h.sumCount());
@@ -112,7 +112,7 @@ public class DatabaseManager extends Manager
             historyInsertStatement.executeUpdate();
         }
 
-        for (History h : deleteHistory)
+        for (History h : getDeleteHistory())
         {
             String deleteSQL = "delete from History where DATE = '" + h.date() + "' and TIME_COST = "
                     + h.timeCost();
@@ -120,7 +120,7 @@ public class DatabaseManager extends Manager
             statement.executeUpdate(deleteSQL);
         }
 
-        for (Map.Entry<History, History> h : modifyHistory.entrySet())
+        for (Map.Entry<History, History> h : getModifyHistory().entrySet())
         {
             History to = h.getValue();
             String modifySQL = "update History set DATE = '" + to.date()

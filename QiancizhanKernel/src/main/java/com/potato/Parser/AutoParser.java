@@ -4,6 +4,7 @@ import com.potato.Config;
 import com.potato.Log.Log;
 import com.potato.ToolKit.FileToolKit;
 import com.potato.ToolKit.WordFileType;
+import com.potato.Word.Word;
 import lombok.SneakyThrows;
 
 import java.io.File;
@@ -13,15 +14,16 @@ import java.lang.reflect.InvocationTargetException;
 import static com.potato.ToolKit.FileToolKit.*;
 
 /**
- * AutoParser用于自动根据传入单词本文件类型选择对应的解析器解析单词本
+ * AutoParser用于根据单词本文件的文件类型匹配其对应的Parser并解析单词本文件
  */
 public class AutoParser extends Parser
 {
     /**
-     * AutoParser用于根据文件类型生成对应的解析储存单词本文件的Parser
-     * 如对于db，生成DatabaseParser
+     * AutoParser用于根据单词本文件的文件类型匹配其对应的{@link Parser}并解析单词本文件
+     * <p> 文件类型对应的解析器在{@link Config}中{@code setParser}方法配置
+     * <p> 如对于db，默认给出{@link DatabaseParser}
      *
-     * @param file 需要解析的文件
+     * @param file 需要解析的单词本文件
      */
     public AutoParser(File file)
     {
@@ -29,7 +31,9 @@ public class AutoParser extends Parser
     }
 
     /**
-     * 解析，将this.file解析为一个储存Word的List，将这个List赋给this.wordList
+     * 解析单词本文件
+     * <p> 将this.file解析为一个储存{@link Word}的List，将这个List赋给this.wordList
+     * <p> 如果在解析前有需要初始化的对象，将初始化写在构造器中
      */
     @Override
     protected void parser()

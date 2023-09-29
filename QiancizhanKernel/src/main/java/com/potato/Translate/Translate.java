@@ -10,7 +10,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Translate是翻译器
+ * Translate是翻译器类，用于翻译文本
+ * 该类使用的是百度翻译
  */
 public class Translate
 {
@@ -43,11 +44,13 @@ public class Translate
 
     /**
      * 翻译文本
-     * zh代表汉语，en代表英语，auto代表自动识别
+     * <p> zh代表汉语，en代表英语，auto代表自动识别
+     * <p> 注意：这个方法的返回值是翻译API给出的原始数据，即JSON格式的数据
+     * <p> 若要只获取翻译的结果文本，请见{@link Translate}的filter方法
      *
      * @param query 需要翻译的内容
-     * @param from  来自某语言
-     * @param to    翻译为某语言
+     * @param from  翻译的源自语言
+     * @param to    翻译的去向语言
      * @return 翻译结果
      */
     public String translate(String query, String from, String to)
@@ -56,10 +59,10 @@ public class Translate
     }
 
     /**
-     * 过滤器，用于将提取中json字符串中的翻译结果
+     * 这个过滤器用于从翻译API给出的JSON格式的原始数据提取出翻译后的文本
      *
-     * @param source 需要提取的字符串
-     * @return 翻译结果
+     * @param source 需要提取的JSON字符串
+     * @return 提取出的翻译后文本
      */
     public static String filter(String source)
     {
@@ -77,8 +80,8 @@ public class Translate
     }
 
     /**
-     * 格式化程序，将unicode转成一般语言
-     * 这个方法是星火GPT告诉我的，我也不懂是怎么实现的
+     * 该方法用于将unicode形式的字符转成一般形式
+     * <p> 这个方法是星火GPT告诉我的，我也不懂是怎么实现的
      *
      * @param unicodeString 需要转换的字符串
      * @return 转换结果

@@ -3,26 +3,29 @@ package com.potato.Manager;
 import com.potato.ToolKit.History;
 import com.potato.ToolKit.Info;
 import com.potato.Word.Word;
+import lombok.Data;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.potato.ToolKit.FileToolKit.getExtensionName;
 
 /**
  * Manager用于管理单词本文件
  */
+@Data
 public abstract class Manager
 {
-    Info info;
-    List<Word> insertWords = new ArrayList<>();
-    List<Word> deleteWords = new ArrayList<>();
-    HashMap<Word, Word> modifyWords = new HashMap<>();
-    List<History> insertHistory = new ArrayList<>();
-    List<History> deleteHistory = new ArrayList<>();
-    HashMap<History, History> modifyHistory = new HashMap<>();
+    private Info info;
+    private List<Word> insertWords = new ArrayList<>();
+    private List<Word> deleteWords = new ArrayList<>();
+    private Map<Word, Word> modifyWords = new HashMap<>();
+    private List<History> insertHistory = new ArrayList<>();
+    private List<History> deleteHistory = new ArrayList<>();
+    private Map<History, History> modifyHistory = new HashMap<>();
 
     /**
      * Manager用于对单词本文件进行增、删、改的操作
