@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'com.potato'
-version = '1.0.0b'
+version = '1.0.1b'
 description = 'The desktop GUI of Qiancizhan'
 
 compileJava.options.encoding = 'UTF-8'

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.potato'
-version = '1.0.4b'
+version = '1.0.5b'
 description = 'The kernel of Qiancizhan'
 
 repositories {
